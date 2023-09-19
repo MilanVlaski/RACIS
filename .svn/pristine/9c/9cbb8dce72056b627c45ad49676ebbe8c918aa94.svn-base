@@ -1,0 +1,47 @@
+package view.table;
+
+import javax.swing.event.ListSelectionEvent;
+
+public class Selection implements EditorState {
+
+	private TablePanel context;
+	
+	public Selection(TablePanel context) {
+		this.context = context;
+		context.getCreateBtn().setEnabled(true);
+		context.getChangeBtn().setEnabled(false);
+		context.getDeleteBtn().setEnabled(false);
+		context.getCancelBtn().setEnabled(true);
+	}
+	
+	@Override
+	public void handleSelectionChanged(ListSelectionEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void handleCreate() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void handleChange() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void handleDelete() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void handleCancel() {
+		// TODO Auto-generated method stub
+
+	}
+
+}

@@ -1,0 +1,45 @@
+package view.table;
+
+public class Creation implements EditorState {
+
+	private TablePanel context;
+	
+	public Creation(TablePanel context) {
+		this.context = context;
+		context.getCreateBtn().setEnabled(true);
+		context.getChangeBtn().setEnabled(false);
+		context.getDeleteBtn().setEnabled(false);
+		context.getCancelBtn().setEnabled(false);
+	}
+	
+	@Override
+	public void handleSelectionChanged() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void handleCreate() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void handleChange() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void handleDelete() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void handleCancel() {
+		// TODO Auto-generated method stub
+
+	}
+
+}

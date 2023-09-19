@@ -1,0 +1,74 @@
+package controller.state;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.table.TableModel;
+
+import view.input.InputPanel;
+import view.menubar.MenuBar;
+import view.statusbar.StatusBar;
+import view.table.TablePanel;
+
+public class Idle implements EditorState {
+
+	private TablePanel context;
+	private InputPanel inputPanel;
+	private MenuBar menuBar;
+
+	public Idle(TablePanel context, MenuBar menuBar) {
+		this.context = context;
+		this.inputPanel = context.getInputPanel();
+		this.menuBar = menuBar;
+		context.getStatusBar().setStatusMessage("Ready");
+
+		this.context.getChangeBtn().setEnabled(false);
+		this.context.getDeleteBtn().setEnabled(false);
+		this.context.getCancelBtn().setEnabled(false);
+	}
+
+	@Override
+	public void handleSelectionChanged(ListSelectionEvent e) {
+		if (e.getValueIsAdjusting()) {
+			return;
+		}
+		TableModel model = context.getTable().getModel();
+
+		ListSelectionModel lsm = (ListSelectionModel) e.getSource();
+		if (!lsm.isSelectionEmpty()) {
+			int selectedRow = lsm.getMinSelectionIndex();
+			List<Object> row = new ArrayList<>();
+			for (int i = 0; i < model.getColumnCount(); i++) {
+				row.add(model.getValueAt(selectedRow, i));
+			}
+
+			inputPanel.fillInputs(row);
+			inputPanel.disablePKeyInputs();
+
+			context.setEditorState(new Selection(context, menuBar));
+		}
+	}
+
+	@Override
+	public void handleCreate() {
+		inputPanel.enableAllInputs();
+		inputPanel.setVisible(true);
+
+		context.setEditorState(new Creation(context, menuBar));
+	}
+
+	@Override
+	public void handleChange() {
+	}
+
+	@Override
+	public void handleDelete() {
+	}
+
+	@Override
+	public void handleCancel() {
+	}
+
+}

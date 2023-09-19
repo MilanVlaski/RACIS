@@ -1,0 +1,56 @@
+﻿camac za ribarenje
+bowser (voda ili benzin)
+kanu
+kabin kruzer (spavanje i jelo)
+houseboat (za godisnje odmore)
+speedboat
+parobrod
+podmornica
+
+3 tipa:
+Brodovi bez pogona
+Jedrenjaci
+Motorni brodovi
+
+Ribarski camac, Dinghy, Deck boat, Bowrider, Katamaran, Kadi kabina, Sa centralnom konzolom, Houseboat, Trawler, Cabin cruiser, Game boat, Motor yacht, Jet ski, Jet boat, Ski boat, Sedan bridge
+
+Nabavka: Prodavci i firme za konstrukcij brodova
+
+Neki brodovi zahtijevaju kapetane, posadu. Npr iznajmljivanje jahti je il neka putovanja koja se reklamiraju, kruzeri...
+
+Servisi na brodovima: posluga, kuhari, masaza.
+
+Brod treba imat raznu opremu kao sto su: radio, komunikacija, navigaciona tehnologija, prva pomoc. Oprema za pecanje, ronjenje.
+
+Dozvola za voznju, Dozvola za vodenu oblast.
+
+Lokacija: Luka,
+Lucno osoblje, Vlasnik luke
+
+Rute plovidbe jako bitne. (Dovoljno je karta sa oznacenim zonama)
+
+Dok (pristaniste) - fizicka lokacije s koje se ukrcavaju/iskrcavaju brodovi/gliseri
+
+„luka, odnosno pristanište“ je vodeni i sa vodom neposredno povezani kopneni prostor sa
+objektima namijenjenim za pristajanje, sidrenje i zaštitu plovnih objekata, kao i ukrcavanje i
+iskrcavanje putnika i robe;
+
+„brodar“ je fizičko ili pravno lice koje je kao držalac broda nosilac plovidbenog poduhvata, s tim
+što se pretpostavlja, dok se protivno ne dokaže, da je brodar lice koje je u Upisnik brodova
+upisano kao vlasnik broda;
+
+„čamac unutrašnje plovidbe“ je plovni objekat, osim tegljača i potiskivača bez obzira na njihovu
+dužinu, širinu i istisninu registrovan za plovidbu na unutrašnjim vodama ako mu je dužina trupa
+manja od 15 metara, širina trupa manja od tri metra ili najveća istisnina manja od 15 tona;
+
+brod unutrašnje plovidbe“ je plovilo dužine trupa od 15 metara i više, širine trupa od 3 metra i
+više; ili čija je istisnina 15 tona i više, ili osposobljeno za prevoz više od 12 putnika kao i tegljač,
+odnosno potiskivač bez obzira na njegovu dužinu, širinu ili istisninu;
+
+„marina“ je specijalizovana luka, odnosno pristanište na obalama unutrašnjih voda namijenjena za
+prihvat, čuvanje i opremu plovila, koja služe za rekreaciju, sport i razonodu;
+
+„tovarište“ je mjesto uz obalu plovnog puta izvan luke, odnosno pristaništa odreñeno za
+povremeno pristajanje plovila radi utovara, odnosno istovara odreñenih vrsta tereta;
+
+tegljenica, potisnica, teretni brod, putnicki brod, tanker, domaci brod, strani brod, javni brod, strani javni brod

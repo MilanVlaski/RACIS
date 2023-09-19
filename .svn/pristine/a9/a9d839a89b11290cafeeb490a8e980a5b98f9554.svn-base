@@ -1,0 +1,83 @@
+package model;
+
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.table.TableModel;
+
+import db.manipulation.DbManipulation;
+import model.table.CustomTableModel;
+import model.table.GeneralTableModel;
+import model.tree.CustomTreeModel;
+import model.tree.TreeElement.Table;
+import model.xmlparser.XMLParser;
+import model.xmlparser.XMLTreeParser;
+import view.Subscriber;
+import view.table.MainTableView;
+/**
+ * Klasa cuva parser, dbManipulation i konekciju, kojima ne bi trebalo
+ * pristupati bez ove klase. Sadrzi i trenutni MainTableModel koji je 
+ * moguce postaviti na null. Cuva listu Subscribera koje moze obavjestiti kada se 
+ * neki podatak promijeni.
+ * @author Milan Vlaski
+ *
+ */
+public class ApplicationModel implements Publisher{
+
+	private final XMLParser xmlParser;
+	private GeneralTableModel mainTableModel;
+	private CustomTreeModel treeModel;
+
+	private List<Subscriber> subscribers;
+	
+	public ApplicationModel() {
+		this.xmlParser = new XMLParser();
+		xmlParser.createConnection();
+		
+		CustomTreeModel treeModel = new CustomTreeModel(null);
+		treeModel.initializeFromXml(xmlParser);
+		this.treeModel = treeModel;
+		
+		this.subscribers = new ArrayList<>();	
+	}
+	
+	public XMLTreeParser getXmlParser() {
+		return xmlParser;
+	}
+	public GeneralTableModel getMainTableModel() {
+		return mainTableModel;
+	}
+	
+	public void setMainTableModel(Table table) {
+		if(table != null) {
+			this.mainTableModel = new CustomTableModel(table);
+		} else {
+			this.mainTableModel = null;
+		}
+		notifyAllSubscribers();
+	}
+	
+	public CustomTreeModel getTreeModel() {
+		return treeModel;
+	}
+
+	@Override
+	public void notify(Subscriber subscriber) {
+		subscriber.update(this);
+	}
+
+	@Override
+	public void notifyAllSubscribers() {
+		for (Subscriber subscriber : subscribers) {
+			subscriber.update(this);
+		}
+	}
+
+	@Override
+	public void subscribe(Subscriber subscriber) {
+		subscribers.add(subscriber);
+	}
+}

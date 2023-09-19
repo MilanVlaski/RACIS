@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.5.final using JasperReports Library version 6.20.5-3efcf2e67f959db3888d79f73dde2dbd7acb4f8e  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="IstorijskeRezervacije" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d4a1d5eb-82dd-412f-a620-202e4bdf9dba">
+	<property name="template.engine" value="tabular_template"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="RACIS"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<style name="Table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+			<topPen lineWidth="1.0" lineColor="#000000"/>
+			<leftPen lineWidth="1.0" lineColor="#000000"/>
+			<bottomPen lineWidth="1.0" lineColor="#000000"/>
+			<rightPen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TH" mode="Transparent" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" forecolor="#241D12" backcolor="#DAEBF5">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Transparent" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT} % 2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#DBDBDB"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="tableDataset" uuid="584c11a3-97f5-49fa-bdfb-3673be9c007f">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="RACIS"/>
+		<queryString language="SQL">
+			<![CDATA[SELECT 
+      
+	  pisg2.[Vozilo drumskog saobracaja].Marka AS [Marka drumskog vozila]
+		,pisg2.[Vozilo drumskog saobracaja].Model AS [Model drumskog vozila]
+		,pisg2.[Plovno vozilo].Marka AS [Marka plovila]
+		,pisg2.[Plovno vozilo].Model AS [Model plovila]
+		,pisg2.Prikolica.Naziv AS [Marka i model prikolice]
+		,pisg2.Klijent.Ime AS [Klijent koji je rezervisao]
+		,[Datum preuzimanja] AS [Datum i vrijeme preuzimanja]
+	  --,pisg2.[Status rezervacije].Naziv AS [Status rezrvacije]
+      ,[Stanje brojila prije]
+      ,[Stanje rezervoara prije]
+      ,[Datum povratka] AS [Datum i vrijeme povratka]
+      ,[Stanje brojila poslije]
+      ,[Stanje rezervoara poslije]
+      ,[Opsta zapazanja]
+  FROM [pisg2].[Iznajmljena vozila]
+  LEFT JOIN pisg2.Klijent ON pisg2.Klijent.Identifikator=pisg2.[Iznajmljena vozila].[Klijent rezervisao]
+  LEFT JOIN pisg2.Rezervacija ON pisg2.Rezervacija.Oznaka=pisg2.[Iznajmljena vozila].Rezervacija
+  LEFT JOIN pisg2.[Status rezervacije] ON pisg2.[Status rezervacije].Oznaka=pisg2.Rezervacija.Status
+  LEFT JOIN pisg2.Vozilo ON pisg2.Vozilo.[Broj vozila]=pisg2.[Iznajmljena vozila].[Broj vozila]
+  LEFT JOIN pisg2.[Vozilo drumskog saobracaja] ON pisg2.[Vozilo drumskog saobracaja].[Broj vozila]=pisg2.[Iznajmljena vozila].[Broj vozila]
+  LEFT JOIN pisg2.[Plovno vozilo] ON pisg2.[Plovno vozilo].[Broj vozila]=pisg2.[Iznajmljena vozila].[Broj vozila]
+  LEFT JOIN pisg2.[Prikolica] ON pisg2.Prikolica.[Broj vozila]=pisg2.[Iznajmljena vozila].[Broj vozila]
+  WHERE pisg2.[Status rezervacije].Oznaka=4]]>
+		</queryString>
+		<field name="Marka drumskog vozila" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="Marka drumskog vozila"/>
+			<property name="com.jaspersoft.studio.field.label" value="Marka drumskog vozila"/>
+		</field>
+		<field name="Model drumskog vozila" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="Model drumskog vozila"/>
+			<property name="com.jaspersoft.studio.field.label" value="Model drumskog vozila"/>
+		</field>
+		<field name="Marka plovila" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="Marka plovila"/>
+			<property name="com.jaspersoft.studio.field.label" value="Marka plovila"/>
+		</field>
+		<field name="Model plovila" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="Model plovila"/>
+			<property name="com.jaspersoft.studio.field.label" value="Model plovila"/>
+		</field>
+		<field name="Marka i model prikolice" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="Marka i model prikolice"/>
+			<property name="com.jaspersoft.studio.field.label" value="Marka i model prikolice"/>
+		</field>
+		<field name="Klijent koji je rezervisao" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="Klijent koji je rezervisao"/>
+			<property name="com.jaspersoft.studio.field.label" value="Klijent koji je rezervisao"/>
+		</field>
+		<field name="Datum i vrijeme preuzimanja" class="java.sql.Timestamp">
+			<property name="com.jaspersoft.studio.field.name" value="Datum i vrijeme preuzimanja"/>
+			<property name="com.jaspersoft.studio.field.label" value="Datum i vrijeme preuzimanja"/>
+		</field>
+		<field name="Stanje brojila prije" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.name" value="Stanje brojila prije"/>
+			<property name="com.jaspersoft.studio.field.label" value="Stanje brojila prije"/>
+		</field>
+		<field name="Stanje rezervoara prije" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.name" value="Stanje rezervoara prije"/>
+			<property name="com.jaspersoft.studio.field.label" value="Stanje rezervoara prije"/>
+		</field>
+		<field name="Datum i vrijeme povratka" class="java.sql.Timestamp">
+			<property name="com.jaspersoft.studio.field.name" value="Datum i vrijeme povratka"/>
+			<property name="com.jaspersoft.studio.field.label" value="Datum i vrijeme povratka"/>
+		</field>
+		<field name="Stanje brojila poslije" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.name" value="Stanje brojila poslije"/>
+			<property name="com.jaspersoft.studio.field.label" value="Stanje brojila poslije"/>
+		</field>
+		<field name="Stanje rezervoara poslije" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.name" value="Stanje rezervoara poslije"/>
+			<property name="com.jaspersoft.studio.field.label" value="Stanje rezervoara poslije"/>
+		</field>
+		<field name="Opsta zapazanja" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="Opsta zapazanja"/>
+			<property name="com.jaspersoft.studio.field.label" value="Opsta zapazanja"/>
+		</field>
+	</subDataset>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="6321f5e3-86eb-444f-acc1-8daaaa0d6c60"/>
+				<staticText>
+					<reportElement x="20" y="20" width="360" height="43" forecolor="#FFFFFF" uuid="9e48917a-7b59-4ffd-baad-725f45563194"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Završene rezervacije]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="fed27553-a6c4-4a8a-9056-2f6f2589a3e5"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Strana "+$V{PAGE_NUMBER}+" od"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="9f5ad531-d413-49c9-874b-8b99e8150fa6"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="fc593335-5cbf-4caf-97b3-ff897c676bde"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="200" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<componentElement>
+				<reportElement x="-10" y="0" width="580" height="200" uuid="77dff691-4d0d-482f-b331-f053801ff2d3">
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="tableDataset" uuid="0fefce8e-471d-4519-8a86-4d9f7abc2ea1">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="50" uuid="c533bcff-a75b-4739-86b7-2bbe4f791344">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:columnHeader style="Table_CH" height="60">
+							<staticText>
+								<reportElement mode="Transparent" x="0" y="0" width="50" height="60" forecolor="#006699" backcolor="#E6E6E6" uuid="d3be2d8c-2ec3-4807-aa5a-9821767d1c1d"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Marka drumskog vozila]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement key="" x="0" y="0" width="50" height="30" uuid="2c0b5826-8141-4417-970e-5bdde4e5c549">
+									<property name="net.sf.jasperreports.style.isBlankWhenNull" value="true"/>
+								</reportElement>
+								<box leftPadding="2"/>
+								<textElement>
+									<font fontName="Arial" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Marka drumskog vozila}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="42" uuid="897c16e7-00af-41e6-ba03-3b88c30711a6">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:columnHeader style="Table_CH" height="60">
+							<staticText>
+								<reportElement mode="Transparent" x="0" y="0" width="42" height="60" forecolor="#006699" backcolor="#E6E6E6" uuid="86ee1a81-5572-4568-a5f4-95d4ae8e92e2"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Model drumskog vozila]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement key="" x="0" y="0" width="42" height="30" uuid="cdf0a3b0-d9d6-4bd7-82ce-3c405da5e3a0">
+									<property name="net.sf.jasperreports.style.isBlankWhenNull" value="true"/>
+								</reportElement>
+								<box leftPadding="2"/>
+								<textElement>
+									<font fontName="Arial" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Model drumskog vozila}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="42" uuid="143aaaaa-5e13-4253-89fa-6cfdfb2aca1b">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:columnHeader style="Table_CH" height="60">
+							<staticText>
+								<reportElement mode="Transparent" x="0" y="0" width="42" height="60" forecolor="#006699" backcolor="#E6E6E6" uuid="c28009a1-b0c6-4bac-8a14-e340f1398ef9"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Marka plovila]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement key="" x="0" y="0" width="42" height="30" uuid="448485e3-375b-4e4b-a2b1-f8ef0cc83111">
+									<property name="net.sf.jasperreports.style.isBlankWhenNull" value="true"/>
+								</reportElement>
+								<box leftPadding="2"/>
+								<textElement>
+									<font fontName="Arial" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Marka plovila}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="42" uuid="0d14ef8c-2fc7-42e7-8a55-81a51a997503">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<jr:columnHeader style="Table_CH" height="60">
+							<staticText>
+								<reportElement mode="Transparent" x="0" y="0" width="42" height="60" forecolor="#006699" backcolor="#E6E6E6" uuid="50b4a010-bdc4-4e24-b494-644c5d56ea9f"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Model plovila]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement key="" x="0" y="0" width="42" height="30" uuid="a60b6805-8bcb-47eb-a34b-7692b429f405">
+									<property name="net.sf.jasperreports.style.isBlankWhenNull" value="true"/>
+								</reportElement>
+								<box leftPadding="2"/>
+								<textElement>
+									<font fontName="Arial" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Model plovila}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="42" uuid="93923688-b2b1-452f-b84e-1a8d06b00502">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+						<jr:columnHeader style="Table_CH" height="60">
+							<staticText>
+								<reportElement mode="Transparent" x="0" y="0" width="42" height="60" forecolor="#006699" backcolor="#E6E6E6" uuid="002f1fcb-5042-4b3e-8ff3-1d2560709f5f"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Marka i model prikolice]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement key="" x="0" y="0" width="42" height="30" uuid="4e2d4e9c-8b7e-41ae-b8ab-ab2ab3e275f4">
+									<property name="net.sf.jasperreports.style.isBlankWhenNull" value="true"/>
+								</reportElement>
+								<box leftPadding="2"/>
+								<textElement>
+									<font fontName="Arial" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Marka i model prikolice}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="42" uuid="268e3e5c-6aaf-4eb5-abae-de8e4481014b">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column6"/>
+						<jr:columnHeader style="Table_CH" height="60">
+							<staticText>
+								<reportElement mode="Transparent" x="0" y="0" width="42" height="60" forecolor="#006699" backcolor="#E6E6E6" uuid="1d872a44-4b32-4163-9ed3-5d71fc525cba"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Klijent koji je rezervisao]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement key="" x="0" y="0" width="42" height="30" uuid="1e72affd-8dad-44c0-ae76-04821ec58b12">
+									<property name="net.sf.jasperreports.style.isBlankWhenNull" value="true"/>
+								</reportElement>
+								<box leftPadding="2"/>
+								<textElement>
+									<font fontName="Arial" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Klijent koji je rezervisao}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="50" uuid="cafad6e0-0279-462e-b6e7-5c1e0af8a708">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column7"/>
+						<jr:columnHeader style="Table_CH" height="60">
+							<staticText>
+								<reportElement mode="Transparent" x="0" y="0" width="50" height="60" forecolor="#006699" backcolor="#E6E6E6" uuid="f5083c14-0657-43cb-971a-115bc4de33b7"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Datum i vrijeme preuzimanja]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement key="" x="0" y="0" width="50" height="30" uuid="071572d7-9d06-4f3a-9707-af6371546376">
+									<property name="net.sf.jasperreports.style.isBlankWhenNull" value="true"/>
+								</reportElement>
+								<box leftPadding="2"/>
+								<textElement>
+									<font fontName="Arial" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Datum i vrijeme preuzimanja}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="30" uuid="3b25ae75-247b-4c39-a184-7d1971221783">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column8"/>
+						<jr:columnHeader style="Table_CH" height="60">
+							<staticText>
+								<reportElement mode="Transparent" x="0" y="0" width="30" height="60" forecolor="#006699" backcolor="#E6E6E6" uuid="6244c2db-1976-4c45-a384-8af6e3659057"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Stanje brojila prije]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement key="" x="0" y="0" width="30" height="30" uuid="d8b3b988-a012-4ed6-bca2-6c753ea2f57c">
+									<property name="net.sf.jasperreports.style.isBlankWhenNull" value="true"/>
+								</reportElement>
+								<box leftPadding="2"/>
+								<textElement>
+									<font fontName="Arial" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Stanje brojila prije}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="42" uuid="00f1696a-e549-4049-b33d-a3b3af2d29f9">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column9"/>
+						<jr:columnHeader style="Table_CH" height="60">
+							<staticText>
+								<reportElement mode="Transparent" x="0" y="0" width="42" height="60" forecolor="#006699" backcolor="#E6E6E6" uuid="b679d616-fe5e-4998-b075-4e2115887c93"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Stanje rezervoara prije]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement key="" x="0" y="0" width="42" height="30" uuid="dcf504fd-5339-4f87-8527-ae1a674eeb21">
+									<property name="net.sf.jasperreports.style.isBlankWhenNull" value="true"/>
+								</reportElement>
+								<box leftPadding="2"/>
+								<textElement>
+									<font fontName="Arial" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Stanje rezervoara prije}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="42" uuid="79355f9c-89a7-4f8b-aab6-fdbcb14789c6">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column10"/>
+						<jr:columnHeader style="Table_CH" height="60">
+							<staticText>
+								<reportElement mode="Transparent" x="0" y="0" width="42" height="60" forecolor="#006699" backcolor="#E6E6E6" uuid="44eb893f-b712-4112-a94b-46ea91e7c577"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Datum i vrijeme povratka]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement key="" x="0" y="0" width="42" height="30" uuid="fe6d5e20-2f5c-40a1-8f35-70819227c38b">
+									<property name="net.sf.jasperreports.style.isBlankWhenNull" value="true"/>
+								</reportElement>
+								<box leftPadding="2"/>
+								<textElement>
+									<font fontName="Arial" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Datum i vrijeme povratka}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="42" uuid="11ec775a-0daa-4b52-b275-706bfa6bfa0c">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column11"/>
+						<jr:columnHeader style="Table_CH" height="60">
+							<staticText>
+								<reportElement mode="Transparent" x="0" y="0" width="42" height="60" forecolor="#006699" backcolor="#E6E6E6" uuid="de050f91-90e4-480c-b77c-b0827ecd96b8"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Stanje brojila poslije]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement key="" x="0" y="0" width="42" height="30" uuid="89af64ad-71d4-4db0-8390-969a27e19810">
+									<property name="net.sf.jasperreports.style.isBlankWhenNull" value="true"/>
+								</reportElement>
+								<box leftPadding="2"/>
+								<textElement>
+									<font fontName="Arial" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Stanje brojila poslije}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="42" uuid="36546ad8-714f-4a53-9c28-9e67762a9add">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column12"/>
+						<jr:columnHeader style="Table_CH" height="60">
+							<staticText>
+								<reportElement mode="Transparent" x="0" y="0" width="42" height="60" forecolor="#006699" backcolor="#E6E6E6" uuid="319248da-2b7a-4dbc-b643-e1b54c2a180d"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Stanje rezervoara poslije]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement key="" x="0" y="0" width="42" height="30" uuid="b7f0f7ff-8ed0-4780-aa13-44a3c9db2e29">
+									<property name="net.sf.jasperreports.style.isBlankWhenNull" value="true"/>
+								</reportElement>
+								<box leftPadding="2"/>
+								<textElement>
+									<font fontName="Arial" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Stanje rezervoara poslije}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="68" uuid="e53fac3e-e900-49cc-ae00-a517436984df">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column13"/>
+						<jr:columnHeader style="Table_CH" height="60">
+							<staticText>
+								<reportElement mode="Transparent" x="0" y="0" width="68" height="60" forecolor="#006699" backcolor="#E6E6E6" uuid="d3ca036c-bfbb-4060-8bd7-d17bede8e883"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Opšta zapažanja]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement key="" x="0" y="0" width="68" height="30" uuid="696282b9-9708-4d4d-ab30-217a48ad07a1">
+									<property name="net.sf.jasperreports.style.isBlankWhenNull" value="true"/>
+								</reportElement>
+								<box leftPadding="2"/>
+								<textElement>
+									<font fontName="Arial" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Opsta zapazanja}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</summary>
+</jasperReport>

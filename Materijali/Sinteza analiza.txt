@@ -1,0 +1,49 @@
+Rezervacija(radi opstosti moze se nazvati narudzba): Status (Rezervisana, Preuzeta, Vracena), Od, Do, Cijena, Placena(da/ne), One-way(da/ne Da li vraca automobil na nasu lokaciju?) ~Proizvod/i, Musterija, Cijena, Metod (Onlajn, Uzivo, Telefonom)
+
+Proizvod: Tip (Iznajmljujuci, Potrosivi, Usluga), Padding time (kad se proizvod vrati, koliko vremena treba dok ne bude opet iskoristiv?), Cijena, Datum nabavke, Kvantitet, kolika je puta iznajmljen
+
+Vozilo: Status (Dostupan, U najmu, U procesu preuzeca, U popravci, Na servisu, Vracen firmi od koje smo kupili)
+Tip (full size, mid size, mini van, suv, luxury, sedan, compact)
+Odometar (kilometraza), rezervoar, osiguravajuca firma, trenutna lokacija, lokacija vlasnistva (To je mjesto kojem ovaj automobil pripada, neka od nasih poslovnica. Jer postoji varijanta da je u nekoj drugoj nasoj poslovnici, a to nije njegova lokacija vlasnistva. Moze biti i na tudjoj lokaciji.)
+VIN (vehicle identification number)
+tip mjenjaca, broj vrata
+
+Preuzece (Klijent, Vrijeme, Mjesto, Rezervacija)	
+
+Povratak (Klijent, Vrijeme, Mjesto, Rezervacija)
+
+Cijena: Fiksna(da/ne), Taxable(da/ne), Discountable(da/ne), Bazna kolicina, Ukupna kolicina, Cijenovno pravilo
+
+Cijenovno pravilo: Od, Do, Postotak(-100% do +1000%)
+(da moze vikendima i u sezoni skuplje, al nez kako ovo odradit iskreno)
+
+Musterija: Ime, Email, Tip (osoba ili ?), telefon, adrese, broj vozacke dozvole, datum isteka vozacke, kreditna kartica
+
+Uplata: Tip, Metod(Rucno, Karticom, Payment request)
+
+Ugovor: Musterija, Firma(mi), Datum, Rezervacija, Tip(Unaprijed, Poslije, itd), Metod(Kes, Kreditna, Cek), Kolicina, Tekst
+
+Faktura: Ugovor, Firma(mi), Rezervacija, Skup proizvoda, Ukupna cijena, Tekst
+
+Agreement (dogovor?) moze postati stampani ugovor nakon sto se dogovorimo s musterijom (Ovo je neformalna stvar)
+
+Poslovna lokacija:
+
+Steta - Tip, Datum, Vrijeme, Opis
+	
+Odrzavanje - Od, Do...
+
+Info o onome ko nam je iznajmio/prodao auto
+
+Aerodrom - brLeta, naziv, grad, zip kod, vrijeme slijetanja, aero kompanija, brPutnika
+
+
+Mi mozemo auto kupiti ili leasovati (lizing). Kupovanje je isplativije na duge staze. 
+
+(Prikolice?)
+
+Izvjestaj o proizvodima, prinos vozila - cijena = profit
+
+Cijena i porez se moze generisati na osnovu tipa vozila (zanimljivo)
+
+(GPS) navigation systems, entertainment systems, mobile phones, portable WiFi and child safety seats

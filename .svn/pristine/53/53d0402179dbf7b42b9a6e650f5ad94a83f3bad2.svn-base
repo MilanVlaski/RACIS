@@ -1,0 +1,21 @@
+package view.table;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.function.Function;
+
+import view.input.InputPanel;
+
+public class CrudListener implements ActionListener {
+
+	private final InputPanel inputPanel;
+
+	public CrudListener(InputPanel inputPanel) {
+		this.inputPanel = inputPanel;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+	}
+}

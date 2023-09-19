@@ -1,0 +1,11 @@
+package view.table;
+
+import javax.swing.event.ListSelectionEvent;
+
+public interface EditorState {
+	void handleSelectionChanged(ListSelectionEvent e);
+	void handleCreate();
+	void handleChange();
+	void handleDelete();
+	void handleCancel();
+}

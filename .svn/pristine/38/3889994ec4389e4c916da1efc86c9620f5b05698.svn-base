@@ -1,0 +1,59 @@
+package view.table;
+
+import java.awt.FlowLayout;
+import java.awt.event.ActionListener;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
+import view.input.InputPanel;
+
+public class TablePanel extends JPanel{
+
+	private final MainTableView table;
+	private final InputPanel inputPanel;
+	private final JButton createBtn = new JButton("Kreiraj novo");
+	public final JButton changeBtn = new JButton("Izmijeni");
+	public final JButton deleteBtn = new JButton("Izbrisi");
+	private final JButton cancelBtn = new JButton("Odustani");
+
+	public TablePanel(MainTableView table, InputPanel inputPanel) {
+		this.table = table;
+		this.inputPanel = inputPanel;
+		
+		JScrollPane scrollTable = new JScrollPane(this.table);
+		
+		createBtn.addActionListener(e -> {
+			inputPanel.setVisible(true);
+			inputPanel.clearFields();
+			inputPanel.enableAllFields();
+			cancelBtn.setEnabled(true);
+			});
+		cancelBtn.addActionListener(e -> {inputPanel.setVisible(false); cancelBtn.setEnabled(false);});
+		
+		cancelBtn.setEnabled(false);
+		changeBtn.setEnabled(false);
+		deleteBtn.setEnabled(false);
+
+		
+		JPanel btnPanel = new JPanel();
+		btnPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		btnPanel.add(createBtn);
+		btnPanel.add(changeBtn);
+		btnPanel.add(deleteBtn);
+		btnPanel.add(cancelBtn);
+		
+		
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		add(scrollTable);
+		add(btnPanel);
+		
+		setVisible(false);
+	}
+	
+	public MainTableView getTable() {
+		return table;
+	}
+}

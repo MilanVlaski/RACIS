@@ -1,0 +1,132 @@
+package view.table;
+
+import java.awt.FlowLayout;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.BoxLayout;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
+import view.input.InputPanel;
+import view.statusbar.StatusBar;
+
+public class TablePanel extends JPanel{
+
+	private final MainTableView table;
+	private final InputPanel inputPanel;
+	private EditorState editorState;
+	private String state;
+	private StatusBar statusBar;
+
+	private final JButton createBtn = new JButton("Kreiraj novo");
+	public final JButton changeBtn = new JButton("Izmijeni");
+	public final JButton deleteBtn = new JButton("Izbrisi");
+	private final JButton cancelBtn = new JButton("Odustani");
+
+	public TablePanel(MainTableView table, InputPanel inputPanel, StatusBar stBar) {
+		this.table = table;
+		this.inputPanel = inputPanel;
+		this.statusBar=stBar;
+		this.editorState = new Idle(this);
+		
+		JScrollPane scrollTable = new JScrollPane(this.table);
+		
+		createBtn.addActionListener(e -> {
+			editorState.handleCreate();
+			updateStatusBar();
+		});
+
+		changeBtn.addActionListener(e -> {
+			editorState.handleChange();
+			updateStatusBar();
+		});
+
+		deleteBtn.addActionListener(e -> {
+			editorState.handleDelete();
+			updateStatusBar();
+		});
+
+		cancelBtn.addActionListener(e -> {
+			editorState.handleCancel();
+			updateStatusBar();
+		});
+		
+		table.setSelectionListener(e -> {
+			editorState.handleSelectionChanged(e);
+			updateStatusBar();
+		});
+		
+		createBtn.setEnabled(true);
+		changeBtn.setEnabled(false);
+		deleteBtn.setEnabled(false);
+		cancelBtn.setEnabled(false);
+		
+		JPanel btnPanel = new JPanel();
+		btnPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		btnPanel.add(createBtn);
+		btnPanel.add(changeBtn);
+		btnPanel.add(deleteBtn);
+		btnPanel.add(cancelBtn);
+		
+		
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		add(scrollTable);
+		add(btnPanel);
+		
+		setVisible(false);
+	}
+	
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public EditorState getEditorState() {
+		return editorState;
+	}
+
+	public void setEditorState(EditorState editorState) {
+		this.editorState = editorState;
+	}
+	
+	public InputPanel getInputPanel() {
+		return inputPanel;
+	}
+	
+	public MainTableView getTable() {
+		return table;
+	}
+	
+	public JButton getCreateBtn() {
+		return createBtn;
+	}
+
+	public JButton getChangeBtn() {
+		return changeBtn;
+	}
+
+	public JButton getDeleteBtn() {
+		return deleteBtn;
+	}
+
+	public JButton getCancelBtn() {
+		return cancelBtn;
+	}
+	private void updateStatusBar() {
+        editorState.updateStatusMessage(statusBar);
+    }
+	public String getSelectedItemName() {
+        return table.getSelectedTableName();
+    }
+}

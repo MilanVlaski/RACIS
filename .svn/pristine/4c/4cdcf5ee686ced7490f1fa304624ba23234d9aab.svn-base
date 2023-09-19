@@ -1,0 +1,39 @@
+package view.table;
+
+import view.input.InputPanel;
+
+public class Idle implements EditorState {
+
+	private TablePanel context;
+	
+	public Idle(TablePanel context) {
+		this.context = context;
+		context.getCreateBtn().setEnabled(true);
+		context.getChangeBtn().setEnabled(false);
+		context.getDeleteBtn().setEnabled(false);
+		context.getCancelBtn().setEnabled(false);
+	}
+	
+	@Override
+	public void handleSelectionChanged() {}
+	
+	@Override
+	public void handleCreate() {
+		InputPanel inputPanel = context.getInputPanel();
+		inputPanel.setVisible(true);
+		inputPanel.enableAllFields();
+		context.getCancelBtn().setEnabled(true);
+		context.setEditorState(new Creation(context));
+	}
+
+	@Override
+	public void handleChange() {}
+
+	@Override
+	public void handleDelete() {}
+
+	@Override
+	public void handleCancel() {
+	}
+
+}

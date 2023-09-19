@@ -1,0 +1,62 @@
+package test.input;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.sql.Timestamp;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+import model.tree.TreeElement.Column;
+import view.input.Input;
+import view.input.InputFactory;
+
+class TestInputFields {
+
+	@Test
+	void shouldThrowArgExceptionIfNonexistentType() {
+		Column column = new Column(null, null, false, false, null, null, "EEEEEEE", 0, 0);
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			InputFactory.createInput(column);
+			});
+	}
+	
+	@Test
+	void shouldSetStringValue() {
+		Column column = new Column("String", null, false, false, null, null, "java.lang.String", 3, 0);
+		Input textInput = InputFactory.createInput(column);
+		
+		textInput.setValue("123");
+		assertEquals("123", textInput.getValue());
+	}
+	
+	@Test
+	void shouldSetNullValueOnTextInput() {
+		Column column = new Column("String", null, false, false, null, null, "java.lang.String", 3, 0);
+		Input textInput = InputFactory.createInput(column);
+		
+		textInput.setValue(null);
+		assertEquals(null, textInput.getValue());
+	}
+	
+	@Test
+	void shouldSetBooleanValue() {
+		Column column = new Column("Boolean", null, false, false, null, null, "boolean", 1, 0);
+		Input boolInput = InputFactory.createInput(column);
+		
+		boolInput.setValue(true);
+		assertEquals(true, boolInput.getValue());
+	}
+	
+	@Test
+	void shouldSetDatetimeValue() {
+		Column column = new Column("Datetime", null, false, false, null, null, "java.sql.Timestamp", 0, 0);
+		Input dateTimeInput = InputFactory.createInput(column);
+		
+		Timestamp time = new Timestamp(100000);
+		
+		dateTimeInput.setValue(time);
+		assertEquals(time, dateTimeInput.getValue());
+	}
+
+}

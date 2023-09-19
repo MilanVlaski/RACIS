@@ -1,0 +1,26 @@
+package model.table;
+
+public class TableColumnModel {
+	private String columnName;
+	private String dbColumnName;
+	private boolean isPk;	
+
+	public TableColumnModel(String columnName, String dbColumnName, boolean isPk) {
+		super();
+		this.columnName = columnName;
+		this.dbColumnName = dbColumnName;
+		this.isPk = isPk;
+	}
+
+	public String getColumnName() {
+		return columnName;
+	}
+
+	public String getDbColumnName() {
+		return dbColumnName;
+	}
+
+	public boolean isPk() {
+		return isPk;
+	}
+}

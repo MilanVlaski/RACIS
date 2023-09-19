@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database name="AGENCIJA"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <connection database_type="MsSQL_JDBC" address="78.28.157.8" port="1435" database="PIS2022"
+        username="EtfPIS2022G2" password="EtfPIS2022G22918" />
+    <package name="Rezervacije">
+	    <table name="Sve rezervacije"></table>
+	    <table name="Aktuelne rezervacije"></table>
+	    <table name="Istorijske rezervacije"></table>
+    </package>
+    <package name="Vozila">
+    	<table name="Sva vozila"></table>
+    	<table name="Dostupna vozila"></table>
+    	<table name="Trenutno iznajmljena vozila"></table>
+    	<table name="Oštećena vozila"></table>
+    </package>
+</database>

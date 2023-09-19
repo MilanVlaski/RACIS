@@ -1,0 +1,72 @@
+package view.table;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.table.TableModel;
+
+import view.statusbar.StatusBar;
+
+public class Creation implements EditorState {
+
+	private TablePanel context;
+	private String status;
+	
+	public Creation(TablePanel context) {
+		this.context = context;
+		context.getChangeBtn().setEnabled(false);
+		context.getDeleteBtn().setEnabled(false);
+		context.getCancelBtn().setEnabled(true);
+	}
+	
+	@Override
+	public void handleSelectionChanged(ListSelectionEvent e) {
+		if (e.getValueIsAdjusting()) {
+			return;
+		}
+		TableModel model = context.getTable().getModel();
+
+		ListSelectionModel lsm = (ListSelectionModel) e.getSource();
+		if (!lsm.isSelectionEmpty()) {
+			int selectedRow = lsm.getMinSelectionIndex();
+			List<Object> row = new ArrayList<>();
+			for (int i = 0; i < model.getColumnCount(); i++) {
+				row.add(model.getValueAt(selectedRow, i));
+			}
+			
+			context.getInputPanel().fillFields(row);
+			context.getInputPanel().disablePKeyFields();
+			
+			context.setEditorState(new Selection(context));
+			
+		}
+	}
+
+	@Override
+	public void handleCreate() {
+		context.getInputPanel().clearFields();
+	}
+
+	@Override
+	public void handleChange() {}
+
+	@Override
+	public void handleDelete() {}
+
+	@Override
+	public void handleCancel() {
+		this.context.getInputPanel().setVisible(false);
+		this.context.getInputPanel().clearFields();
+		
+		context.setEditorState(new Idle(context));
+	}
+
+	@Override
+	public void updateStatusMessage(StatusBar statusBar) {
+		statusBar.setStatusMessage("Create item");
+		
+	}
+
+}

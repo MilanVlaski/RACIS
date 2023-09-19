@@ -1,0 +1,48 @@
+package view.tree;
+
+import java.awt.event.MouseListener;
+import java.security.Timestamp;
+import java.time.LocalDateTime;
+import java.util.EventListener;
+
+import javax.swing.JScrollPane;
+import javax.swing.JTree;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.TreeSelectionModel;
+
+import controller.tree.TreeListener;
+import model.ApplicationModel;
+import model.tree.CustomTreeModel;
+import model.xmlparser.ParallelXMLParser;
+import model.xmlparser.XMLTreeParser;
+import view.table.MainTableView;
+public class MainTree extends JScrollPane
+{
+
+	private static final long serialVersionUID = 1L;
+	ApplicationModel appModel;
+	
+	public MainTree(ApplicationModel appModel)
+	{
+		
+		CustomTreeModel customTreeModel = new CustomTreeModel(null);
+		
+		customTreeModel.initializeFromXml(appModel.getXmlParser());
+		
+		JTree tree = new JTree(customTreeModel);
+		
+		tree.setRootVisible(false);
+
+		tree.getSelectionModel().setSelectionMode (TreeSelectionModel.SINGLE_TREE_SELECTION);
+		
+		EventListener el = new TreeListener(appModel);
+		
+		tree.addTreeSelectionListener((TreeSelectionListener) el);
+		tree.addMouseListener((MouseListener) el);
+		
+		tree.setCellRenderer(new CustomTreeCellRenderer());
+	
+		setViewportView(tree);
+	}
+	
+}

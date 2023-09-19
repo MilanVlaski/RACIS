@@ -1,0 +1,27 @@
+package model;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import db.manipulation.*;
+public class Login {
+	
+	public boolean isUserPresent(Connection connection ,String userName, String Password) throws SQLException {
+
+        CallableStatement cs = connection.prepareCall("{call st_LogIn(?,?)}");
+        cs.setString(1, userName);
+        cs.setString(2, Password);
+
+        int pid=-1;
+        ResultSet rs = cs.executeQuery();
+        while (rs.next()) {
+             pid = rs.getInt(1);
+        }
+
+        return pid>0;
+
+    }
+
+}

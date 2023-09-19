@@ -1,0 +1,9 @@
+package view.table;
+
+public interface EditorState {
+	void handleSelectionChanged();
+	void handleCreate();
+	void handleChange();
+	void handleDelete();
+	void handleCancel();
+}

@@ -1,0 +1,130 @@
+package view.input;
+
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+import model.ApplicationModel;
+import model.Publisher;
+import model.table.GeneralTableModel;
+import model.tree.TreeElement.Column;
+import view.Colors;
+import view.Subscriber;
+import view.table.CustomCellRenderer;
+/**
+ * Kontejner za Input polja.
+ * @author Milan Vlaski
+ *
+ */
+public class InputPanel extends JPanel implements Subscriber{
+	
+	private List<Input> inputs = new ArrayList<>();
+
+	public InputPanel() {
+		setLayout(new FlowLayout(FlowLayout.LEFT));
+		setBackground(Colors.DARK_BACKGROUND);
+		setPreferredSize(new Dimension(0, 500));
+		
+		JButton okBtn = new JButton("OK");
+		okBtn.addActionListener((e) -> {
+			if(inputsValid()) {
+				// submit...
+			} else {
+				JOptionPane.showMessageDialog(null, "Niste unijeli: " + mandatoryEmptyInputNames() + ".",
+				"Nepotpun unos", JOptionPane.WARNING_MESSAGE);
+			}
+		});
+		
+		add(okBtn);
+		
+		setVisible(false);
+	}
+	
+
+	public void setFields(List<Column> columns) {
+
+		for (Input input : inputs) {
+			remove((Component) input);
+		}
+		inputs.clear();
+		
+		for (Column column : columns) {
+			Input input = InputFactory.createInput(column);
+			inputs.add(input);
+			add((Component)input);
+		}
+		revalidate();
+		repaint();
+	}
+	
+	public void fillFields(List<Object> row) {
+		for (int i = 0; i < row.size(); i++) {
+			inputs.get(i).setValue(row.get(i));
+		}
+	}
+
+	public void clearFields() {
+		for (Input input : inputs) {
+			input.setValue(null);
+		}
+	}
+	
+	public void enableAllFields() {
+		for (Input input : inputs) {
+			input.setEnabled(true);
+		}
+	}
+	
+	public void disablePKeyFields() {
+		for (Input input : inputs) {
+			if(input.isPrimary()) {
+				input.setEnabled(false);
+			}
+		}
+	}
+	
+	public boolean inputsValid() {
+		for (Input input : inputs) {
+			if(input.getValue() == null && !input.isNullable()) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public String mandatoryEmptyInputNames() {
+		String string = "";
+		
+		for (Input input : inputs) {
+			if(input.getValue() == null && !input.isNullable()) {
+				string += input.getName() + ", ";
+			}
+		}
+		
+		String result = string.substring(0, string.length() - 2);
+		return result;
+	}
+	
+	@Override
+	public void update(Publisher context) {
+		GeneralTableModel tableModel = ((ApplicationModel) context).getMainTableModel();
+//		if(!(tableModel == null)) {			
+			setFields(tableModel.getColumns());
+//		} else {
+//			removeAll();
+//			inputs.clear();
+//		}
+	}
+	
+	public List<Input> getInputs() {
+		return inputs;
+	}
+}

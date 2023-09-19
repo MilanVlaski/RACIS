@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="schema.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    name="Rent a vehicle">
+    <connection address="78.28.157.8" database="PIS2022"
+        database_type="MsSQL_JDBC" password="EtfPIS2022G22918" port="1435"
+        schema="pisg2" username="EtfPIS2022G2" />
+    <package name="Vozila">
+        <table name="Sva vozila" code="Sva vozila">
+            <crud>
+                <create />
+                <retrieve>{call st_GetAllVozila()}</retrieve>
+                <update />
+                <delete />
+            </crud>
+        </table>
+        <table name="Drumska vozila" code="Drumska vozila">
+            <crud>
+                <create />
+                <retrieve>{call pisg2.st_GetAllDrumskaVozila()}</retrieve>
+                <update />
+                <delete />
+            </crud>
+            <column name="Broj" code="Broj vozila"
+                nullable="false" primary="true">
+                <refcolumn>Broj vozila</refcolumn>
+                <reftable>Vozilo</reftable>
+            </column>
+            <column name="Broj šasije" code="Broj sasije"
+                nullable="false" primary="true"> </column>
+            <column name="Marka" code="Marka"
+                nullable="true" primary="false"> </column>
+            <column name="Model" code="Model"
+                nullable="true" primary="false"> </column>
+            <column name="Boja" code="Boja"
+                nullable="true" primary="false"> </column>
+            <column name="Manuelni" code="Manuelni"
+                nullable="true" primary="false"> </column>
+            <column name="Klasa" code="Klasa"
+                nullable="false" primary="false">
+                <refcolumn>Naziv</refcolumn>
+                <reftable>Klasa</reftable>
+            </column>
+            <column name="Tip" code="Tip"
+                nullable="false" primary="false">
+                <refcolumn>Naziv</refcolumn>
+                <reftable>Tip motornog vozila</reftable>
+            </column>
+            <column name="Broj vrata" code="Broj vrata"
+                nullable="true" primary="false"> </column>
+            <column name="Kilometraža" code="Kilometraza"
+                nullable="true" primary="false"> </column>
+            <column name="Broj motora" code="Broj motora"
+                nullable="true" primary="false"> </column>
+            <column name="Zapremina motora" code="Zapremina motora"
+                nullable="true" primary="false"> </column>
+            <column name="Snaga (kW)" code="Snaga u kW"
+                nullable="true" primary="false"> </column>
+            <column name="Masa" code="Masa"
+                nullable="true" primary="false"> </column>
+            <column name="Nosivost" code="Ukupna nosivost"
+                nullable="true" primary="false"> </column>
+            <column name="Zapremina rezervoara" code="Zapremina rezervoara"
+                nullable="true" primary="false"> </column>
+        </table>
+        <table name="Plovila" code="Plovila">
+            <crud>
+                <create />
+                <retrieve>{call pisg2.st_GetAllPlovila()}</retrieve>
+                <update />
+                <delete />
+            </crud>
+        </table>
+        <table name="Prikolice" code="Prikolice">
+            <crud>
+                <create />
+                <retrieve>{call pisg2.st_GetAllPrikolice()}</retrieve>
+                <update />
+                <delete />
+            </crud>
+        </table>
+    </package>
+    <package name="Rezervacije">
+        <package name="Aktuelne rezervacije">
+            <table name="Drumska vozila" code="Drumska vozila">
+                <crud>
+                    <create />
+                    <retrieve>{call pisg2.st_GetAllAktuelneRezervacijeDrumskaVozila()}</retrieve>
+                    <update />
+                    <delete />
+                </crud>
+            </table>
+            <table name="Plovila" code="Plovila">
+                <crud>
+                    <create />
+                    <retrieve>{call pisg2.st_GetAllAktuelneRezervacijePlovila()}</retrieve>
+                    <update />
+                    <delete />
+                </crud>
+            </table>
+            <table name="Prikolice" code="Prikolice">
+                <crud>
+                    <create />
+                    <retrieve></retrieve>
+                    <update />
+                    <delete />
+                </crud>
+            </table>
+        </package>
+        <package name="Istorijske rezervacije">
+            <table name="Drumska vozila" code="Drumska vozila">
+                <crud>
+                    <create />
+                    <retrieve>{call pisg2.st_GetAllIstorijskeRezervacijeDrumskaVozila()}</retrieve>
+                    <update />
+                    <delete />
+                </crud>
+            </table>
+            <table name="Plovila" code="Plovila">
+                <crud>
+                    <create />
+                    <retrieve>{call pisg2.st_GetAllIstorijskeRezervacijePlovila()}</retrieve>
+                    <update />
+                    <delete />
+                </crud>
+            </table>
+            <table name="Prikolice" code="Prikolice">
+                <crud>
+                    <create />
+                    <retrieve></retrieve>
+                    <update />
+                    <delete />
+                </crud>
+            </table>
+        </package>
+        <package name="Sve rezervacije">
+            <table name="Drumska vozila" code="Drumska vozila">
+                <crud>
+                    <create />
+                    <retrieve>{call pisg2.st_GetAllRezervacijeDrumskaVozila()}</retrieve>
+                    <update />
+                    <delete />
+                </crud>
+            </table>
+            <table name="Plovila" code="Plovila">
+                <crud>
+                    <create />
+                    <retrieve>{call pisg2.st_GetAllRezervacijePlovila()}</retrieve>
+                    <update />
+                    <delete />
+                </crud>
+            </table>
+        </package>
+    </package>
+    <package name="Inventar">
+        <table name="Citav inventar" code="Citav inventar">
+            <crud>
+                <create />
+                <retrieve>{call pisg2.st_GetInventarAgencije()}</retrieve>
+                <update />
+                <delete />
+            </crud>
+        </table>
+        <table name="Vidi tipove inventara" code="Vidi tipove inventara">
+            <crud>
+                <create />
+                <retrieve>{call pisg2.st_GetTipoviInventara()}</retrieve>
+                <update />
+                <delete />
+            </crud>
+        </table>
+    </package>
+    <package name="Radnici">
+        <table name="Svi radnici" code="Svi radnici">
+            <crud>
+                <create />
+                <retrieve>{call pisg2.st_GetRadnaMjesta()}</retrieve>
+                <update />
+                <delete />
+            </crud>
+        </table>
+    </package>
+</database>

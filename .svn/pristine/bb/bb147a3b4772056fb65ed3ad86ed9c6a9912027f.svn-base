@@ -1,0 +1,660 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema" name="Rent a vehicle">
+    <connection address="78.28.157.8" database="PIS2022" database_type="MsSQL_JDBC" password="EtfPIS2022G22918" port="1435" schema="pisg2" username="EtfPIS2022G2" />
+    <package name="Vozila">
+        <table name="Sva vozila" code="Sva vozila">
+            <crud>
+                <create />
+                <retrieve>{call st_GetAllVozila()}</retrieve>
+                <update />
+                <delete />
+            </crud>
+        </table>
+        <table name="Drumska vozila" code="Drumska vozila">
+            <crud>
+                <create>{call pisg2.st_InsertVoziloInDrumska()}</create>
+                <retrieve>{call pisg2.st_GetAllDrumskaVozila()}</retrieve>
+                <update>{call pisg2.st_UpdateVoziloInDrumskaVozila()}</update>
+                <delete>{call pisg2.st_DeleteDrumskoVozilo()}</delete>
+            </crud>
+            <column name="Broj" code="Broj vozila" nullable="false" primary="true">
+                <refcolumn>Broj vozila</refcolumn>
+                <reftable>Vozilo</reftable>
+            </column>
+            <column name="Broj šasije" code="Broj sasije" nullable="false" primary="true"></column>
+            <column name="Marka" code="Marka" nullable="true" primary="false"></column>
+            <column name="Model" code="Model" nullable="true" primary="false"></column>
+            <column name="Boja" code="Boja" nullable="true" primary="false"></column>
+            <column name="Manuelni" code="Manuelni" nullable="true" primary="false"></column>
+            <column name="Klasa" code="Klasa" nullable="false" primary="false">
+                <refcolumn>Naziv</refcolumn>
+                <reftable>Klasa</reftable>
+            </column>
+            <column name="Tip" code="Tip" nullable="false" primary="false">
+                <refcolumn>Naziv</refcolumn>
+                <reftable>Tip motornog vozila</reftable>
+            </column>
+            <column name="Broj vrata" code="Broj vrata" nullable="true" primary="false"></column>
+            <column name="Kilometraža" code="Kilometraza" nullable="true" primary="false"></column>
+            <column name="Broj motora" code="Broj motora" nullable="true" primary="false"></column>
+            <column name="Zapremina motora" code="Zapremina motora" nullable="true" primary="false"></column>
+            <column name="Snaga (kW)" code="Snaga u kW" nullable="true" primary="false"></column>
+            <column name="Masa" code="Masa" nullable="true" primary="false"></column>
+            <column name="Nosivost" code="Ukupna nosivost" nullable="true" primary="false"></column>
+            <column name="Zapremina rezervoara" code="Zapremina rezervoara" nullable="true" primary="false"></column>
+        </table>
+        <table name="Plovila" code="Plovila">
+            <crud>
+                <create>{call pisg2.st_InsertVoziloInPlovilo()}</create>
+                <retrieve>{call pisg2.st_GetAllPlovila()}</retrieve>
+                <update>{call pisg2.st_UpdatePlovnoVozilo()}</update>
+                <delete>{call pisg2.st_DeletePlovnoVozilo()}</delete>
+            </crud>
+            <column name="Broj" code="Broj vozila" nullable="false" primary="true">
+                <refcolumn>Broj vozila</refcolumn>
+                <reftable>Vozilo</reftable>
+            </column>
+            <column name="Oznaka" code="Oznaka" nullable="false" primary="true"></column>
+            <column name="Pogon" code="Pogon" nullable="false" primary="false"></column>
+            <column name="Model" code="Model" nullable="false" primary="false"></column>
+            <column name="Marka" code="Marka" nullable="false" primary="false"></column>
+            <column name="Boja" code="Boja" nullable="true" primary="false"></column>
+            <column name="Stanje rezervoara" code="Stanje rezervoara" nullable="true" primary="false"></column>
+            <column name="Radni sati" code="Radni sati" nullable="true" primary="false"></column>
+            <column name="Deplasman" code="Deplasman" nullable="true" primary="false"></column>
+            <column name="Gaz" code="Gaz" nullable="true" primary="false"></column>
+            <column name="Broj putnika" code="Broj putnika" nullable="true" primary="false"></column>
+            <column name="Maksimalna brzina" code="Maksimalna brzina" nullable="true" primary="false"></column>
+            <column name="Duzina" code="Duzina" nullable="true" primary="false"></column>
+            <column name="Posada" code="Posada" nullable="true" primary="false"></column>
+            <column name="Broj brodskog svjedočanstva" code="Broj brodskog svjedocanstva" nullable="true" primary="false"></column>
+            <column name="Tip" code="Tip" nullable="false" primary="false">
+                <refcolumn>Naziv</refcolumn>
+                <reftable>Tip plovnog vozila</reftable>
+            </column>
+        </table>
+        <table name="Prikolice" code="Prikolice">
+            <crud>
+                <create>{call pisg2.st_InsertVoziloInPrikolice()}</create>
+                <retrieve>{call pisg2.st_GetAllPrikolice()}</retrieve>
+                <update>{call pisg2.st_UpdatePrikolica()}</update>
+                <delete>{call pisg2.st_DeletePrikolica()}</delete>
+            </crud>
+            <column name="Broj" code="Broj vozila" nullable="false" primary="true">
+                <refcolumn>Broj vozila</refcolumn>
+                <reftable>Vozilo</reftable>
+            </column>
+            <column name="Oznaka" code="Oznaka" nullable="false" primary="true"></column>
+            <column name="Tip" code="Tip" nullable="false" primary="false">
+                <refcolumn>Naziv</refcolumn>
+                <reftable>Tip prikolice</reftable>
+            </column>
+            <column name="Naziv" code="Naziv" nullable="false" primary="false"></column>
+            <column name="Masa" code="Masa" nullable="true" primary="false"></column>
+            <column name="Ukupna nosivost" code="Ukupna nosivost" nullable="true" primary="false"></column>
+            <column name="Broj osovina" code="Broja osovina" nullable="true" primary="false"></column>
+            <column name="Broj točkova" code="Broja tockova" nullable="true" primary="false"></column>
+            <column name="Dimenzije" code="Dimenzije" nullable="true" primary="false"></column>
+            <column name="Napomena" code="Napomena" nullable="true" primary="false"></column>
+        </table>
+    </package>
+    <package name="Rezervacije">
+        <package name="Aktuelne rezervacije">
+            <table name="Drumska vozila" code="Drumska vozila">
+                <crud>
+                    <create />
+                    <retrieve>{call pisg2.st_GetAllAktuelneRezervacijeDrumskaVozila()}</retrieve>
+                    <update />
+                    <delete />
+                </crud>
+                <column name="Status vozila" code="Status vozila" nullable="false" primary="false">
+                    <refcolumn>Naziv</refcolumn>
+                    <reftable>Status vozila</reftable>
+                </column>
+                <column name="Datum i vrijeme preuzimanja" code="Vrijeme preuzimanja" nullable="true" primary="false">
+                </column>
+                <column name="Datum i vrijeme povratka" code="Vrijeme povratka" nullable="true" primary="false">
+                </column>
+                <column name="Status rezervacije" code="Status rezervacije" nullable="false" primary="false">
+                    <refcolumn>Naziv</refcolumn>
+                    <reftable>Status rezervacije</reftable>
+                </column>
+                <column name="Marka" code="Marka" nullable="true" primary="false">
+                    <refcolumn>Marka</refcolumn>
+                    <reftable>Vozilo drumskog saobracaja</reftable>
+                </column>
+                <column name="Model" code="Model" nullable="true" primary="false">
+                    <refcolumn>Model</refcolumn>
+                    <reftable>Vozilo drumskog saobracaja</reftable>
+                </column>
+                <column name="Ime klijenta" code="Ime" nullable="false" primary="false">
+                    <refcolumn>Ime</refcolumn>
+                    <reftable>Klijent</reftable>
+                </column>
+                <column name="Stanje brojila prije" code="Stanje brojila prije" nullable="true" primary="false">
+                </column>
+                <column name="Stanje rezervoara prije" code="Stanje rezervoara prije" nullable="true" primary="false">
+                </column>
+                <column name="Opšta zapažanja" code="Opsta zapazanja" nullable="true" primary="false">
+                </column>
+            </table>
+            <table name="Plovila" code="Plovila">
+                <crud>
+                    <create />
+                    <retrieve>{call pisg2.st_GetAllAktuelneRezervacijePlovila()}</retrieve>
+                    <update />
+                    <delete />
+                </crud>
+                <column name="Status vozila" code="Status vozila" nullable="false" primary="false">
+                    <refcolumn>Naziv</refcolumn>
+                    <reftable>Status vozila</reftable>
+                </column>
+                <column name="Datum i vrijeme preuzimanja" code="Vrijeme preuzimanja" nullable="true" primary="false">
+                </column>
+                <column name="Datum i vrijeme povratka" code="Vrijeme povratka" nullable="true" primary="false">
+                </column>
+                <column name="Status rezervacije" code="Status rezervacije" nullable="false" primary="false">
+                    <refcolumn>Naziv</refcolumn>
+                    <reftable>Status rezervacije</reftable>
+                </column>
+                <column name="Marka" code="Marka" nullable="true" primary="false">
+                    <refcolumn>Marka</refcolumn>
+                    <reftable>Plovno vozilo</reftable>
+                </column>
+                <column name="Model" code="Model" nullable="true" primary="false">
+                    <refcolumn>Model</refcolumn>
+                    <reftable>Plovno vozilo</reftable>
+                </column>
+                <column name="Ime klijenta" code="Ime" nullable="false" primary="false">
+                    <refcolumn>Ime</refcolumn>
+                    <reftable>Klijent</reftable>
+                </column>
+                <column name="Stanje brojila prije" code="Stanje brojila prije" nullable="true" primary="false">
+                </column>
+                <column name="Stanje rezervoara prije" code="Stanje rezervoara prije" nullable="true" primary="false">
+                </column>
+                <column name="Opšta zapažanja" code="Opsta zapazanja" nullable="true" primary="false">
+                </column>
+            </table>
+            <table name="Prikolice" code="Prikolice">
+                <crud>
+                    <create />
+                    <retrieve>{call pisg2.st_GetAllAktuelneRezervacijePrikolica()}</retrieve>
+                    <update />
+                    <delete />
+                </crud>
+                <column name="Status vozila" code="Status vozila" nullable="false" primary="false">
+                    <refcolumn>Naziv</refcolumn>
+                    <reftable>Status vozila</reftable>
+                </column>
+                <column name="Datum i vrijeme preuzimanja" code="Vrijeme preuzimanja" nullable="true" primary="false">
+                </column>
+                <column name="Datum i vrijeme povratka" code="Vrijeme povratka" nullable="true" primary="false">
+                </column>
+                <column name="Status rezervacije" code="Status rezervacije" nullable="false" primary="false">
+                    <refcolumn>Naziv</refcolumn>
+                    <reftable>Status rezervacije</reftable>
+                </column>
+                <column name="Naziv" code="Naziv" nullable="true" primary="false">
+                    <refcolumn>Naziv</refcolumn>
+                    <reftable>Prikolica</reftable>
+                </column>
+                <column name="Ime klijenta" code="Ime" nullable="false" primary="false">
+                    <refcolumn>Ime</refcolumn>
+                    <reftable>Klijent</reftable>
+                </column>
+                <column name="Stanje brojila prije" code="Stanje brojila prije" nullable="true" primary="false">
+                </column>
+                <column name="Stanje rezervoara prije" code="Stanje rezervoara prije" nullable="true" primary="false">
+                </column>
+                <column name="Opšta zapažanja" code="Opsta zapazanja" nullable="true" primary="false">
+                </column>
+            </table>
+        </package>
+        <package name="Istorijske rezervacije">
+            <table name="Drumska vozila" code="Drumska vozila">
+                <crud>
+                    <create />
+                    <retrieve>{call pisg2.st_GetAllIstorijskeRezervacijeDrumskaVozila()}</retrieve>
+                    <update />
+                    <delete />
+                </crud>
+                <column name="Datum i vrijeme preuzimanja" code="Vrijeme preuzimanja" nullable="false" primary="false">
+                </column>
+                <column name="Datum i vrijeme povratka" code="Vrijeme povratka" nullable="false" primary="false">
+                </column>
+                <column name="Datum i vrijeme povratka" code="Vrijeme povratka" nullable="false" primary="false">
+                    <refcolumn>Ime</refcolumn>
+                    <reftable>Klijent</reftable>
+                </column>
+                <column name="Status vozila" code="Status vozila" nullable="false" primary="false">
+                    <refcolumn>Naziv</refcolumn>
+                    <reftable>Status vozila</reftable>
+                </column>
+                <column name="Status rezervacije" code="Status rezervacije" nullable="false" primary="false">
+                    <refcolumn>Naziv</refcolumn>
+                    <reftable>Status rezervacije</reftable>
+                </column>
+                <column name="Marka" code="Marka" nullable="true" primary="false">
+                    <refcolumn>Marka</refcolumn>
+                    <reftable>Vozilo drumskog saobracaja</reftable>
+                </column>
+                <column name="Model" code="Model" nullable="true" primary="false">
+                    <refcolumn>Model</refcolumn>
+                    <reftable>Vozilo drumskog saobracaja</reftable>
+                </column>
+                <column name="Stanje brojila prije" code="Stanje brojila prije" nullable="true" primary="false">
+                </column>
+                <column name="Stanje rezervoara prije" code="Stanje rezervoara prije" nullable="true" primary="false">
+                </column>
+                <column name="Stanje brojila poslije" code="Stanje brojila poslije" nullable="true" primary="false">
+                </column>
+                <column name="Stanje rezervoara poslije" code="Stanje rezervoara poslije" nullable="true" primary="false">
+                </column>
+                <column name="Opšta zapažanja" code="Opsta zapazanja" nullable="true" primary="false">
+                </column>
+                <column name="Ime klijenta" code="Ime" nullable="false" primary="false">
+                    <refcolumn>Ime</refcolumn>
+                    <reftable>Klijent</reftable>
+                </column>
+            </table>
+            <table name="Plovila" code="Plovila">
+                <crud>
+                    <create />
+                    <retrieve>{call pisg2.st_GetAllIstorijskeRezervacijePlovila()}</retrieve>
+                    <update />
+                    <delete />
+                </crud>
+                <column name="Datum i vrijeme preuzimanja" code="Vrijeme preuzimanja" nullable="false" primary="false">
+                </column>
+                <column name="Datum i vrijeme povratka" code="Vrijeme povratka" nullable="false" primary="false">
+                </column>
+                <column name="Datum i vrijeme povratka" code="Vrijeme povratka" nullable="false" primary="false">
+                    <refcolumn>Ime</refcolumn>
+                    <reftable>Klijent</reftable>
+                </column>
+                <column name="Status vozila" code="Status vozila" nullable="false" primary="false">
+                    <refcolumn>Naziv</refcolumn>
+                    <reftable>Status vozila</reftable>
+                </column>
+                <column name="Status rezervacije" code="Status rezervacije" nullable="false" primary="false">
+                    <refcolumn>Naziv</refcolumn>
+                    <reftable>Status rezervacije</reftable>
+                </column>
+                <column name="Marka" code="Marka" nullable="true" primary="false">
+                    <refcolumn>Marka</refcolumn>
+                    <reftable>Plovno vozilo</reftable>
+                </column>
+                <column name="Model" code="Model" nullable="true" primary="false">
+                    <refcolumn>Model</refcolumn>
+                    <reftable>Plovno vozilo</reftable>
+                </column>
+                <column name="Stanje brojila prije" code="Stanje brojila prije" nullable="true" primary="false">
+                </column>
+                <column name="Stanje rezervoara prije" code="Stanje rezervoara prije" nullable="true" primary="false">
+                </column>
+                <column name="Stanje brojila poslije" code="Stanje brojila poslije" nullable="true" primary="false">
+                </column>
+                <column name="Stanje rezervoara poslije" code="Stanje rezervoara poslije" nullable="true" primary="false">
+                </column>
+                <column name="Opšta zapažanja" code="Opsta zapazanja" nullable="true" primary="false">
+                </column>
+                <column name="Ime klijenta" code="Ime" nullable="false" primary="false">
+                    <refcolumn>Ime</refcolumn>
+                    <reftable>Klijent</reftable>
+                </column>
+            </table>
+            <table name="Prikolice" code="Prikolice">
+                <crud>
+                    <create />
+                    <retrieve>{call pisg2.st_GetAllIstorijskeRezervacijePrikolica() }</retrieve>
+                    <update />
+                    <delete />
+                </crud>
+                <column name="Datum i vrijeme preuzimanja" code="Vrijeme preuzimanja" nullable="false" primary="false">
+                </column>
+                <column name="Datum i vrijeme povratka" code="Vrijeme povratka" nullable="false" primary="false">
+                </column>
+                <column name="Datum i vrijeme povratka" code="Vrijeme povratka" nullable="false" primary="false">
+                    <refcolumn>Ime</refcolumn>
+                    <reftable>Klijent</reftable>
+                </column>
+                <column name="Status vozila" code="Status vozila" nullable="false" primary="false">
+                    <refcolumn>Naziv</refcolumn>
+                    <reftable>Status vozila</reftable>
+                </column>
+                <column name="Status rezervacije" code="Status rezervacije" nullable="false" primary="false">
+                    <refcolumn>Naziv</refcolumn>
+                    <reftable>Status rezervacije</reftable>
+                </column>
+                <column name="Naziv" code="Naziv" nullable="true" primary="false">
+                    <refcolumn>Naziv</refcolumn>
+                    <reftable>Prikolica</reftable>
+                </column>
+                <column name="Stanje brojila prije" code="Stanje brojila prije" nullable="true" primary="false">
+                </column>
+                <column name="Stanje rezervoara prije" code="Stanje rezervoara prije" nullable="true" primary="false">
+                </column>
+                <column name="Stanje brojila poslije" code="Stanje brojila poslije" nullable="true" primary="false">
+                </column>
+                <column name="Stanje rezervoara poslije" code="Stanje rezervoara poslije" nullable="true" primary="false">
+                </column>
+                <column name="Opšta zapažanja" code="Opsta zapazanja" nullable="true" primary="false">
+                </column>
+                <column name="Ime klijenta" code="Ime" nullable="false" primary="false">
+                    <refcolumn>Ime</refcolumn>
+                    <reftable>Klijent</reftable>
+                </column>
+            </table>
+        </package>
+        <package name="Sve rezervacije">
+            <table name="Drumska vozila" code="Drumska vozila">
+                <crud>
+                    <create />
+                    <retrieve>{call pisg2.st_GetAllRezervacijeDrumskaVozila()}</retrieve>
+                    <update />
+                    <delete />
+                </crud>
+                <column name="Datum i vrijeme preuzimanja" code="Vrijeme preuzimanja" nullable="false" primary="false">
+                </column>
+                <column name="Datum i vrijeme povratka" code="Vrijeme povratka" nullable="false" primary="false">
+                </column>
+                <column name="Datum i vrijeme povratka" code="Vrijeme povratka" nullable="false" primary="false">
+                    <refcolumn>Ime</refcolumn>
+                    <reftable>Klijent</reftable>
+                </column>
+                <column name="Status vozila" code="Status vozila" nullable="false" primary="false">
+                    <refcolumn>Naziv</refcolumn>
+                    <reftable>Status vozila</reftable>
+                </column>
+                <column name="Status rezervacije" code="Status rezervacije" nullable="false" primary="false">
+                    <refcolumn>Naziv</refcolumn>
+                    <reftable>Status rezervacije</reftable>
+                </column>
+                <column name="Marka" code="Marka" nullable="true" primary="false">
+                    <refcolumn>Marka</refcolumn>
+                    <reftable>Vozilo drumskog saobracaja</reftable>
+                </column>
+                <column name="Model" code="Model" nullable="true" primary="false">
+                    <refcolumn>Model</refcolumn>
+                    <reftable>Vozilo drumskog saobracaja</reftable>
+                </column>
+                <column name="Stanje brojila prije" code="Stanje brojila prije" nullable="true" primary="false">
+                </column>
+                <column name="Stanje rezervoara prije" code="Stanje rezervoara prije" nullable="true" primary="false">
+                </column>
+                <column name="Stanje brojila poslije" code="Stanje brojila poslije" nullable="true" primary="false">
+                </column>
+                <column name="Stanje rezervoara poslije" code="Stanje rezervoara poslije" nullable="true" primary="false">
+                </column>
+                <column name="Opšta zapažanja" code="Opsta zapazanja" nullable="true" primary="false">
+                </column>
+                <column name="Ime klijenta" code="Ime" nullable="false" primary="false">
+                    <refcolumn>Ime</refcolumn>
+                    <reftable>Klijent</reftable>
+                </column>
+            </table>
+            <table name="Plovila" code="Plovila">
+                <crud>
+                    <create />
+                    <retrieve>{call pisg2.st_GetAllRezervacijePlovila()}</retrieve>
+                    <update />
+                    <delete />
+                </crud>
+                <column name="Datum i vrijeme preuzimanja" code="Vrijeme preuzimanja" nullable="false" primary="false">
+                </column>
+                <column name="Datum i vrijeme povratka" code="Vrijeme povratka" nullable="false" primary="false">
+                </column>
+                <column name="Datum i vrijeme povratka" code="Vrijeme povratka" nullable="false" primary="false">
+                    <refcolumn>Ime</refcolumn>
+                    <reftable>Klijent</reftable>
+                </column>
+                <column name="Status vozila" code="Status vozila" nullable="false" primary="false">
+                    <refcolumn>Naziv</refcolumn>
+                    <reftable>Status vozila</reftable>
+                </column>
+                <column name="Status rezervacije" code="Status rezervacije" nullable="false" primary="false">
+                    <refcolumn>Naziv</refcolumn>
+                    <reftable>Status rezervacije</reftable>
+                </column>
+                <column name="Marka" code="Marka" nullable="true" primary="false">
+                    <refcolumn>Marka</refcolumn>
+                    <reftable>Plovno vozilo</reftable>
+                </column>
+                <column name="Model" code="Model" nullable="true" primary="false">
+                    <refcolumn>Model</refcolumn>
+                    <reftable>Plovno vozilo</reftable>
+                </column>
+                <column name="Stanje brojila prije" code="Stanje brojila prije" nullable="true" primary="false">
+                </column>
+                <column name="Stanje rezervoara prije" code="Stanje rezervoara prije" nullable="true" primary="false">
+                </column>
+                <column name="Stanje brojila poslije" code="Stanje brojila poslije" nullable="true" primary="false">
+                </column>
+                <column name="Stanje rezervoara poslije" code="Stanje rezervoara poslije" nullable="true" primary="false">
+                </column>
+                <column name="Opšta zapažanja" code="Opsta zapazanja" nullable="true" primary="false">
+                </column>
+                <column name="Ime klijenta" code="Ime" nullable="false" primary="false">
+                    <refcolumn>Ime</refcolumn>
+                    <reftable>Klijent</reftable>
+                </column>
+            </table>
+            <table name="Prikolice" code="Prikolice">
+                <crud>
+                    <create />
+                    <retrieve>{call pisg2.st_GetAllRezervacijePrikolica}</retrieve>
+                    <update />
+                    <delete />
+                </crud>
+                <column name="Datum i vrijeme preuzimanja" code="Vrijeme preuzimanja" nullable="false" primary="false">
+                </column>
+                <column name="Datum i vrijeme povratka" code="Vrijeme povratka" nullable="false" primary="false">
+                </column>
+                <column name="Datum i vrijeme povratka" code="Vrijeme povratka" nullable="false" primary="false">
+                    <refcolumn>Ime</refcolumn>
+                    <reftable>Klijent</reftable>
+                </column>
+                <column name="Status vozila" code="Status vozila" nullable="false" primary="false">
+                    <refcolumn>Naziv</refcolumn>
+                    <reftable>Status vozila</reftable>
+                </column>
+                <column name="Status rezervacije" code="Status rezervacije" nullable="false" primary="false">
+                    <refcolumn>Naziv</refcolumn>
+                    <reftable>Status rezervacije</reftable>
+                </column>
+                <column name="Naziv" code="Naziv" nullable="true" primary="false">
+                    <refcolumn>Naziv</refcolumn>
+                    <reftable>Prikolica</reftable>
+                </column>
+                <column name="Stanje brojila prije" code="Stanje brojila prije" nullable="true" primary="false">
+                </column>
+                <column name="Stanje rezervoara prije" code="Stanje rezervoara prije" nullable="true" primary="false">
+                </column>
+                <column name="Stanje brojila poslije" code="Stanje brojila poslije" nullable="true" primary="false">
+                </column>
+                <column name="Stanje rezervoara poslije" code="Stanje rezervoara poslije" nullable="true" primary="false">
+                </column>
+                <column name="Opšta zapažanja" code="Opsta zapazanja" nullable="true" primary="false">
+                </column>
+                <column name="Ime klijenta" code="Ime" nullable="false" primary="false">
+                    <refcolumn>Ime</refcolumn>
+                    <reftable>Klijent</reftable>
+                </column>
+            </table>
+        </package>
+    </package>
+    <package name="Inventar">
+        <table name="Citav inventar" code="Citav inventar">
+            <crud>
+                <create>{call pisg2.st_InsertInventar()} </create>
+                <retrieve>{call pisg2.st_GetInventarAgencije()}</retrieve>
+                <update>{call pisg2.st_UpdateInventar()}</update>
+                <delete>{call pisg2.st_DeleteInInventar()}</delete>
+            </crud>
+            <column name="Naziv" code="Naziv" nullable="false" primary="false">
+                <refcolumn>Naziv</refcolumn>
+                <reftable>Tip</reftable>
+            </column>
+            <column name="Opis" code="Opis" nullable="true" primary="false">
+                <refcolumn>Opis</refcolumn>
+                <reftable>Tip</reftable>
+            </column>
+            <column name="Model" code="Opis" nullable="true" primary="false">
+                <refcolumn>Opis</refcolumn>
+                <reftable>Inventar</reftable>
+            </column>
+            <column name="Količina" code="Kolicina" nullable="true" primary="false">
+            </column>
+            <column name="Cijena po jedinici" code="Cijena po jedinici" nullable="true" primary="false">
+            </column>
+            <column name="Ukupna cijena nabavke" code="Ukupna cijena nabavke" nullable="true" primary="false">
+            </column>
+            <column name="Datum nabavke" code="Datum nabavke" nullable="true" primary="false">
+            </column>
+        </table>
+        <table name="Vidi tipove inventara" code="Vidi tipove inventara">
+            <crud>
+                <create>{call pisg2.st_InsertTipInventara()}</create>
+                <retrieve>{call pisg2.st_GetTipoviInventara()}</retrieve>
+                <update>{call pisg2.st_updateTipInventara()}</update>
+                <delete>{call pisg2.st_deleteTipInventara()}</delete>
+            </crud>
+            <column name="Oznaka" code="Oznaka" nullable="false" primary="false">
+            </column>
+            <column name="Naziv" code="Naziv" nullable="false" primary="false">
+            </column>
+            <column name="Opis" code="Opis" nullable="true" primary="false">
+            </column>
+        </table>
+    </package>
+    <package name="Radna mjesta">
+        <table name="Katalog zanimanja" code="Katalog zanimanja">
+            <crud>
+                <create>{call pisg2.st_InsertZanimanje()}</create>
+                <retrieve>{call pisg2.st_GetRadnaMjesta()}</retrieve>
+                <update>{call pisg2.st_UpdateZanimanja()}</update>
+                <delete>{call pisg2.st_DeleteZanimanje()}</delete>
+            </crud>
+            <column name="Država" code="Država" nullable="false" primary="false">
+            </column>
+            <column name="Naziv radnog mjesta" code="Naziv radnog mjesta" nullable="false" primary="false">
+                <refcolumn>Naziv radnog mjesta</refcolumn>
+                <reftable>Katalog radnih mjesta</reftable>
+            </column>
+            <column name="Opis radnog mjesta" code="Naziv" nullable="false" primary="false">
+            </column>
+        </table>
+    </package>
+    <package name="Pregled cijena">
+        <table name="Cijene" code="Cijene">
+            <crud>
+                <create>{call pisg2.st_InsertCijena()}</create>
+                <retrieve>{call pisg2.st_GetAllCijene()}</retrieve>
+                <update>{call pisg2.st_UpdateCijena()}</update>
+                <delete>{call pisg2.st_DeleteCijena()}</delete>
+            </crud>
+            <column name="Id cijene" code="Id cijene" nullable="false" primary="true">
+            </column>
+            <column name="Dnevna cijena" code="Dnevna cijena" nullable="false" primary="false">
+            </column>
+            <column name="Sedmična cijena" code="Sedmicna cijena" nullable="true" primary="false">
+            </column>
+            <column name="Mjesečna cijena" code="Mjesecna cijena" nullable="true" primary="false">
+            </column>
+        </table>
+    </package>
+    <package name="Klasa vozila">
+        <table name="Klasa" code="Klasa">
+            <crud>
+                <create/>
+                <retrieve>{call pisg2.st_GetAllKlasaVozila()}</retrieve>
+                <update/>
+                <delete>{call pisg2.st_DeleteKlasaVozila()}</delete>
+            </crud>
+            <column name="Oznaka" code="Oznaka" nullable="false" primary="true">
+            </column>
+            <column name="Naziv" code="Naziv" nullable="false" primary="false">
+            </column>
+            <column name="Opis" code="Opis" nullable="true" primary="false">
+            </column>
+        </table>
+    </package>
+    <package name="Pogon vozila">
+        <table name="Pogon" code="Pogon">
+            <crud>
+                <create/>
+                <retrieve>{call pisg2.st_GetAllPogon()}</retrieve>
+                <update/>
+                <delete>{call pisg2.st_DeletePogonVozila()}</delete>
+            </crud>
+            <column name="Oznaka" code="Oznaka" nullable="false" primary="true">
+            </column>
+            <column name="Naziv" code="Naziv" nullable="false" primary="false">
+            </column>
+            <column name="Opis" code="Opis" nullable="true" primary="false">
+            </column>
+        </table>
+    </package>
+    <package name="Klijenti">
+        <table name="Klijent" code="Klijent">
+            <crud>
+                <create>{call pisg2.st_InsertKlijent()}</create>
+                <retrieve>{call pisg2.st_GetAllKlijenti()}</retrieve>
+                <update>{call pisg2.st_UpdateKlijent()}</update>
+                <delete>{call pisg2.st_DeleteKlijent()}</delete>
+            </crud>
+            <column name="Identifikator" code="Identifikator" nullable="false" primary="true">
+            </column>
+            <column name="Tip klijenta" code="Tip" nullable="false" primary="false">
+                <refcolumn>Naziv</refcolumn>
+                <reftable>Tip klijenta</reftable>
+            </column>
+            <column name="Ime" code="Ime" nullable="false" primary="false">
+            </column>
+            <column name="Adresa" code="Adresa" nullable="true" primary="false">
+            </column>
+            <column name="Broj telefona" code="Broj telefona" nullable="true" primary="false">
+            </column>
+            <column name="E-mail" code="E-mail" nullable="true" primary="false">
+            </column>
+        </table>
+    </package>
+    <package name="Status vozila">
+        <table name="Status vozila" code="Status vozila">
+            <crud>
+                <create/>
+                <retrieve>{call pisg2.st_GetAllStatus()}</retrieve>
+                <update/>
+                <delete/>
+            </crud>
+            <column name="Oznaka" code="Oznaka" nullable="false" primary="true">
+            </column>
+            <column name="Naziv" code="Naziv" nullable="false" primary="false">
+            </column>
+            <column name="Opis" code="Opis" nullable="true" primary="false">
+            </column>
+        </table>
+    </package>
+    <package name="Privilegije korisnika">
+        <table name="Sistem ili podsistem" code="Sistem ili podsistem">
+            <crud>
+                <create/>
+                <retrieve>{call pisg2.st_GetPrivilegijeKorisnika()}</retrieve>
+                <update/>
+                <delete/>
+            </crud>
+            <column name="Mogućnost pristupa paketu" code="Naziv" nullable="false" primary="false">
+            </column>
+            <column name="Naziv role" code="Naziv role" nullable="false" primary="false">
+            <refcolumn>Naziv role</refcolumn>
+                <reftable>Rola</reftable>
+            </column>
+            <column name="Username" code="Username" nullable="false" primary="false">
+            <refcolumn>Username</refcolumn>
+                <reftable>Korisnicki nalog</reftable>
+            </column>
+        </table>
+    </package>
+</database>

@@ -1,0 +1,33 @@
+PREDSTAVNIK SLUŽBE ZA KORISNIKE
+-PRIJAVA I REGISTRACIJA ZAPOSLENOG NA SISTEM
+Naš sistem omogućava korisniku sistema da se prijavi na sistem, a u koliko nije prijavljen omogućuje mu registraciju uz korisničko ime i lozinku. Takođe omogućava oporavak kredencijala, u koliko je zaposleni zaboravio iste.
+-UVID U PREVOZNA SREDSTVA I PRETRAGU ISTIH
+Korisnik sistema ima mogućnost uvida i detaljan opis  prevoznih sredstava koja posjeduje agencija, te detaljne informacija o njima, kao što su pređeni kilometri, godina proizvodnje, broj sjedišta, navigacija, manuelni ili automatski mjenjač brzina, proizvođač, tip motora( drumska vozila), tip plovila( vodeni saobraćaj) i slično. Što se tiče pretrage vozila potrebno je da sistem omogući ovome korisniku pretragu prevoznih sredstava prema potrebama i zahtjevama klijenta usluga, što uključuje broj sjedišta, navigacija, manuelni ili automatski mjenjač brzina, proizvođač, tip motora( drumska vozila), tip plovila( vodeni saobraćaj), godina proizvodnje, pređeni kilometri i slično. 
+-REZERVACIJA PREVOZNOG SREDSTVA
+Sistem ovome zaposlenom omogućava rezervaciju prevoznog sredstva u određenom vremenskom periodu, uz prikupljanje i unošenje informacija o klijentu kao što su broj lične karte, broj vozačke dozvole, broj godina iskustva u vožnji, te provjeru da li su ti podaci validni(KOMENTAR: ako ovo naš sistem bude sadržao). Sistem ovoga korisnika informiše o uspješnoj rezervaciji, te mu daje mogućnost otkazivanja u skladu sa politikom otkazivanja agencije ili bilo kakve izmjene nad rezervacijom(npr. promjena vremenskog perioda iznajmljivanja vozila).
+-UVID U REZERVACIJU
+Sistem omogućava pregled detalja rezervacija i uvid u sve rezervacije.
+
+UPRAVITELJ VOZNOG PARKA
+-PRIJAVA I REGISTRACIJA ZAPOSLENOG NA SISTEM
+Naš sistem omogućava korisniku sistema da se prijavi na sistem, a u koliko nije prijavljen omogućuje mu registraciju uz korisničko ime i lozinku. Takođe omogućava oporavak kredencijala, u koliko je zaposleni zaboravio iste.
+-UVID U PREVOZNA SREDSTVA I PRETRAGU ISTIH
+Sistem omogućava ovom korisniku uvid u sva prevozna sredstva,tj. njihov tabelarni prikaz i pretragu istih na osnovu parametara koji su relevantni za  održavanje i popravku prevoznih sredstava npr. servisi, čišćenje, dezinfekcija i slično. Te na osnovu odrađenih radova nad prevoznim sredstvom.
+promjenu informacija o stanju prevoznog sredstva u aplikaciji, u smislu ako je izvršeno čišćenje da se ta informacija ažurira u skladu sa tom izvršenom akcijom. Takođe npr. ako je prevozno sredstvo na popravci da se ažurira podatak o dostupnost prevoznog sredstva za iznajmljivanje u datom momentu.
+-IZVJEŠTAJ
+Omogućava pisanje i unošenje izvještaja, te pregled prethodno napisanih izvještaja. 
+
+STRUČNJAK ZA MARKETING
+-PRIJAVA I REGISTRACIJA ZAPOSLENOG NA SISTEM
+Naš sistem omogućava korisniku sistema da se prijavi na sistem, a u koliko nije prijavljen omogućuje mu registraciju uz korisničko ime i lozinku. Takođe omogućava oporavak kredencijala, u koliko je zaposleni zaboravio iste.
+-UVID O INFORMACIJE O PREVOZNIM SREDSTVIMA I REZERVACIJAMA ISTIH, GENERISANJE IZVJEŠTAJA O STATISTICI I POSLOVANJU AGENCIJE NA OSNOVU PRETHODNO NAVEDENIH INFORMACIJA
+Sistem ovome korisniku omogućava uvid u tabelarni prikaz svih prevoznih sredstava i informacije o njima, tj. njihov detaljan opis i tabelarn prikaz svih urađenih rezervacija, te pretraga istih po određenim kriterijima, a sve to u cilju analize tih podataka, a zatim generisanje izvještaja i praćenje statistike, što dalje rezultuje pravljenjem strategije za napredak u poslovanju same agencije.
+
+VOZAČ
+-PRIJAVA I REGISTRACIJA ZAPOSLENOG NA SISTEM
+Naš sistem omogućava korisniku sistema da se prijavi na sistem, a u koliko nije prijavljen omogućuje mu registraciju uz korisničko ime i lozinku. Takođe omogućava oporavak kredencijala, u koliko je zaposleni zaboravio iste.
+-TABELARNI PRIKAZ REZERVACIJA U KOJIMA ON IMA ULOGU VOZAČA
+Sistem omogućava ovome korisniku tabelarni prikaz rezervacija u kojima on ima ulogu vozača, tj.neku vrstu planera, na osnovu kojeg ima uvid u svoje zadatke koji se tiču isporuke i prijema prevoznog sredstva.
+-REZERVACIJA PREVOZNOG SREDSTVA
+Sistem ovome zaposlenom omogućava rezervaciju prevoznog sredstva u određenom vremenskom periodu, uz prikupljanje i unošenje informacija o klijentu kao što su broj lične karte, broj vozačke dozvole, broj godina iskustva u vožnji, te provjeru da li su ti podaci validni(KOMENTAR: ako ovo naš sistem bude sadržao). Sistem ovoga korisnika informiše o uspješnoj rezervaciji, te mu daje mogućnost otkazivanja u skladu sa politikom otkazivanja agencije ili bilo kakve izmjene nad rezervacijom(npr. promjena vremenskog perioda iznajmljivanja vozila).
+Primjer, ukoliko radi na iznajmljivanju plovila(npr. jet ski, gliser…),treba da bude u mogućnosti da ovdje obavi kako kreiranje rezervacije tako i predaju i prijem prevoznog sredstva u ovome slučaju plovila.

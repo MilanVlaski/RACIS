@@ -1,0 +1,31 @@
+package view.input;
+
+import java.awt.Component;
+import java.awt.FlowLayout;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import model.tree.TreeElement.Column;
+
+public class MainFrame extends JFrame{
+	
+	private List<Column> columns = new ArrayList<>();
+	
+	public MainFrame() {
+		setSize(750, 750);
+		setLocationRelativeTo(null);;
+		
+		add(new InputPanel());
+		
+		
+		setVisible(true);
+	}
+
+	public static void main(String[] args) {
+		new MainFrame();
+	}
+}

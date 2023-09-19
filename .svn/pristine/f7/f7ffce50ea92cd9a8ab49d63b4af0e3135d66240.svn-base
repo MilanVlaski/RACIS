@@ -1,0 +1,149 @@
+package model.tree;
+/**
+ * Objekat cvor stablo strukture.
+ * @author Dijana
+ *
+ */
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+
+public abstract class TreeElement {
+
+	public String code;
+	public String name;
+	
+	private List<TreeElement> elements = new ArrayList<>();
+	
+	public int getIndexOfElement(TreeElement element) {
+		return elements.indexOf(element);
+	}
+	
+	public List<TreeElement> getAllElements() {
+		return elements;
+	}
+	
+	public TreeElement getElementAt(int index) {
+		return elements.get(index);
+	}
+	
+	public void addElement(TreeElement element) {
+		elements.add(element);
+	}
+	
+	@Override
+	public String toString() {
+		return name;
+	}
+	/**
+	 * A container for tables in a tree structure.
+	 * @author Milan Vlaski
+	 */
+	public static class Package extends TreeElement {
+		
+		public Package() {}
+		
+		public Package(String name) {
+			this.name = name;
+		}
+	}
+	/**
+	 * Has a reference to other tables and ways to get the related
+	 * stored procedures relevant for the table.
+	 * @author Milan Vlaski
+	 */
+	public static class Table extends TreeElement {
+		
+		private Vector<Table> reference = new Vector<>();
+		
+		
+		private String createSProc = null;
+		private String retrieveSProc = null;
+		private String updateSProc = null;
+		private String deleteSProc = null;
+		
+		public Table() {}
+		
+		public void addReferenca(Table referenca) 
+		{
+			reference.add(referenca);
+		}
+		
+		public Vector<Table> getAllReference() 
+		{
+			return this.reference;
+		}
+		
+		public Table getRefTableAt(int indeks) 
+		{
+			return reference.elementAt(indeks);
+		}
+
+		public String getCreateSProc() {
+			return createSProc;
+		}
+
+		public void setCreateSProc(String createSProc) {
+			this.createSProc = createSProc;
+		}
+
+		public String getRetrieveSProc() {
+			return retrieveSProc;
+		}
+
+		public void setRetrieveSProc(String retrieveSProc) {
+			this.retrieveSProc = retrieveSProc;
+		}
+
+		public String getUpdateSProc() {
+			return updateSProc;
+		}
+
+		public void setUpdateSProc(String updateSProc) {
+			this.updateSProc = updateSProc;
+		}
+
+		public String getDeleteSProc() {
+			return deleteSProc;
+		}
+
+		public void setDeleteSProc(String deleteSProc) {
+			this.deleteSProc = deleteSProc;
+		}
+	}
+	
+	/**
+	 * Represents columns of a table. Says whether a column
+	 * can be null or a primary key.
+	 * @author Milan Vlaski
+	 *
+	 */
+	public static class Column extends TreeElement 
+	{
+		private Boolean nullable = false;
+		private Boolean primary = false;
+		
+		public Column() {}
+		
+		public Boolean isNullable() 
+		{
+			return nullable;
+		}
+		
+		public void setNullable(Boolean nullable) 
+		{
+			this.nullable = nullable;
+		}
+		
+		public Boolean isPrimary() 
+		{
+			return primary;
+		}
+		
+		public void setPrimary(Boolean primary) 
+		{
+			this.primary = primary;
+		}
+	}
+}

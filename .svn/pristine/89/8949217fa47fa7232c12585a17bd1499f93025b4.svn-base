@@ -1,0 +1,112 @@
+package model;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+
+import javax.swing.JOptionPane;
+
+import com.microsoft.sqlserver.jdbc.SQLServerResultSet;
+
+import db.manipulation.DbManipulation;
+import model.tree.TreeElement;
+import model.tree.TreeElement.Column;
+import model.tree.TreeElement.Table;
+/**
+ * Vrsi pozive stored procedura cuvanih u proslijedjenoj tabeli.
+ * @author Milan Vlaski
+ *
+ */
+public class ProcedureService {
+
+	private Connection conn;
+	private final Table table;
+	
+	public ProcedureService(Table table) {
+		this.conn = DbManipulation.dbManip.get(0).getConnection();
+		this.table = table;
+	}
+	/**
+	 * @return Rezultat get.
+	 * @throws SQLException
+	 */
+	public ResultSet retrieve() {
+		try {
+			return getCallableStatement(table.getRetrieveSProc()).executeQuery();
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, "Greska u citanju podataka." + e.getMessage());
+			e.printStackTrace();
+		}
+		return null;
+	}
+	/**
+	 * @param parametri
+	 * @return 1 za uspjeh, 0 za neuspijeh
+	 * @throws SQLException
+	 */
+	public int create(HashMap<String, Object> params) {
+		return state(getCallableStatement(table.getCreateSProc()), params);
+	}
+	/**
+	 * @param parametri
+	 * @return 1 za uspjeh, 0 za neuspijeh
+	 * @throws SQLException
+	 */
+	public int update(HashMap<String, Object> params) {
+		return state(getCallableStatement(table.getUpdateSProc()), params);
+	}
+	
+	public int delete(Object key) {
+		CallableStatement callableStatement = getCallableStatement(table.getDeleteSProc());
+		try {
+			callableStatement.setObject(1, key);
+			
+			if(!callableStatement.execute()) {
+				return 1;
+			} else {
+				return 0;
+			}
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, "Greska sa bazom." + e.getMessage());
+			e.printStackTrace();
+		}
+		return 0;
+		
+	}
+	
+	private int state(CallableStatement callableStatement, HashMap<String, Object> params) {
+		try {
+			for (int i = 0; i < table.getAllElements().size(); i++) {
+				Column column = (Column) table.getElementAt(i);
+				callableStatement.setObject(i + 1, params.get(column.code));
+			}
+			
+			if (!callableStatement.execute()) {
+				return 1;
+			} else {
+				return 0;
+			}
+
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, "Greska u slanju podataka." + e.getMessage());
+			e.printStackTrace();
+		}
+		return 0;
+	}
+		
+	
+	private CallableStatement getCallableStatement(String storedProcedure) {
+		try {
+			return conn.prepareCall(storedProcedure, SQLServerResultSet.TYPE_SCROLL_INSENSITIVE,
+					SQLServerResultSet.CONCUR_READ_ONLY);
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, "Greska u pozivu baze podataka." + e.getMessage());
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+}

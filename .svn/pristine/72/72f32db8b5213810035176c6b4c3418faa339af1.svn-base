@@ -1,0 +1,116 @@
+package controller.state;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.table.TableModel;
+
+import model.table.CustomTableModel;
+import view.input.InputPanel;
+import view.input.InputPanel.SubmitAction;
+import view.menubar.EditMenu;
+import view.menubar.MenuBar;
+import view.statusbar.StatusBar;
+import view.table.TablePanel;
+
+public class Selection implements EditorState {
+
+	private TablePanel context;
+	private InputPanel inputPanel;
+	private MenuBar menuBar;
+
+	public Selection(TablePanel context, MenuBar menuBar) {
+		this.context = context;
+		this.inputPanel = context.getInputPanel();
+		this.menuBar = menuBar;
+		updateStatusMessage(context.getStatusBar());
+
+		this.context.getChangeBtn().setEnabled(true);
+		this.context.getDeleteBtn().setEnabled(true);
+		this.context.getCancelBtn().setEnabled(true);
+		
+		EditMenu editMenu=this.menuBar.getEditMenu();
+		editMenu.getCreateItem().setEnabled(true);;
+		editMenu.getDeleteItem().setEnabled(true);
+		editMenu.getChangeItem().setEnabled(true);
+		editMenu.getCancelItem().setEnabled(true);
+		editMenu.getAcceptItem().setEnabled(true);
+	}
+
+	@Override
+	public void handleSelectionChanged(ListSelectionEvent e) {
+		if (e.getValueIsAdjusting()) {
+			return;
+		}
+		TableModel model = context.getTable().getModel();
+
+		ListSelectionModel lsm = (ListSelectionModel) e.getSource();
+		if (!lsm.isSelectionEmpty()) {
+
+			int selectedRow = lsm.getMinSelectionIndex();
+			List<Object> row = new ArrayList<>();
+			for (int i = 0; i < model.getColumnCount(); i++) {
+				row.add(model.getValueAt(selectedRow, i));
+			}
+
+			inputPanel.fillInputs(row);	
+
+			updateStatusMessage(context.getStatusBar());
+		}
+	}
+
+	@Override
+	public void handleCreate() {
+		inputPanel.clearInputs();
+		inputPanel.enableAllInputs();
+		context.getTable().getSelectionModel().clearSelection();
+		inputPanel.setVisible(true);
+
+		context.setEditorState(new Creation(context, menuBar));
+	}
+
+	@Override
+	public void handleChange() {
+		inputPanel.setVisible(true);
+	}
+
+	@Override
+	public void handleDelete() {
+		int result = JOptionPane.showConfirmDialog(context, "Jeste li sigurni da želite obrisati ovaj podatak?",
+				"Brisanje podataka", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		if (result == 0) {
+			CustomTableModel tableModel = (CustomTableModel) context.getTable().getModel();
+//			tableModel.deleteRow();
+//			tableModel.getAllData();
+		}
+	}
+
+	@Override
+	public void handleCancel() {
+		inputPanel.clearInputs();
+		context.getTable().getSelectionModel().clearSelection();
+		inputPanel.setVisible(false);
+
+		context.setEditorState(new Idle(context, menuBar));
+	}
+
+	private void updateStatusMessage(StatusBar statusBar) {
+		String selectedItem = context.getTable().getSelectedTableName();
+
+		if (selectedItem != null) {
+			statusBar.setStatusMessage("Selected item: " + selectedItem);
+		} else {
+			statusBar.setStatusMessage("Item selected");
+		}
+	}
+
+	@Override
+	public void handleSubmit() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

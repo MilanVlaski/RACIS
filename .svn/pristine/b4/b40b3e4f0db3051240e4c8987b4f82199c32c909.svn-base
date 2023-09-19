@@ -1,0 +1,137 @@
+package model.table;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Types;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import model.ProcedureService;
+import model.tree.TreeElement.Column;
+import model.tree.TreeElement.Table;
+/**
+ *  Predstavlja konacni skup podataka o nekoj tabeli u aplikaciji. Ne zna nista o
+ *  konkretnim stored procedurama, one se nalaze u Table klasi. Podatke o kolonama uzima iz 
+ *  CustomTreeModela, tj njegove odgovarajuce tabele koju referencira ovaj model.
+ * @author Milan Vlaski
+ *
+ */
+public class CustomTableModel extends GeneralTableModel{
+
+	private final ProcedureService procedureService;
+	private final Table table;
+	
+	public CustomTableModel(Connection conn, Table table) {
+		this.table = table;
+		this.procedureService = new ProcedureService(conn, table);
+		getAllData();
+	}
+	
+	@Override
+	public void getAllData() {
+		ResultSet resultSet = procedureService.retrieve();
+		ResultSetMetaData rsmd;
+		
+		try {
+			rsmd = resultSet.getMetaData();
+			
+			// Kolone iz stabla stavlja u kolone modela tabele
+			// i dodaje im tip i duzinu iz metapodataka
+			this.columns = new ArrayList<>();
+			this.columns.add(new Column("#"));
+
+			for(int i = 0; i < table.getAllElements().size(); i++) {
+				
+				Column column = ((Column) table.getElementAt(i));
+				column.setType(rsmd.getColumnClassName(i+1));
+				column.setSize(rsmd.getPrecision(i+1));
+				column.setScale(rsmd.getScale(i+1));
+				
+				this.columns.add(column);
+			}
+			
+			// Pravi redove
+			int j = 1;
+			this.data = new ArrayList<>();
+			while (resultSet.next()) {
+				
+				// zaglavlje redova
+				List<Object> row = new ArrayList<>();
+				row.add(j);
+				j++;
+				
+				for (int i = 1; i <= columns.size(); i++) {
+					row.add(resultSet.getObject(i));
+				}
+				
+				this.data.add(row);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public boolean deleteRow(Object rowId) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean getRowById(Object rowId) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void addRow(HashMap<String, String> params) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editRow(HashMap<String, String> params) {
+		// TODO Auto-generated method stub
+		
+	}
+	/**
+	 * Ispisuje resultset na konzolu.
+	 * @param resultset za ispis
+	 * @throws SQLException
+	 */
+	private void showData(ResultSet rs) throws SQLException {
+		
+		ResultSetMetaData rsmd = rs.getMetaData();
+		
+		//ispis naziva kolona
+		for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+			System.out.print(String.format("%-50s", rsmd.getColumnLabel(i)));
+		}
+		
+		System.out.println();
+		//ispis tipova kolona
+		for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+			System.out.print(String.format("%-50s", rsmd.getColumnClassName(i)));
+		}
+		
+		//ispis separatora
+		System.out.println();
+		String separator = new String("-").repeat(50 * rsmd.getColumnCount());
+		System.out.println(separator);
+		
+		//Vraca kursor na pocetak
+		rs.absolute(0);
+		//ispis podataka
+		while(rs.next())
+		{
+			for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+				System.out.print(String.format("%-50s", rs.getObject(i)));
+			}
+			System.out.println();
+		}		
+	}
+}

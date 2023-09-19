@@ -1,0 +1,85 @@
+package view.input;
+
+import java.awt.Component;
+
+import javax.swing.ButtonGroup;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.SwingUtilities;
+import javax.swing.border.TitledBorder;
+
+import model.tree.TreeElement.Column;
+
+public class BooleanInput extends JPanel implements Input{
+
+	private final JRadioButton trueBtn = new JRadioButton("Da");
+	private final JRadioButton falseBtn = new JRadioButton("Ne");
+	private final ButtonGroup btnGroup = new ButtonGroup();
+	
+	private final Column column;
+	private Boolean value;
+	
+	public BooleanInput(Column column) {
+		this.column = column;
+		
+		TitledBorder titledBorder = new TitledBorder(column.name);
+		setBorder(titledBorder);
+		
+		btnGroup.add(trueBtn);
+		btnGroup.add(falseBtn);
+		
+		trueBtn.addActionListener((e) -> setValue(true));
+		falseBtn.addActionListener((e) -> setValue(false));
+		
+		add(trueBtn);
+		add(falseBtn);
+	}
+	
+	@Override
+	public Object getValue() {
+		return value;
+	}
+
+	@Override
+	public void setValue(Object object) {
+		value = (Boolean) object;
+		SwingUtilities.invokeLater(() -> handleValueChanged());
+	}
+
+	private void handleValueChanged() {
+		if (value != null) {
+			if (value) {	
+				trueBtn.setSelected(true);
+			} else {
+				falseBtn.setSelected(true);
+			}
+		} else {
+			btnGroup.clearSelection();	
+		}
+	}
+	
+	@Override
+	public void setReferenceBtn(Component btn) {}
+
+	@Override
+	public void setEnabled(boolean enabled) {
+		trueBtn.setEnabled(enabled);
+		falseBtn.setEnabled(enabled);
+	}
+
+	@Override
+	public boolean isPrimary() {
+		return false;
+	}
+
+	@Override
+	public boolean isNullable() {
+		return column.isNullable();
+	}
+
+	@Override
+	public String getName() {
+		return column.name;
+	}
+
+}

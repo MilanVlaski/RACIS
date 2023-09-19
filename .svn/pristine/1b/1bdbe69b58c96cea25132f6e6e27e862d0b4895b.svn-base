@@ -1,0 +1,66 @@
+package model;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+
+import javax.swing.JOptionPane;
+
+import com.microsoft.sqlserver.jdbc.SQLServerResultSet;
+
+import db.manipulation.DbManipulation;
+import model.tree.TreeElement;
+import model.tree.TreeElement.Column;
+import model.tree.TreeElement.Table;
+/**
+ * Vrsi pozive stored procedura cuvanih u proslijedjenoj tabeli.
+ * Samim tim, ona vraca ResultSet, te bi trebala biti jedino mjesto iz 
+ * kojeg se moze pokupiti ResultSet.
+ * @author Milan Vlaski
+ *
+ */
+public class ProcedureService {
+
+	private Connection conn;
+	private Table table;
+	
+	public ProcedureService(Table table) {
+		this.conn = DbManipulation.dbManip.get(0).getConnection();
+		this.table = table;
+	}
+	
+	public ResultSet retrieve() {
+		
+		ResultSet result = null;
+		try {
+			CallableStatement callableStatement = conn.prepareCall(table.getRetrieveSProc(),
+				SQLServerResultSet.TYPE_SCROLL_INSENSITIVE, SQLServerResultSet.CONCUR_READ_ONLY);
+			result = callableStatement.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public int update(HashMap<String, Object> params) throws SQLException {
+			CallableStatement callableStatement = conn.prepareCall(table.getUpdateSProc(),
+					SQLServerResultSet.TYPE_SCROLL_INSENSITIVE, SQLServerResultSet.CONCUR_READ_ONLY);
+			
+			for (int i = 0; i < table.getAllElements().size(); i++) {
+				Column column = (Column) table.getElementAt(i);
+				callableStatement.setObject(i+1, params.get(column.code));
+			}
+			
+			// returns false for some reason, the documentation is unclear too
+			if(!callableStatement.execute()) {
+				return 1;
+			} else {
+				return 0;
+			}
+			
+	}
+
+}

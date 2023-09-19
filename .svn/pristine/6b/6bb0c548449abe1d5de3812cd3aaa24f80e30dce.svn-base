@@ -1,0 +1,122 @@
+package model.table;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import model.ProcedureService;
+import model.tree.TreeElement.Column;
+import model.tree.TreeElement.Table;
+
+public class CustomTableModel extends GeneralTableModel{
+
+	private final ProcedureService procedureService;
+	private final Table table;
+	
+	public CustomTableModel(Connection conn, Table table) {
+		this.table = table;
+		this.procedureService = new ProcedureService(conn, table);
+		getAllData();
+	}
+	
+	@Override
+	public void getAllData() {
+		ResultSet resultSet = procedureService.retrieve();
+		ResultSetMetaData rsmd;
+		
+		this.columns = new ArrayList<>();
+		this.data = new ArrayList<>();
+		
+		try {
+			rsmd = resultSet.getMetaData();
+			// Kolone iz stabla stavlja u kolone modela tabele
+			for(int i = 0; i < table.getAllElements().size(); i++) {
+				Column column = ((Column) table.getElementAt(i));
+				this.columns.add(new TableColumnModel(column.name,
+						column.code,
+						column.isPrimary()));
+			}
+			
+			// Kolone modela stavlja u gornji red
+			List<Object> header = new ArrayList<>();
+			for (TableColumnModel tableColumnModel : columns) {		
+				header.add(tableColumnModel.getColumnName());
+				}
+				this.data.add(header);
+			
+			// Pravi redove
+			while (resultSet.next()) {
+				List<Object> row = new ArrayList<>();
+				for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+					row.add(resultSet.getObject(i));
+				}
+				this.data.add(row);
+			}		
+			//ispisuje na komandnu liniju
+//			showData(resultSet);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public boolean deleteRow(Object rowId) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean getRowById(Object rowId) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void addRow(HashMap<String, String> params) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editRow(HashMap<String, String> params) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void showData(ResultSet rs) throws SQLException {
+		
+		ResultSetMetaData rsmd = rs.getMetaData();
+		
+		//ispis naziva kolona
+		for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+			System.out.print(String.format("%-50s", rsmd.getColumnLabel(i)));
+		}
+		
+		System.out.println();
+		//ispis tipova kolona
+		for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+			System.out.print(String.format("%-50s", rsmd.getColumnClassName(i)));
+		}
+		
+		//ispis separatora
+		System.out.println();
+		String separator = new String("-").repeat(50 * rsmd.getColumnCount());
+		System.out.println(separator);
+		
+		//Vraca kursor na pocetak
+		rs.absolute(0);
+		//ispis podataka
+		while(rs.next())
+		{
+			for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+				System.out.print(String.format("%-50s", rs.getObject(i)));
+			}
+			System.out.println();
+		}		
+	}
+}

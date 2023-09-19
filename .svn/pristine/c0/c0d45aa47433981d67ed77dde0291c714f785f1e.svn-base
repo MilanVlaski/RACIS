@@ -1,0 +1,109 @@
+package controller.state;
+
+import java.util.List;
+
+import javax.swing.JOptionPane;
+
+import model.table.CustomTableModel;
+import model.table.GeneralTableModel;
+import model.tree.TreeElement.Column;
+import view.input.InputPanel;
+import view.menubar.EditMenu;
+import view.statusbar.StatusBar;
+import view.table.TablePanel;
+
+public class Selection extends Common {
+
+	public Selection(TablePanel context) {
+		super(context);
+		updateStatusMessage(context.getStatusBar());
+
+		this.context.getChangeBtn().setEnabled(true);
+		this.context.getDeleteBtn().setEnabled(true);
+		this.context.getCancelBtn().setEnabled(true);
+		
+		EditMenu editMenu=this.menuBar.getEditMenu();
+		editMenu.getDeleteItem().setEnabled(true);
+		editMenu.getChangeItem().setEnabled(true);
+		editMenu.getCancelItem().setEnabled(true);
+		editMenu.getAcceptItem().setEnabled(true);
+	}
+	
+	@Override
+	protected void handleSelectionSpecific() {
+		updateStatusMessage(context.getStatusBar());
+	}
+
+	@Override
+	public void handleCreate() {
+		inputPanel.clearInputs();
+		inputPanel.enableAllInputs();
+		context.getTable().getSelectionModel().clearSelection();
+		inputPanel.setVisible(true);
+
+		context.setEditorState(new Creation(context));
+	}
+
+	@Override
+	public void handleChange() {
+		inputPanel.setVisible(true);
+	}
+
+	@Override
+	public void handleDelete() {
+		int result = JOptionPane.showConfirmDialog(context, "Jeste li sigurni da želite obrisati ovaj podatak?",
+				"Brisanje podataka", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		
+		if (result == 0) {
+			
+			GeneralTableModel tableModel = context.getTable().getTableModel();
+			for (int i = 0; i < tableModel.getColumns().size(); i++) {
+				Column column = tableModel.getColumn(i);
+				
+				if(column.isPrimary() && column.getRefTable() == null) {
+					Object key = tableModel.getValueAt(context.getTable().getSelectedRow(), i);
+					boolean successful = tableModel.deleteRow(key);
+					
+					if (successful) {
+						InputPanel.showTimedAlert(inputPanel, "Brisanje uspješno!", 2000);
+						context.getTable().revalidate();
+					} else {
+						InputPanel.showTimedAlert(inputPanel, "Brisanje nije uspjelo!", 2000);
+					}
+				}
+			}
+		}
+	}
+
+	@Override
+	public void handleCancel() {
+		inputPanel.clearInputs();
+		context.getTable().getSelectionModel().clearSelection();
+		inputPanel.setVisible(false);
+
+		context.setEditorState(new Idle(context));
+	}
+
+	private void updateStatusMessage(StatusBar statusBar) {
+		String selectedItem = context.getTable().getSelectedTableName();
+
+		if (selectedItem != null) {
+			statusBar.setStatusMessage("Selected item: " + selectedItem);
+		} else {
+			statusBar.setStatusMessage("Item selected");
+		}
+	}
+
+	@Override
+	protected void handleSubmitSpecific() {
+		boolean successful = false;
+		successful = inputPanel.getTableModel().editRow(inputPanel.getValues());
+
+		if (successful) {
+			InputPanel.showTimedAlert(inputPanel, "Izmjena uspješna!", 2000);
+			context.getTable().revalidate();
+		} else {
+			InputPanel.showTimedAlert(inputPanel, "Izmjena nije uspjela!", 2000);
+		}
+	}
+}

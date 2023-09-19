@@ -1,0 +1,50 @@
+package test.treemodel;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import model.tree.CustomTreeModel;
+import model.tree.TreeElement;
+import model.tree.TreeElement.Package;
+import model.tree.TreeElement.Table;
+import model.xmlparser.ParallelXMLParser;
+
+class TestTreeModelParallelParsing {
+
+	CustomTreeModel ctm;
+	TreeElement rootPackage;
+	
+	@BeforeEach
+	void setup() {
+		ctm = new CustomTreeModel(null);
+		ctm.initializeFromXml(new ParallelXMLParser());
+		rootPackage = (Package) ctm.getRoot();
+	}
+	
+	@Test
+	void shouldInitializeRootPackage() {
+		assertEquals("Konceptualni model sistema", rootPackage.name);
+	}
+	
+	@Test
+	void shouldInitializePackageAsFirstElement() {
+		assertTrue(rootPackage.getElementAt(0) instanceof Package);
+	}
+	
+	@Test
+	void shouldInitializeSubPackage() {
+		assertTrue(rootPackage.getElementAt(1).getElementAt(0) instanceof Package);
+	}
+	
+	@Test
+	void shouldInitializeTableWithCrudStoredProc() {
+		Table table = (Table) rootPackage.getElementAt(0)
+										.getElementAt(0);
+		assertEquals("{call st_GetAllVozila()}", table.getRetrieveSProc());
+	}
+
+}

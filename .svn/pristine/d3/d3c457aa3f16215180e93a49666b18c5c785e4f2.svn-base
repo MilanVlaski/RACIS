@@ -1,0 +1,40 @@
+package test.parser;
+
+import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
+import model.ProcedureService;
+import model.xmlparser.XMLParser;
+import test.procedureservice.TestProcedureService;
+
+class TestUserPrivileges {
+
+	static final String STORED_PROC = "{call pisg2.st_GetPrivilegijeKorisnika(?)}";
+
+	@BeforeAll
+	static void setup() {
+		TestProcedureService.setupDb();
+	}
+	
+	@Test
+	void shouldGetStoredProcedureForUserPrivileges() {
+		XMLParser.setFileLocation("xmlsetup//test//test.xml");
+		XMLParser parser = new XMLParser();
+
+		assertEquals(STORED_PROC, parser.getProcedureForGetPrivileges());
+	}
+	
+	@Test
+	void shouldReturnPrivilegesResultSet_ForStoredProc() throws SQLException {
+		ProcedureService procService = new ProcedureService(null);
+		ResultSet privilegesRs = procService.getUserPrivileges(STORED_PROC, "perop");
+		assertNotNull(privilegesRs);
+	}
+
+}

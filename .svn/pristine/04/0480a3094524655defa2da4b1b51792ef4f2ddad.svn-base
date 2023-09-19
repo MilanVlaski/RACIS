@@ -1,0 +1,40 @@
+package view.input;
+
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.FlowLayout;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JPanel;
+
+import model.tree.TreeElement.Column;
+import view.table.CustomCellRenderer;
+/**
+ * Kontejner za Input polja.
+ * @author Milan Vlaski
+ *
+ */
+public class InputPanel extends JPanel {
+	
+	private List<Column> columns = new ArrayList<>();
+	
+	public InputPanel() {
+		setLayout(new FlowLayout());
+		setBackground(CustomCellRenderer.DARKER_BACKGROUND);
+		
+		columns.add(new Column("String", "String", false, false, null, null, "java.lang.String", 7, 0));
+		columns.add(new Column("Integer", "Integer", false, false, null, null, "java.lang.Integer", 3, 0));
+		columns.add(new Column("Decimal", "Decimal", false, false, null, null, "java.math.BigDecimal", 3, 2));
+		
+		for (Column column : columns) {
+			add((Component)InputFactory.createInput(column));
+		}
+		
+		setVisible(true);
+	}
+	
+	public void fillFields(List<Column> row) {
+		
+	}
+}

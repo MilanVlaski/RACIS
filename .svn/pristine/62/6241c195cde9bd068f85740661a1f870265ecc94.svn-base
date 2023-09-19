@@ -1,0 +1,43 @@
+package controller;
+
+import java.awt.Component;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.TableModel;
+
+import view.input.InputPanel;
+import view.table.MainTableView;
+
+public class TableListener implements ListSelectionListener {
+
+	private JTable table;
+	private InputPanel inputPanel;
+	
+	public TableListener(JTable table, InputPanel inputPanel) {
+		this.table = table;
+		this.inputPanel = inputPanel;
+	}
+	
+	@Override
+	public void valueChanged(ListSelectionEvent e) {
+		if (e.getValueIsAdjusting()) {
+			return;
+		}
+		TableModel model = table.getModel();
+		
+		ListSelectionModel lsm = (ListSelectionModel) e.getSource();
+		if(!lsm.isSelectionEmpty()) {
+			int selectedRow = lsm.getMinSelectionIndex();
+			List<Object> row = new ArrayList<>(); 
+			for(int i = 0; i < model.getColumnCount(); i++) {
+				row.add(model.getValueAt(selectedRow, i));
+			}
+			inputPanel.fillFields(row);
+		}
+	}
+}

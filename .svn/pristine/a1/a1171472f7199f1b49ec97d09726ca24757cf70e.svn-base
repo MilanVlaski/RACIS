@@ -1,0 +1,104 @@
+package controller.state;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.table.TableModel;
+
+import model.table.GeneralTableModel;
+import view.input.InputPanel;
+import view.input.InputPanel.SubmitAction;
+import view.statusbar.StatusBar;
+import view.table.TablePanel;
+import view.menubar.EditMenu;
+import view.menubar.MenuBar;
+
+public class Creation implements EditorState {
+
+	private TablePanel context;
+	private InputPanel inputPanel;
+	private MenuBar menuBar;
+
+	public Creation(TablePanel context) {
+		this.context = context;
+		this.inputPanel = context.getInputPanel();
+		this.menuBar = context.getMenuBar();
+		context.getStatusBar().setStatusMessage("Create item");
+
+		context.getChangeBtn().setEnabled(false);
+		context.getDeleteBtn().setEnabled(false);
+		context.getCancelBtn().setEnabled(true);
+		
+		EditMenu editM = this.menuBar.getEditMenu();
+		editM.getCreateItem().setEnabled(true);
+		editM.getDeleteItem().setEnabled(false);
+		editM.getChangeItem().setEnabled(false);
+		editM.getCancelItem().setEnabled(true);
+	}
+
+	@Override
+	public void handleSelectionChanged(ListSelectionEvent e) {
+		if (e.getValueIsAdjusting()) {
+			return;
+		}
+
+		ListSelectionModel lsm = (ListSelectionModel) e.getSource();
+		if (!lsm.isSelectionEmpty()) {
+			int selectedRow = lsm.getMinSelectionIndex();
+			
+			TableModel tableModel = context.getTable().getTableModel();
+			
+			List<Object> row = new ArrayList<>();
+			for (int i = 0; i < tableModel.getColumnCount(); i++) {
+				row.add(tableModel.getValueAt(selectedRow, i));
+			}
+
+			inputPanel.fillInputs(row);
+			inputPanel.disablePKeyInputs();
+
+			context.setEditorState(new Selection(context, menuBar));
+
+		}
+	}
+
+	@Override
+	public void handleCreate() {
+		inputPanel.clearInputs();
+	}
+
+	@Override
+	public void handleChange() {}
+
+	@Override
+	public void handleDelete() {}
+
+	@Override
+	public void handleCancel() {
+		inputPanel.setVisible(false);
+		inputPanel.clearInputs();
+
+		context.setEditorState(new Idle(context));
+	}
+
+	@Override
+	public void handleSubmit() {
+		if(!inputPanel.inputsValid()) {
+			JOptionPane.showMessageDialog(null, "Niste unijeli: " + inputPanel.mandatoryButEmptyInputNames() + ".",
+					"Nepotpun unos", JOptionPane.WARNING_MESSAGE);
+		} else {
+			boolean successful = false;
+			successful = inputPanel.getTableModel().addRow(inputPanel.getValues());
+			
+			if(successful) {
+				InputPanel.showTimedAlert(inputPanel, "Uspješan unos!", 2000);
+				context.getTable().revalidate();
+			} else {
+				InputPanel.showTimedAlert(inputPanel, "Neuspješan unos!", 2000);
+			}
+		}
+	}
+
+}

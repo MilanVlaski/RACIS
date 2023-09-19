@@ -1,0 +1,61 @@
+package view.table;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionListener;
+
+import model.ApplicationModel;
+import model.Publisher;
+import model.table.GeneralTableModel;
+import view.Subscriber;
+
+public class MainTableView extends JTable implements Subscriber{
+	
+		public MainTableView() {
+			
+			setRowHeight(30);
+			setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			setAutoResizeMode(AUTO_RESIZE_OFF);
+			tableHeader.setReorderingAllowed(false);
+			
+			tableHeader.setBackground(CustomCellRenderer.HEADER_COLOR);
+			
+			setDefaultRenderer(Object.class, new CustomCellRenderer());
+			
+			getSelectionModel().addListSelectionListener(e -> {
+				
+				if (e.getValueIsAdjusting()) {
+					return;
+				}
+				ListSelectionModel lsm = (ListSelectionModel) e.getSource();
+				if(!lsm.isSelectionEmpty()) {
+					int selectedRow = lsm.getMinSelectionIndex();
+					List<Object> row = new ArrayList<>(); 
+					for(int i = 0; i < getModel().getColumnCount(); i++) {
+						row.add(getModel().getValueAt(selectedRow, i));
+					}
+					// inputPanel.setVisible(true);
+					// inputPanel.fillFields(row);
+					System.out.println("Row " + selectedRow + " is now selected.\n");
+					System.out.println(row);
+				}
+			});
+		}
+		
+		public void setTableModel(GeneralTableModel tableModel) {
+			setModel(tableModel);
+		}
+
+		@Override
+		public void
+		update(Publisher context) {
+			setTableModel(((ApplicationModel) context).getMainTableModel());
+		}
+		
+		public void setSelectionListener(ListSelectionListener listener) {
+			getSelectionModel().addListSelectionListener(listener);
+		}
+}

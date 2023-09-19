@@ -1,0 +1,78 @@
+package view.table;
+
+import java.awt.Dimension;
+
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
+import model.ApplicationModel;
+import model.Publisher;
+import model.table.GeneralTableModel;
+import view.Subscriber;
+
+public class MainTableView extends JTable implements Subscriber {
+
+	private GeneralTableModel tableModel;
+
+	public MainTableView() {
+
+		setRowHeight(30);
+		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		setAutoResizeMode(AUTO_RESIZE_OFF);
+		tableHeader.setReorderingAllowed(false);
+		tableHeader.setResizingAllowed(false);
+		
+		tableHeader.setBackground(CustomCellRenderer.HEADER_COLOR);
+		setDefaultRenderer(Object.class, new CustomCellRenderer());
+	}
+	
+	public GeneralTableModel getTableModel() {
+		return tableModel;
+	}
+	/**
+	 * Uz postavljanje modela, postavlja i sirinu svih kolona.
+	 * Ovo koristiti umjesto setModel!
+	 * @param tableModel
+	 */
+	public void setTableModel(GeneralTableModel tableModel) {
+		this.tableModel = tableModel;
+		setModel(tableModel);
+		setColumnWidths();
+	}
+
+	private void setColumnWidths() {
+		if (tableModel != null) {
+			for (int i = 0; i < tableModel.getColumns().size(); i++) {
+				int size = tableModel.getColumn(i).getSize();
+				if (size < 60) {
+					getColumnModel().getColumn(i).setMinWidth(40);
+				} else if (size > 100){
+					getColumnModel().getColumn(i).setMinWidth((int)(size * 0.3) + 20);
+				}
+			}
+		}
+	}
+
+	// omogucava skrolanje iako smo postavili da tabela zauzme maks prostor
+	@Override
+	public boolean getScrollableTracksViewportWidth() {
+		return getPreferredSize().width < getParent().getWidth();
+	}
+
+	@Override
+	public void update(Publisher context) {
+		GeneralTableModel model = ((ApplicationModel) context).getMainTableModel();
+//		if(!(model == null)) {
+			setTableModel(model);			
+//		} else {
+//			tableModel.getColumns().clear();
+//		}
+	}
+
+	public void setSelectionListener(ListSelectionListener listener) {
+		getSelectionModel().addListSelectionListener(listener);
+	}
+}

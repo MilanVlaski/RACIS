@@ -1,0 +1,67 @@
+package view.table;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.table.TableModel;
+
+import view.input.InputPanel;
+import view.statusbar.StatusBar;
+
+public class Idle implements EditorState {
+
+	private TablePanel context;
+	private InputPanel inputPanel;
+	
+	public Idle(TablePanel context) {
+		this.context = context;
+		this.inputPanel = context.getInputPanel();
+		context.getStatusBar().setStatusMessage("Ready");
+		
+		this.context.getChangeBtn().setEnabled(false);
+		this.context.getDeleteBtn().setEnabled(false);
+		this.context.getCancelBtn().setEnabled(false);
+	}
+	
+	@Override
+	public void handleSelectionChanged(ListSelectionEvent e) {
+		if (e.getValueIsAdjusting()) {
+			return;
+		}
+		TableModel model = context.getTable().getModel();
+
+		ListSelectionModel lsm = (ListSelectionModel) e.getSource();
+		if (!lsm.isSelectionEmpty()) {
+			int selectedRow = lsm.getMinSelectionIndex();
+			List<Object> row = new ArrayList<>();
+			for (int i = 0; i < model.getColumnCount(); i++) {
+				row.add(model.getValueAt(selectedRow, i));
+			}
+			
+			inputPanel.fillFields(row);
+			inputPanel.disablePKeyFields();
+			
+			context.setEditorState(new Selection(context));
+		}
+	}
+	
+	@Override
+	public void handleCreate() {
+		inputPanel.enableAllFields();
+		inputPanel.setVisible(true);
+		
+		context.setEditorState(new Creation(context));
+	}
+
+	@Override
+	public void handleChange() {}
+
+	@Override
+	public void handleDelete() {}
+
+	@Override
+	public void handleCancel() {}
+
+}

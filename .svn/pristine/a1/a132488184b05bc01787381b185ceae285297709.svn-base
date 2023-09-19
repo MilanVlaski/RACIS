@@ -1,0 +1,22 @@
+package view.input;
+
+import java.awt.Color;
+import java.awt.Component;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import view.table.MainTableView;
+
+public class SelectionDialog extends JFrame {
+
+	SelectionDialog(Component tableView, String table, String referencedColumn) {
+		setTitle(table);
+		
+		add(tableView);
+		
+		pack();
+		setLocationRelativeTo(null);
+		setVisible(true);
+	}
+}

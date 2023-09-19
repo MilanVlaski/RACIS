@@ -1,0 +1,57 @@
+package controller.state;
+
+import javax.swing.event.ListSelectionEvent;
+
+import view.input.InputPanel;
+import view.menubar.MenuBar;
+import view.table.TablePanel;
+
+public abstract class BaseState implements EditorState {
+
+	protected TablePanel context;
+	protected InputPanel inputPanel;
+	protected MenuBar menuBar;
+
+	public BaseState(TablePanel context) {
+		this.context = context;
+		this.inputPanel = context.getInputPanel();
+		this.menuBar = context.getMenuBar();
+	}
+	
+	@Override
+	public void handleSelectionChanged(ListSelectionEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void handleCreate() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void handleChange() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void handleDelete() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void handleCancel() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void handleSubmit() {
+		// TODO Auto-generated method stub
+
+	}
+
+}

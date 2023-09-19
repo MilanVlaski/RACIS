@@ -1,0 +1,46 @@
+package controller;
+
+import java.awt.Component;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.TableModel;
+
+import view.input.InputPanel;
+import view.table.MainTableView;
+import view.table.TablePanel;
+
+public class TableListener implements ListSelectionListener {
+
+	private TablePanel tablePanel; // ovo ce mi vjerovatno trebati da mijenjam stanje buttona
+	private InputPanel inputPanel;
+	
+	public TableListener(TablePanel tablePanel, InputPanel inputPanel) {
+		this.tablePanel = tablePanel;
+		this.inputPanel = inputPanel;
+	}
+	
+	@Override
+	public void valueChanged(ListSelectionEvent e) {
+		if (e.getValueIsAdjusting()) {
+			return;
+		}
+		TableModel model = tablePanel.getTable().getModel();
+		
+		ListSelectionModel lsm = (ListSelectionModel) e.getSource();
+		if(!lsm.isSelectionEmpty()) {
+			int selectedRow = lsm.getMinSelectionIndex();
+			List<Object> row = new ArrayList<>(); 
+			for(int i = 0; i < model.getColumnCount(); i++) {
+				row.add(model.getValueAt(selectedRow, i));
+			}
+			inputPanel.fillFields(row);
+			tablePanel.changeBtn.setEnabled(true);
+			tablePanel.deleteBtn.setEnabled(true);
+		}
+	}
+}

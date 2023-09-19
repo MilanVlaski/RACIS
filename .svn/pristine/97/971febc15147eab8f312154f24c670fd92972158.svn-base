@@ -1,0 +1,30 @@
+package model;
+
+import java.sql.Connection;
+
+import db.manipulation.DbManipulation;
+import model.xmlparser.XMLParser;
+import model.xmlparser.XMLTreeParser;
+
+public class ApplicationModel {
+
+	XMLParser xmlParser;
+	DbManipulation dbManipulation;
+	Connection conn;
+
+	public ApplicationModel() {
+		this.xmlParser = new XMLParser();
+		this.dbManipulation = xmlParser.createConnection();
+		this.conn = dbManipulation.getConnection();
+	}
+	
+	public XMLTreeParser getXmlParser() {
+		return xmlParser;
+	}
+	public DbManipulation getDbManipulation() {
+		return dbManipulation;
+	}
+	public Connection getConn() {
+		return conn;
+	}
+}

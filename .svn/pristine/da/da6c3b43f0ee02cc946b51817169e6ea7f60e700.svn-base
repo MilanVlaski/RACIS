@@ -1,0 +1,130 @@
+package view.input;
+
+import java.awt.Dimension;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.Format;
+import java.text.NumberFormat;
+import java.text.ParseException;
+
+import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
+import javax.swing.JFormattedTextField.AbstractFormatter;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.TableModel;
+import javax.swing.text.DefaultFormatter;
+import javax.swing.text.InternationalFormatter;
+import javax.swing.text.MaskFormatter;
+
+import db.manipulation.DbManipulation;
+import db.type.DatabaseType;
+import model.table.CustomTableModel;
+import model.table.GeneralTableModel;
+import model.tree.TreeElement.Column;
+import view.table.MainTableView;
+/**
+ * Fabrika za Input polja. Staticka metoda createInput vraca
+ * objekte tipa Input. Ove objekte ne treba praviti osim kroz
+ * ovu fabriku.<br>createInput postavlja labelu, a na osnovu tipa
+ * postavlja formatter, ili pravi odgovarajuci Input.
+ * @author Milan Vlaski
+ *
+ */
+public class InputFactory {
+
+	/**
+	 * Labelu postavlja isto za sve, a format na osnovu tipa kolone,
+	 * ako je to potrebno.<br>Sve podkomponente (labele, buttoni...)
+	 * trebaju se proslijediti konstruktoru nekog custom Input polja,
+	 * koje ce definisati kako ce se te komponente interno posloziti.
+	 * @param column u tabeli na osnovu koje se pravi polje
+	 * @return Input polje na osnovu tipa i ostalih parametara kolone
+	 */
+	public static Input createInput(Column column) {	
+		Input result;
+		
+		String label = column.name + ((column.isNullable()) ? "" : "*");
+		
+		
+		switch (column.getType()) {
+		
+		case "java.lang.String": {
+			
+			StringBuilder mask = new StringBuilder();
+			for(int i = 0; i < column.getSize(); i++) {
+				mask.append("*");
+			}
+			
+			JFormattedTextField formattedField = null;
+			try {
+				formattedField = new JFormattedTextField(new MaskFormatter(mask.toString()));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			
+			
+			result = new TextInput(label, formattedField, column);
+			break;
+			}
+		
+		case "java.math.BigDecimal": 
+		case "java.lang.Double": {
+			
+			NumberFormat numFormat = NumberFormat.getInstance();
+			numFormat.setMaximumIntegerDigits(column.getSize());
+			numFormat.setMaximumFractionDigits(column.getScale());
+
+			JFormattedTextField formattedField = new JFormattedTextField(createFormatter(numFormat));
+			
+			result = new TextInput(label, formattedField, column);
+			break;
+		}
+		case "java.lang.Integer":
+		case "java.lang.Long":{
+			
+			NumberFormat numFormat = NumberFormat.getInstance();
+			numFormat.setMaximumIntegerDigits(column.getSize());
+			numFormat.setMaximumFractionDigits(0);
+			numFormat.setParseIntegerOnly(true);
+			
+			result = new TextInput(label, new JFormattedTextField(createFormatter(numFormat)), column);
+			break;
+		}
+		case "java.lang.Boolean" : {
+			result = new TextInput("BOOLEAN NOT YET IMPLEMENTED", new JFormattedTextField(), column);
+			break;
+		}
+		case "java.sql.Timestamp": {
+			result = new TextInput("TIMESTAMP NOT YET IMPLEMENTED", new JFormattedTextField(), column);
+			break;
+		}
+		default:
+			throw new IllegalArgumentException("Nepoznati tip: " + column.getType() + " !");
+		}
+		
+		
+		if(column.getRefTable() != null && !column.isPrimary()) {			
+			result = new LinkedField(result, column.getRefTable(), column.getRefColumn());
+		}
+		
+		return result;
+	}
+	
+	// Dopusta prazne vrijednosti text polja.
+	private static DefaultFormatter createFormatter(NumberFormat format) {
+		InternationalFormatter formatter = new InternationalFormatter(format) {
+            @Override
+            public Object stringToValue(String text) throws java.text.ParseException {
+                if (text.trim().isEmpty()) {
+                    return null;
+                }
+                return super.stringToValue(text);
+            }
+		};
+		
+		return formatter;
+	};
+}

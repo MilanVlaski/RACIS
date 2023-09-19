@@ -1,0 +1,28 @@
+package view.menubar;
+
+
+
+
+import javax.swing.JMenuBar;
+
+
+public class MenuBar extends JMenuBar {
+
+
+	FileMenu fileMenu = new FileMenu();
+	EditMenu editMenu = new EditMenu();
+	HelpMenu helpMenu = new HelpMenu();
+
+	public  MenuBar() {
+
+		add(fileMenu);
+		add(editMenu);
+		add(helpMenu);
+
+	}
+
+	public EditMenu getEditMenu() {
+		return editMenu;
+	}
+
+}

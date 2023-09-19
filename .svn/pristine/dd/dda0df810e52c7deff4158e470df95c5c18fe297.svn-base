@@ -1,0 +1,50 @@
+package view.table;
+
+import java.awt.Dimension;
+
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+
+import model.ApplicationModel;
+import model.Publisher;
+import model.table.GeneralTableModel;
+import view.Subscriber;
+
+public class MainTableView extends JTable implements Subscriber{
+
+	GeneralTableModel tableModel;
+	
+		public MainTableView() {
+			
+			setRowHeight(30);
+			setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			setAutoResizeMode(AUTO_RESIZE_OFF);
+			tableHeader.setReorderingAllowed(false);
+			
+			
+			tableHeader.setBackground(CustomCellRenderer.HEADER_COLOR);
+			
+			setColumnWidths();
+			
+			setDefaultRenderer(Object.class, new CustomCellRenderer());
+		}
+		
+		public void setTableModel(GeneralTableModel tableModel) {
+			setModel(tableModel);
+		}
+
+		@Override
+		public void update(Publisher context) {
+			setTableModel(((ApplicationModel) context).getMainTableModel());
+		}
+		
+		private void setColumnWidths() {
+			int i = 0;
+			while(columnModel.getColumns().hasMoreElements()) {
+				columnModel.getColumns().nextElement().setMaxWidth(tableModel.getColumns().get(i).getSize());
+				i++;
+			}
+		}
+}

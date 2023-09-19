@@ -1,0 +1,16 @@
+package test.submit;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import javax.swing.JButton;
+
+import org.junit.jupiter.api.Test;
+
+class TestSubmit {
+
+	@Test
+	void should() {
+//		SubmitButton submitButton = new SubmitButton();
+	}
+
+}

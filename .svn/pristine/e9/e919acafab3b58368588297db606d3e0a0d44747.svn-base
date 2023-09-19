@@ -1,0 +1,88 @@
+package test.procedureservice;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import model.ProcedureService;
+import model.tree.TreeElement.Column;
+import model.tree.TreeElement.Table;
+
+class TestUpdate {
+
+	private Table table;
+	
+	@BeforeEach
+	void setup() {
+		table = new Table();
+		table.setUpdateSProc("{call pisg2.st_UpdateTEST(?,?)}");
+
+		Column col1 = new Column("Primary key");
+		col1.code = "Primary key";
+
+		Column col2 = new Column("Value");
+		col2.code = "Value";
+
+		table.addElement(col1);
+		table.addElement(col2);
+	}
+
+	@Test
+	void shouldGet1IfValueIsNull() throws SQLException {
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("Primary key", 1);
+		params.put("Value", null);
+		
+		ProcedureService spService = new ProcedureService(table);
+		
+		assertEquals(1, spService.update(params));
+	}
+	
+	@Test
+	void shouldGet1IfUpdateOneRow() throws SQLException {
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("Primary key", 1);
+		params.put("Value", "A value");
+		
+		ProcedureService spService = new ProcedureService(table);
+
+		assertEquals(1, spService.update(params));
+	}
+	
+	@Test
+	void shouldThrowSQLExcep_IfWrongType() {	
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("Primary key", "String type, but should be int");
+		params.put("Value", "A value");
+		
+		ProcedureService spService = new ProcedureService(table);
+		
+		Assertions.assertThrows(SQLException.class, () -> {
+			spService.update(params);
+		});
+	}
+	
+	@Test
+	void shouldThrowSQLExcep_IfPrimaryKeyIsNull() {
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("Primary key", null);
+		params.put("Value", "A value");
+		
+		ProcedureService spService = new ProcedureService(table);
+		
+		Assertions.assertThrows(SQLException.class, () -> {
+			spService.update(params);
+		});
+	}
+	
+	
+	
+	
+}

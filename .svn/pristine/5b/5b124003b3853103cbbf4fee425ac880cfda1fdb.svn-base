@@ -1,0 +1,96 @@
+package test.input;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.awt.Component;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JFormattedTextField;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
+import model.tree.TreeElement.Column;
+import test.procedureservice.TestProcedureService;
+import view.input.Input;
+import view.input.InputFactory;
+import view.input.InputPanel;
+import view.input.LinkedField;
+
+class TestInput {
+
+	@BeforeAll
+	static void setupDb() {
+		TestProcedureService.setupDb();
+	}
+	
+	@Test
+	void shouldThrowArgExceptionIfNonexistentType() {
+		Column column = new Column(null, null, false, false, null, null, "EEEEEEE", 0, 0);
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			InputFactory.createInput(column);
+			});
+	}
+	
+	@Test
+	void shouldSetStringValue() {
+		Column column = new Column("String", null, false, false, null, null, "java.lang.String", 3, 0);
+		Input textInput = InputFactory.createInput(column);
+		
+		textInput.setValue("123");
+		assertEquals("123", textInput.getValue());
+	}
+	
+	@Test
+	void shouldSetNullValueOnTextInput() {
+		Column column = new Column("String", null, false, false, null, null, "java.lang.String", 3, 0);
+		Input textInput = InputFactory.createInput(column);
+		
+		textInput.setValue(null);
+		assertEquals(null, textInput.getValue());
+	}
+	
+	
+	@Test
+	void shouldThrowArgExceptionIfSetStringOnIntegerField() {
+		Column column = new Column("String", null, false, false, null, null, "java.lang.Integer", 3, 0);
+		Input textInput = InputFactory.createInput(column);
+
+		Assertions.assertThrows(IllegalArgumentException.class, () -> {
+			textInput.setValue("1234");
+		});
+	}
+	
+	@Test
+	void shouldSetBooleanValue() {
+		Column column = new Column("Boolean", null, false, false, null, null, "java.lang.Boolean", 1, 0);
+		Input boolInput = InputFactory.createInput(column);
+		
+		boolInput.setValue(true);
+		assertEquals(true, boolInput.getValue());
+	}
+	
+	@Test
+	void shouldSetDatetimeValue() {
+		Column column = new Column("Datetime", null, false, false, null, null, "java.sql.Timestamp", 0, 0);
+		Input dateTimeInput = InputFactory.createInput(column);
+		
+		Timestamp time = new Timestamp(100000);
+		
+		dateTimeInput.setValue(time);
+		assertEquals(time, dateTimeInput.getValue());
+	}
+	
+	@Test
+	void shouldGetPrimaryKeyThatMatchesValueOfLinkedField() throws SQLException {
+		Column column = new Column("Klasa", "Klasa", true, false, "Naziv", "Klasa", "java.lang.String", 500, 500);
+		LinkedField linkedField = (LinkedField) InputFactory.createInput(column);
+		linkedField.setValue("suv");
+		
+		assertEquals("4", linkedField.getKeyForValue());
+	}
+}

@@ -1,0 +1,70 @@
+package test.treemodel;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
+import model.tree.CustomTreeModel;
+import model.tree.TreeElement;
+import model.tree.TreeElement.Column;
+import model.tree.TreeElement.Package;
+import model.tree.TreeElement.Table;
+import model.xmlparser.XMLParser;
+
+class TestTreeModel {
+
+	static CustomTreeModel ctm;
+	static TreeElement rootPackage;
+	
+	@BeforeAll
+	static void setup() {
+		ctm = new CustomTreeModel(null);
+		ctm.initializeFromXml(new XMLParser());
+		rootPackage = (Package) ctm.getRoot();
+	}
+	
+	@Test
+	void shouldInitializePackageAsFirstElement() {
+		assertTrue(rootPackage.getElementAt(0) instanceof Package);
+	}
+	
+	@Test
+	void shouldInitializeSubPackage() {
+		assertTrue(rootPackage.getElementAt(1).getElementAt(0) instanceof Package);
+	}
+	
+	@Test
+	void shouldInitializeTableWithCrudStoredProc() {
+		Table table = (Table) rootPackage.getElementAt(0)
+										.getElementAt(0);
+		assertEquals("{call st_GetAllVozila()}", table.getRetrieveSProc());
+	}
+	
+	
+	@Test
+	void shouldInitializeTableWithColumn() {
+		Table drumskaVozila = (Table) rootPackage.getElementAt(0).getElementAt(1);
+		assertTrue(drumskaVozila.getElementAt(0) instanceof Column);
+	}
+	
+	@Test
+	void shouldInitializeColumnNamedBroj() {
+		Table drumskaVozila = (Table) rootPackage.getElementAt(0).getElementAt(1);
+		assertEquals("Broj", drumskaVozila.getElementAt(0).name);
+	}
+	@Test
+	void shouldInitializeColumnBrojAsPrimaryKey() {
+		Table drumskaVozila = (Table) rootPackage.getElementAt(0).getElementAt(1);
+		Column broj = (Column) drumskaVozila.getElementAt(0);
+		assertTrue(broj.isPrimary());
+	}
+	
+	@Test
+	void brojVozilaShouldBePkOfTableDrumskaVozila() {
+		Table drumskaVozila = (Table) rootPackage.getElementAt(0).getElementAt(1);
+		assertTrue(drumskaVozila.getElementAt(0) instanceof Column);
+	}
+
+}

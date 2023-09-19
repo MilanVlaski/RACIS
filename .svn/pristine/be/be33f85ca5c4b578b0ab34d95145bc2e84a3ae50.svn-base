@@ -1,0 +1,248 @@
+{call pisg2.st_CreateTEST(?, ?)}
+@PrimaryKey, @Value
+
+{call pisg2.st_DaLiImaDodatnuRoluKorisnik()}
+
+{call pisg2.st_DeleteCijena(?)}
+@idCijene
+
+{call pisg2.st_DeleteDodatneRoleKorisnika(?, ?)}
+@userId, @oznakaIdRole
+
+{call pisg2.st_DeleteDrumskoVozilo(?)}
+@brVozila
+
+{call pisg2.st_DeleteInInventar(?)}
+@id
+
+{call pisg2.st_DeleteKlasaVozila(?)}
+@oznaka
+
+{call pisg2.st_DeleteKlijent(?)}
+@idKlijenta
+
+{call pisg2.st_DeletePlovnoVozilo(?)}
+@brVozila
+
+{call pisg2.st_DeletePogonVozila(?)}
+@oznaka
+
+{call pisg2.st_DeletePrikolica(?)}
+@brVozila
+
+{call pisg2.st_DeletePrivilegijeKorisniku(?)}
+@id
+
+{call pisg2.st_DeletePrivilegijeRoli(?)}
+@id
+
+{call pisg2.st_deleteTEST(?)}
+@Kljuc
+
+{call pisg2.st_deleteTipInventara(?)}
+@oznaka
+
+{call pisg2.st_DeleteZanimanje(?)}
+@oznaka
+
+{call pisg2.st_GetAllAktuelneRezervacijeDrumskaVozila()}
+
+{call pisg2.st_GetAllAktuelneRezervacijePlovila()}
+
+{call pisg2.st_GetAllAktuelneRezervacijePrikolica()}
+
+{call pisg2.st_GetAllAktuelneRezervacijeVozila()}
+
+{call pisg2.st_GetAllCijene()}
+
+{call pisg2.st_GetAllDrumskaVozila()}
+
+{call pisg2.st_GetAllIstorijskeRezervacijeDrumskaVozila()}
+
+{call pisg2.st_GetAllIstorijskeRezervacijePlovila()}
+
+{call pisg2.st_GetAllIstorijskeRezervacijePrikolica()}
+
+{call pisg2.st_GetAllIstorijskeRezervacijeVozila()}
+
+{call pisg2.st_GetAllKatalogZanimanja()}
+
+{call pisg2.st_GetAllKatalogZvanja()}
+
+{call pisg2.st_GetAllKlasaVozila()}
+
+{call pisg2.st_GetAllKlijenti()}
+
+{call pisg2.st_GetAllKorisniciINjihovePrivilegije()}
+
+{call pisg2.st_GetAllPlovila()}
+
+{call pisg2.st_GetAllPogon()}
+
+{call pisg2.st_GetAllPrikolice()}
+
+{call pisg2.st_GetAllRezervacijeDrumskaVozila()}
+
+{call pisg2.st_GetAllRezervacijePlovila()}
+
+{call pisg2.st_GetAllRezervacijePrikolica()}
+
+{call pisg2.st_GetAllRezervacijeVozila()}
+
+{call pisg2.st_GetAllStatus()}
+
+{call pisg2.st_GetAllVozila()}
+
+{call pisg2.st_GetAllVozilaPoCijeni(?)}
+@SearchTerm
+
+{call pisg2.st_GetInventarAgencije()}
+
+{call pisg2.st_GetKatalogRadnihMjesta()}
+
+{call pisg2.st_GetKlijent(?)}
+@SearchTerm
+
+{call pisg2.st_GetPrivilegijeKorisnika(?)}
+@username
+
+{call pisg2.st_GetRadnaMjesta()}
+
+{call pisg2.st_GetTipoviInventara()}
+
+{call pisg2.st_InsertCijena(?, ?, ?)}
+@dnevnaCijena, @sedmicnaCijena, @mjesecnaCijena
+
+{call pisg2.st_InsertDodatnaRolaKorisniku(?, ?)}
+@userId, @oznakaIdDodatneRole
+
+{call pisg2.st_InsertInventar(?, ?, ?, ?, ?, ?, ?)}
+@ID, @oznakaTipa, @naziv, @opis, @kolicina, @cijenaPoJedinici, @datumNabavke
+
+{call pisg2.st_InsertKlijent(?, ?, ?, ?, ?)}
+@tip, @ime, @adresa, @brTel, @mail
+
+{call pisg2.st_InsertPrivilegijeKorisniku(?, ?, ?)}
+@userId, @oznakaIdPrivilegije, @oznakaIdRole
+
+{call pisg2.st_InsertPrivilegijeRoli(?, ?, ?, ?)}
+@drzava, @poslovniSistem, @naziv, @kod
+
+{call pisg2.st_InsertRezervacijaDnevno(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}
+@brojDana, @oznaka, @rezervacija, @klijent, @stanjeBrojilaPrije, @stanjeRezervoaraPrije, @od, @do, @nacinPlacanja, @placena, @brojVozila
+
+{call pisg2.st_InsertRezervacijaMjesecna(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}
+@brojDana, @oznaka, @rezervacija, @klijent, @stanjeBrojilaPrije, @stanjeRezervoaraPrije, @od, @do, @nacinPlacanja, @placena, @brojVozila
+
+{call pisg2.st_InsertRezervacijaSedmicno(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}
+@brojDana, @oznaka, @rezervacija, @klijent, @stanjeBrojilaPrije, @stanjeRezervoaraPrije, @od, @do, @nacinPlacanja, @placena, @brojVozila
+
+{call pisg2.st_InsertTipInventara(?, ?, ?)}
+@oznaka, @naziv, @opis
+
+{call pisg2.st_InsertVoziloInDrumska(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}
+@SearchTerm1, @SearchTerm2, @SearchTerm3, @SearchTerm4, @SearchTerm5, @SearchTerm6, @SearchTerm7, @SearchTerm8, @SearchTerm9, @SearchTerm10, @SearchTerm11, @SearchTerm12, @SearchTerm13, @SearchTerm14, @SearchTerm15, @SearchTerm16, @SearchTerm17, @SearchTerm18, @SearchTerm19, @SearchTerm20, @SearchTerm21, @SearchTerm22, @SearchTerm23
+
+{call pisg2.st_InsertVoziloInPlovilo(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}
+@SearchTerm1, @SearchTerm2, @SearchTerm3, @SearchTerm4, @SearchTerm5, @SearchTerm6, @SearchTerm7, @SearchTerm8, @SearchTerm9, @SearchTerm10, @SearchTerm11, @SearchTerm12, @SearchTerm13, @SearchTerm14, @SearchTerm15, @SearchTerm16, @SearchTerm17, @SearchTerm18, @SearchTerm19
+
+{call pisg2.st_InsertVoziloInPrikolice(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}
+@SearchTerm1, @SearchTerm2, @SearchTerm3, @SearchTerm4, @SearchTerm5, @SearchTerm6, @SearchTerm7, @SearchTerm8, @SearchTerm9, @SearchTerm10, @SearchTerm11, @SearchTerm12, @SearchTerm13
+
+{call pisg2.st_InsertZanimanje(?, ?, ?, ?, ?, ?)}
+@drzava, @oznakaZanimanja, @nazivRadnogMjesta, @opisRadnogMjesta, @planskiBrIzvrsilaca, @poslovniSistem
+
+{call pisg2.st_IzlistajDodatnuRoluZajednoSaPrivilegijamaZaKorisnika()}
+
+{call pisg2.st_IzlistajODUZETEPrivilegijeIRoleZaJednogKorisnika(?)}
+@username
+
+{call pisg2.st_IzlistajODUZETEPrivilegijeKorisnikeIRole()}
+
+{call pisg2.st_IzlistajPrivilegijeIRoleZaJednogKorisnika(?)}
+@username
+
+{call pisg2.st_IzlistajPrivilegijeKorisnikeIRole()}
+
+{call pisg2.st_IzlistajRoleIPrivilegijeOduzete()}
+
+{call pisg2.st_IzlistajSveRoleINjihovePrivilegije()}
+
+{call pisg2.st_LogIn(?, ?)}
+@SearchTermUser, @SearchTermPass
+
+{call pisg2.st_OduzmiPrivilegijeIzTabeleIzlistanihSVIHKorisnika(?)}
+@id
+
+{call pisg2.st_OduzmiPrivilegijeZaJednogKorisnika(?)}
+@id
+
+{call pisg2.st_OduzmiPrivilegijuRoli(?)}
+@idPrivilegije
+
+{call pisg2.st_UpdateCijena(?, ?, ?, ?)}
+@idCijene, @dnevna, @mjesecna, @sedmicna
+
+{call pisg2.st_UpdateInventar(?, ?, ?, ?, ?, ?, ?)}
+@id, @oznakaTipa, @naziv, @opis, @kolicina, @cijenaPoJedinici, @datumNabavke
+
+{call pisg2.st_UpdateKlijent(?, ?, ?, ?, ?, ?)}
+@idKlijenta, @tipKlijenta, @imeKlijenta, @adresaKlijenta, @brojTelefona, @email
+
+{call pisg2.st_UpdatePlovnoVozilo(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}
+@SearchTerm, @SearchTerm1, @SearchTerm2, @pogon, @tip, @boja, @stanjeRezervoara, @radniSati, @deplazman, @gaz, @maksimalnaBrzina
+
+{call pisg2.st_UpdatePrikolica(?, ?, ?, ?)}
+@brVozila, @status, @cijena, @napomena
+
+{call pisg2.st_UpdatePromijeniRoluKorisniku(?, ?)}
+@userId, @oznakaIdRole
+
+{call pisg2.st_UpdateRezervacijeDnevna(?, ?, ?, ?, ?, ?, ?, ?)}
+@oznaka, @rezervacija, @klijent, @stanjeBrojilaPrije, @stanjeRezervoaraPrije, @nacinPlacanja, @placena, @brojVozila
+
+{call pisg2.st_UpdateRezervacijeMjesecna(?, ?, ?, ?, ?, ?, ?, ?)}
+@oznaka, @rezervacija, @klijent, @stanjeBrojilaPrije, @stanjeRezervoaraPrije, @nacinPlacanja, @placena, @brojVozila
+
+{call pisg2.st_UpdateRezervacijeSedmicna(?, ?, ?, ?, ?, ?, ?, ?)}
+@oznaka, @rezervacija, @klijent, @stanjeBrojilaPrije, @stanjeRezervoaraPrije, @nacinPlacanja, @placena, @brojVozila
+
+{call pisg2.st_UpdateStatusRezervacijeDnevna(?, ?, ?, ?, ?, ?, ?, ?, ?)}
+@oznaka, @rezervacija, @klijent, @stanjeBrojilaPrije, @stanjeRezervoaraPrije, @nacinPlacanja, @placena, @brojVozila, @status
+
+{call pisg2.st_UpdateStatusRezervacijeMjesecna(?, ?, ?, ?, ?, ?, ?, ?, ?)}
+@oznaka, @rezervacija, @klijent, @stanjeBrojilaPrije, @stanjeRezervoaraPrije, @nacinPlacanja, @placena, @brojVozila, @status
+
+{call pisg2.st_UpdateStatusRezervacijeSedmicna(?, ?, ?, ?, ?, ?, ?, ?, ?)}
+@oznaka, @rezervacija, @klijent, @stanjeBrojilaPrije, @stanjeRezervoaraPrije, @nacinPlacanja, @placena, @brojVozila, @status
+
+{call pisg2.st_UpdateTEST(?, ?)}
+@PrimaryKey, @Value
+
+{call pisg2.st_updateTipInventara(?, ?, ?)}
+@oznaka, @naziv, @opis
+
+{call pisg2.st_UpdateVoziloInDrumskaVozila(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}
+@SearchTerm, @SearchTerm1, @SearchTerm2, @SearchTerm3, @SearchTerm4, @SearchTerm5, @SearchTerm6, @SearchTerm7, @SearchTerm8, @SearchTerm9, @SearchTerm10, @SearchTerm11, @SearchTerm12
+
+{call pisg2.st_UpdateVrijemeRezervacijeDnevna(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}
+@brojDana, @oznaka, @rezervacija, @klijent, @stanjeBrojilaPrije, @stanjeRezervoaraPrije, @nacinPlacanja, @placena, @brojVozila, @status, @od, @do
+
+{call pisg2.st_UpdateVrijemeRezervacijeMjesecna(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}
+@oznaka, @rezervacija, @klijent, @stanjeBrojilaPrije, @stanjeRezervoaraPrije, @nacinPlacanja, @placena, @brojVozila, @status, @od, @do
+
+{call pisg2.st_UpdateVrijemeRezervacijeSedmicna(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}
+@oznaka, @rezervacija, @klijent, @stanjeBrojilaPrije, @stanjeRezervoaraPrije, @nacinPlacanja, @placena, @brojVozila, @status, @od, @do
+
+{call pisg2.st_UpdateZanimanja(?, ?, ?, ?, ?, ?)}
+@drzava, @oznakaZanimanja, @nazivRadnogMjesta, @opisRadnogMjesta, @planskiBrIzvrsilaca, @poslovniSistem
+
+{call pisg2.st_VratiPrivilegijeIzTabeleIzlistanihSVIHKorisnika(?)}
+@id
+
+{call pisg2.st_VratiPrivilegijeZaJednogKorisnika(?)}
+@id
+
+{call pisg2.st_VratiPrivilegijuRoli(?)}
+@idPrivilegije
+

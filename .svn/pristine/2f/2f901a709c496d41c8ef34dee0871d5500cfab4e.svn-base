@@ -1,0 +1,31 @@
+package test.procedureservice;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+
+import org.junit.jupiter.api.Test;
+
+import db.manipulation.DbManipulation;
+import db.type.DatabaseType;
+import model.ProcedureService;
+import model.tree.TreeElement.Table;
+
+class TestProcedureService {
+
+	@Test
+	void shouldGetResultSetForReadProcedureGetAllVozila() {
+		
+		Table table = new Table();
+		table.setRetrieveSProc("{ call st_GetAllVozila()}");
+		
+		Connection conn = DbManipulation.createConnection(DatabaseType.MsSQL_JDBC, "78.28.157.8",
+				"1435", "PIS2022","EtfPIS2022G2", "EtfPIS2022G22918").getConnection();
+		
+		ProcedureService spService = new ProcedureService(conn, table);
+		
+		assertTrue(spService.retrieve() instanceof ResultSet);
+	}
+
+}

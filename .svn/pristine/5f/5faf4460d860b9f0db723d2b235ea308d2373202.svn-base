@@ -1,0 +1,74 @@
+package view.input;
+
+import java.awt.Dimension;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
+import view.table.MainTableView;
+
+public class SelectionDialog extends JDialog {
+
+	private Object selectedValue = null;
+	
+	public SelectionDialog(MainTableView tableView, String table, String referencedColumn) {
+		setTitle(table);
+	    setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+	    
+		JScrollPane scrollTable = new JScrollPane(tableView);
+		setPreferredSize(new Dimension(1000, 500));
+		
+		JButton okBtn = new JButton("OK");
+		okBtn.setPreferredSize(new Dimension(200, 20));
+		okBtn.addActionListener(e -> {
+			dispose();
+		});
+		
+		JButton cancelBtn = new JButton("Cancel");
+		cancelBtn.setPreferredSize(new Dimension(200, 20));
+		cancelBtn.addActionListener(e -> {
+			selectedValue = null;
+			dispose();
+		});
+		
+		tableView.setSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if (e.getValueIsAdjusting()) {
+					return;
+				}
+				ListSelectionModel lsm = (ListSelectionModel) e.getSource();
+				if(!lsm.isSelectionEmpty()) {
+					int selectedRow = lsm.getMinSelectionIndex();
+					int selectedColumn = tableView.getTableModel().getIndexOfColumnNamed(referencedColumn);
+					selectedValue = tableView.getModel().getValueAt(selectedRow, selectedColumn);
+				}
+			}
+		});
+		
+		setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+		
+		JPanel btnPanel = new JPanel();
+		btnPanel.setLayout(new BoxLayout(btnPanel, BoxLayout.X_AXIS));
+		btnPanel.add(okBtn);
+		btnPanel.add(cancelBtn);
+		
+		add(tableView);
+		add(btnPanel);
+		
+		setModalityType(ModalityType.APPLICATION_MODAL);
+		pack();
+		setLocationRelativeTo(null);
+		setVisible(true);
+	}
+	
+	public Object getSelectedValue() {
+		return selectedValue;
+	}
+}

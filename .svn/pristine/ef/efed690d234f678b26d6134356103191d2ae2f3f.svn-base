@@ -1,0 +1,47 @@
+package model.table;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.HashMap;
+import java.util.List;
+
+import javax.swing.table.AbstractTableModel;
+
+public abstract class GeneralTableModel extends AbstractTableModel {
+
+	protected List<TableColumnModel> columns;
+	protected List<List<Object>> data;	
+	@Override
+	public int getRowCount() {
+		return data.size();
+	}
+	@Override
+	public int getColumnCount() {
+		return columns.size();
+	}
+	@Override
+	public Object getValueAt(int rowIndex, int columnIndex) {
+		return data.get(rowIndex).get(columnIndex);
+	}	
+	@Override
+	public String getColumnName(int column) {
+		return this.columns.get(column).getColumnName();
+	}
+	
+	public TableColumnModel getColumnNamed(String columnName) {
+		for (TableColumnModel tableColumnModel : columns) {
+			if(tableColumnModel.getColumnName().equals(columnName)) {
+				return tableColumnModel;
+			}
+		}
+		return null;
+	}
+	public List<TableColumnModel> getColumns() {
+		return columns;
+	}
+	public abstract void getAllData();	
+	public abstract boolean deleteRow(Object rowId);
+	public abstract boolean getRowById(Object rowId);	
+	public abstract void addRow(HashMap<String, String> params);
+	public abstract void editRow(HashMap<String, String> params);
+}

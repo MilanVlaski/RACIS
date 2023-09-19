@@ -1,0 +1,44 @@
+package view.tree;
+
+import java.awt.Dimension;
+import java.awt.event.MouseListener;
+import java.util.EventListener;
+
+import javax.swing.JScrollPane;
+import javax.swing.JTree;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.TreeSelectionModel;
+
+import model.ApplicationModel;
+import model.Publisher;
+import model.tree.CustomTreeModel;
+import view.Colors;
+import view.Subscriber;
+public class MainTree extends JScrollPane implements Subscriber{
+
+	private final JTree tree;
+	
+	public MainTree(CustomTreeModel customTreeModel){
+		this.tree = new JTree(customTreeModel);
+		
+		tree.getSelectionModel().setSelectionMode (TreeSelectionModel.SINGLE_TREE_SELECTION);
+		
+		setOpaque(true);
+		setBackground(Colors.SELECTION_COLOR);
+		setPreferredSize(new Dimension(225, 0));
+		tree.setCellRenderer(new CustomTreeCellRenderer());
+		tree.setRootVisible(true);
+	
+		setViewportView(tree);
+	}
+	
+	public void setListener(EventListener el) {
+		tree.addTreeSelectionListener((TreeSelectionListener) el);
+		tree.addMouseListener((MouseListener) el);
+	}
+
+	@Override
+	public void update(Publisher context) {
+		tree.setModel(((ApplicationModel)context).getTreeModel());
+	}
+}

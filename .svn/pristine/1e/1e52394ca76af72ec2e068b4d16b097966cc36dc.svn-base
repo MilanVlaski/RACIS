@@ -1,0 +1,29 @@
+package view.table;
+
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.TableModel;
+
+import model.ApplicationModel;
+import model.Publisher;
+import view.Subscriber;
+
+public class MainTableView extends JTable implements Subscriber{
+		
+		public MainTableView() {
+			
+			setRowHeight(30);
+			setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			
+			setDefaultRenderer(Object.class, new CustomCellRenderer());
+		}
+		
+		public void setTableModel(TableModel tableModel) {
+			setModel(tableModel);
+		}
+
+		@Override
+		public void update(Publisher context) {
+			setTableModel(((ApplicationModel) context).getMainTableModel());
+		}
+}

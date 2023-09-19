@@ -1,0 +1,65 @@
+package view.table;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.table.TableModel;
+
+public class Selection implements EditorState {
+
+	private TablePanel context;
+	
+	public Selection(TablePanel context) {
+		this.context = context;
+		this.context.getChangeBtn().setEnabled(true);
+		this.context.getDeleteBtn().setEnabled(true);
+		this.context.getCancelBtn().setEnabled(true);
+	}
+	
+	@Override
+	public void handleSelectionChanged(ListSelectionEvent e) {
+		if (e.getValueIsAdjusting()) {
+			return;
+		}
+		TableModel model = context.getTable().getModel();
+
+		ListSelectionModel lsm = (ListSelectionModel) e.getSource();
+		if (!lsm.isSelectionEmpty()) {
+			int selectedRow = lsm.getMinSelectionIndex();
+			List<Object> row = new ArrayList<>();
+			for (int i = 0; i < model.getColumnCount(); i++) {
+				row.add(model.getValueAt(selectedRow, i));
+			}
+			
+			context.getInputPanel().fillFields(row);
+		}
+	}
+
+	@Override
+	public void handleCreate() {
+		context.getInputPanel().setVisible(true);
+		context.getInputPanel().enableAllFields();
+		context.getInputPanel().clearFields();
+		context.setEditorState(new Creation(context));
+	}
+
+	@Override
+	public void handleChange() {}
+
+	@Override
+	public void handleDelete() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void handleCancel() {
+		context.getInputPanel().setVisible(false);
+		context.getInputPanel().clearFields();
+		context.getTable().getSelectionModel().clearSelection();
+		context.setEditorState(new Idle(context));
+	}
+
+}

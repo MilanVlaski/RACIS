@@ -1,0 +1,45 @@
+package test.tablemodel;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.sql.Connection;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import db.manipulation.DbManipulation;
+import db.type.DatabaseType;
+import model.ProcedureService;
+import model.table.CustomTableModel;
+import model.tree.TreeElement.Table;
+
+class TestCustomTableModel {
+
+	Table table;
+	Connection conn;
+	ProcedureService spService;
+	CustomTableModel customTableModel;
+	
+	@BeforeEach
+	void setup() {
+		table = new Table();
+		table.setRetrieveSProc("{call st_GetAllVozila()}");
+		
+		conn = DbManipulation.createConnection(DatabaseType.MsSQL_JDBC, "78.28.157.8",
+				"1435", "PIS2022","EtfPIS2022G2", "EtfPIS2022G22918").getConnection();
+		spService = new ProcedureService(conn, table);
+		customTableModel = new CustomTableModel(spService);
+	}
+	
+	@Test
+	void shouldInitializeHeader() {
+		assertTrue(customTableModel.getColumnCount() > 0);
+	}
+	
+	@Test
+	void shouldInitializeFirstRow() {
+		//the header is also a row
+		assertTrue(customTableModel.getRowCount() > 1);
+	}
+
+}

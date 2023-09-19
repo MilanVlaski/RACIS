@@ -1,0 +1,71 @@
+package model;
+
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import javax.swing.table.TableModel;
+
+import db.manipulation.DbManipulation;
+import model.table.CustomTableModel;
+import model.tree.TreeElement.Table;
+import model.xmlparser.XMLParser;
+import model.xmlparser.XMLTreeParser;
+import view.Subscriber;
+import view.table.MainTableView;
+
+public class ApplicationModel implements Publisher{
+
+	private final XMLParser xmlParser;
+	private final DbManipulation dbManipulation;
+	private final Connection conn;
+	private TableModel mainTableModel;
+	private ArrayList<Subscriber> subscribers;
+	
+	public ApplicationModel() {
+		this.xmlParser = new XMLParser();
+		this.dbManipulation = xmlParser.createConnection();
+		this.conn = dbManipulation.getConnection();
+		this.mainTableModel = null;
+		this.subscribers = new ArrayList<>();	
+	}
+	
+	public XMLTreeParser getXmlParser() {
+		return xmlParser;
+	}
+	public DbManipulation getDbManipulation() {
+		return dbManipulation;
+	}
+	public Connection getConn() {
+		return conn;
+	}
+	public TableModel getMainTableModel() {
+		return mainTableModel;
+	}
+	public void setMainTableModel(Table table) {
+		if(table != null) {
+			this.mainTableModel = new CustomTableModel(conn, table);
+			notifyAllSubscribers();
+		} else {
+			this.mainTableModel = null;
+		}
+	}
+
+	@Override
+	public void notify(Subscriber subscriber) {
+		subscriber.update(this);
+	}
+
+	@Override
+	public void notifyAllSubscribers() {
+		for (Subscriber subscriber : subscribers) {
+			subscriber.update(this);
+		}
+	}
+
+	@Override
+	public void subscribe(Subscriber subscriber) {
+		subscribers.add(subscriber);
+	}
+}

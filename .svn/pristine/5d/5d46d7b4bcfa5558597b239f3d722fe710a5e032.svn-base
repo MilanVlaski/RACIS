@@ -1,0 +1,65 @@
+package test.input;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+
+import model.tree.TreeElement.Column;
+import view.input.InputPanel;
+
+class TestInputPanel {
+
+	@Test
+	void returnTrueIfMandatoryInputsAreFilled() {
+		InputPanel inputPanel = new InputPanel();
+		List<Column> columns = new ArrayList<>();
+		columns.add(new Column("Mandatory", null, false, false, null, null, "java.lang.String", 20, 20));
+		inputPanel.setFields(columns);
+		
+		inputPanel.getInputs().get(0).setValue("something");
+		
+		assertTrue(inputPanel.inputsValid());
+	}
+	
+	@Test
+	void returnFalseIfMandatoryInputsAreEmpty() {
+		InputPanel inputPanel = new InputPanel();
+		List<Column> columns = new ArrayList<>();
+		columns.add(new Column("Mandatory", null, false, false, null, null, "java.lang.String", 20, 20));
+		inputPanel.setFields(columns);
+		
+		assertFalse(inputPanel.inputsValid());
+	}
+	
+	@Test
+	void returnNameOfEmptyMandatoryInput() {
+		InputPanel inputPanel = new InputPanel();
+		List<Column> columns = new ArrayList<>();
+		columns.add(new Column("Name", null, false, false, null, null, "java.lang.String", 20, 20));
+		inputPanel.setFields(columns);
+		
+		inputPanel.getInputs().get(0).setValue(null);
+		
+		assertEquals("Name", inputPanel.mandatoryEmptyInputNames());
+	}
+	
+	@Test
+	void returnNameOfEmptyMandatoryInputs() {
+		InputPanel inputPanel = new InputPanel();
+		List<Column> columns = new ArrayList<>();
+		columns.add(new Column("Name", null, false, false, null, null, "java.lang.String", 20, 20));
+		columns.add(new Column("Other name", null, false, false, null, null, "java.lang.String", 20, 20));
+
+		inputPanel.setFields(columns);
+		
+		inputPanel.getInputs().get(0).setValue(null);
+		inputPanel.getInputs().get(0).setValue(null);
+
+		
+		assertEquals("Name, Other name", inputPanel.mandatoryEmptyInputNames());
+	}
+
+}

@@ -1,0 +1,83 @@
+package controller;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.JOptionPane;
+import javax.swing.JTree;
+import javax.swing.SwingUtilities;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.TreePath;
+
+import model.ApplicationModel;
+import model.tree.TreeElement.Table;
+import view.table.MainTableView;
+import view.table.TablePanel;
+
+/**
+ * Osluskivac selekcije elementa stabla i klika misa, tako da moze detektovati
+ * double klik na elemenat stabla. Klik na praznu povrsinu komponente Jtree,
+ * deselektuje trenutno selektovani element.
+ * 
+ * @author Dijana
+ * 
+ */
+public class TreeListener extends MouseAdapter implements
+		TreeSelectionListener
+{
+
+	private final ApplicationModel appModel;
+	private final TablePanel tablePanel;
+	private Object node = null;
+	private JTree tree = null;
+	
+	public TreeListener(ApplicationModel appModel, TablePanel tablePanel) {
+		this.appModel = appModel;
+		this.tablePanel = tablePanel;
+	}
+
+	@Override
+	public void valueChanged(TreeSelectionEvent e)
+	{
+		tree = (JTree) e.getSource();
+		node = tree.getLastSelectedPathComponent();
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e)
+	{
+		if (tree != null)
+		{
+			int row = tree.getRowForLocation(e.getX(), e.getY());
+
+			if (row == -1) // Kada se klikne na prazno
+			{
+				tree.clearSelection();
+			}
+			else 
+			{
+		         TreePath selPath = tree.getPathForLocation(e.getX(), e.getY());
+		         tree.setSelectionPath(selPath);
+			}
+		}
+		if (e.getSource() instanceof JTree)
+		{
+			if (e.getClickCount() == 2)
+			{
+				
+				if(node instanceof Table) {
+					appModel.setMainTableModel((Table) node);
+					tablePanel.setVisible(true);
+				}
+			}
+			else if (e.isMetaDown()) 
+			{
+				
+				JOptionPane.showMessageDialog(SwingUtilities.getRoot(tree), "Desni klik na " + node,
+						"Poruka", JOptionPane.INFORMATION_MESSAGE);
+			}
+		}
+	}
+
+}

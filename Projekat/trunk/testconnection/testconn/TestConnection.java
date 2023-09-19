@@ -1,0 +1,49 @@
+package testconn;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+
+import db.manipulation.DbManipulation;
+import db.type.DatabaseType;
+import model.xmlparser.XMLParser;
+
+class TestConnection {
+
+	static DbManipulation dbm;
+	
+	@Test
+	void shouldConnectViaXml() {
+		XMLParser parser = new XMLParser();	
+		dbm = parser.createConnection();
+		try {			
+			assertTrue(dbm.getConnection().isValid(1));
+			assertFalse(dbm.getConnection().isClosed());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	void testDbManipulation() {
+		dbm = DbManipulation.createConnection(DatabaseType.MsSQL_JDBC, "78.28.157.8",
+				"1435", "PIS2022", "EtfPIS2022G2", "EtfPIS2022G22918");
+		try {
+			assertTrue(dbm.getConnection().isValid(1));
+			assertFalse(dbm.getConnection().isClosed());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@AfterAll
+	static void closeConnection() {
+		dbm.closeConnection();
+	}
+}

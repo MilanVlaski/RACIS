@@ -1,0 +1,658 @@
+PRIJAVA NA SISTEM
+
+svi korisnici sistema bi bili na ovo povezani
+
+SPECIFITCATIONS
+
+PRE-CONDITIONS
+1.korisnički nalog kreiran od strane administratora
+
+ACTION STEPS
+1.korisnik unosi korisničko ime ili e-mail adresu i lozinku i potvrdjuje unos
+2.sistem omogucava pristup aplikaciji 
+
+EXTENSION POINTS
+1.1.1.unijeti podaci(korisnicko ime ili e-mail adresa ili lozinka) nisu ispravno unijeti
+1.1.2. sistem obavještava korisnika da ima greška prilikom unosa podataka i omogucava mu ponavljanje unosa
+1.2.1. Nemoguce je pristupiti bazi podataka
+1.2.2. Sistem obavjestava korisnika o tome
+
+EXCEPTIONS
+1.konekcija se prekinula
+1a.sistem obavještava korisnika o tome da nije moguće pristupiti sistemu zbog prekinute konekcije
+
+POST-CONDITIONS
+1.korisnik je prijavljen na sistem
+2.korisniku se prikazuje početna stranica informacionog sistema RACIS
+
+DEFINITION
+Korisnik unosi korisničko ime ili e-mail adresu i lozinku sa ciljem da pristupi sistemu i koristi njegove funkcionalnosti u skladu sa onim što dopušta njegov položaj u agenciji
+
+
+
+Registracija
+
+Preconditions:
+1. Administratoru dodjijeljen administratorski nalog
+
+Action steps:
+1. Administrator unosi potrebne informacije o korisniku
+2. Administrator potvrdjuje kreiranje korisničkog naloga (obavezna validna mail adresa)
+3. Sistem obavještava korisnika o kreiranju njegovog naloga na unesenu mail adresu. Mail sadrži username i password (password se mora promijeniti prilikom prve prijave)
+
+Extension points:
+1. Administrator odustaje od kreiranja naloga
+1a. Sistem pita administratora za potvrdu odustajanja
+1b. Sistem briše unijete podatke iz forme za registraciju
+
+Exceptions:
+1. Unesena mail adresa nije validna
+1a. Sistem obavještava administratora da je unesena mail adresa loša
+
+Postconditions:
+1. Korisnički nalog je kreiran
+2. Sistem obavještava administratora o tome
+3. Sistem briše unijete podatke iz forme za registraciju
+
+
+Definition:
+Administrator može da registruje nove korisnike u skladu sa potrebama agencije. Kada administrator kreira korisnički nalog sistem putem mail-a obavještava korisnika o tome i daje mu potrebne podatke za prijavu. Prilikom prve prijave korisnik je dužan promijeniti šifru a kasnije može da je mijenja ukoliko želi a ne mora. Korisnik čiji nalog je registrovan ima mogućnost pristupa funkcionalnostima definisanim u okviru RBAC za izabranu rolu.
+
+
+
+
+
+UPRAVLJANJE REZERVACIJAMA
+
+PREGLED AKTUELNIH REZERVACIJA
+na ovo povezujemo predstavnika korisnicke sluzbe, upravitelja voznog parka, administratora, vlasnika
+SPECIFITCATIONS
+
+PRE-CONDITIONS
+1.korisnik mora biti ulogovan na sistem
+
+ACTION STEPS
+1.Korisnik bira opciju pregleda aktuelnih rezervacija
+2. Sistem prikazuje aktuelne rezervacije
+
+
+EXTENSION POINT:
+
+
+POST-CONDITIONS
+Prikazane su trenutne rezervacije.
+
+EXCEPTION
+1.ne može da se spoji na bazu
+
+DEFINITION
+OZNAKA ili GUID, VRIJEME POCETKA, VRIJEME ZAVRSETKA, PREDMET, KLIJENT, STATUS, VRIJEME KREIRANJA, OPEN DATE, PLACENA, ONE WAY
+Sistem omogućava korisniku pregled svih narudžbi koje postoje, a kasnije putem filtriranja i pretrage i tačno željene narudžbe o kojoj korisnik želi da sazna detaljnije informacije, kao što su informacije o statusu narudžbe, vremenu preuzeća i povratka, da li je narudžba plaćena, i ostale informacije o mušteriji koja je izvršila rezervaciju.
+
+PREGLED ISTORIJSKIH REZERVACIJA
+na ovo povezujemo predstavnika korisnicke sluzbe, upravitelja voznog parka, administratora, vlasnika
+SPECIFITCATIONS
+
+PRE-CONDITIONS
+1.korisnik mora biti ulogovan na sistem
+
+ACTION STEPS
+1.Korisnik bira opciju pregleda istorijskih rezervacija
+2. Sistem prikazuje istorijskih rezervacije
+
+
+EXTENSION POINT:
+
+
+POST-CONDITIONS
+Prikazane su istorijske rezervacije.
+
+EXCEPTION
+1.ne može da se spoji na bazu
+
+DEFINITION
+OZNAKA ili GUID, VRIJEME POCETKA, VRIJEME ZAVRSETKA, PREDMET, KLIJENT, STATUS, VRIJEME KREIRANJA, OPEN DATE, PLACENA, ONE WAY
+Sistem omogućava korisniku pregled svih narudžbi koje postoje u istoriji, a kasnije putem filtriranja i pretrage i tačno željene narudžbe o kojoj korisnik želi da sazna detaljnije informacije, kao što su informacije o statusu narudžbe, vremenu preuzeća i povratka, da li je narudžba plaćena, i ostale informacije o mušteriji koja je izvršila rezervaciju.
+
+
+
+PREGLED DOSTUPNIH VOZILA
+na ovo vežemo predstavnika korisničke službe
+
+SPECIFITCATIONS
+
+PRE-CONDITIONS
+1.korisnik mora biti ulogovan na sistem
+
+ACTION STEPS
+Korisnik bira opciju pregleda dostupnih vozila,
+Sistem nudi izbor između vozila drumskog i vodenog saobraćaja.
+Korisnik bira zeljenu opciju.
+Korisnik unosi period rezervacije i druge parametre, i bira opciju pretrage.
+Sistem prikazuje dostupna vozila.
+
+EXTENSION POINTS
+4.1.1. korisnik je pogresno unio podatke
+4.1.2. sistem obavjestava korisnika o tome i nudi mu povratak na unos
+
+4.2.1. korisnik nije unio obavezne podatke
+4.2.2. sistem obavjestava korisnika o tome i nudi mu povratak na unos
+
+POST-CONDITIONS
+Prikazana su dostupna vozila.
+
+DEFINITION
+
+Sistem korisniku omogućava pretragu vozila koja odgovaraju potrebama i željama mušterija,  filtriranjem istih, nakon čega unosi sve relevantne informacije o mušteriji, datum preuzimanja i vraćanja prevoznig sredstva, nakon čega on dobija potvrdu o izvršenju narudžbe, i šalje mejl korisniku sa informacijama relevantnim za tu narudžbu, nakon čega se njemu prikazuje početna stranica kako bi mogao dalje pretraživati prevozna sredstva i vršiti dalje narudžbe.
+
+KREIRANJE REZERVACIJE
+
+PRE-CONDITIONS
+1.korisnik mora biti ulogovan na sistem
+
+ACTION STEPS
+Sistem nudi izbor između vozila drumskog i vodenog saobraćaja.
+Korisnik bira zeljenu opciju.
+Sistem nudi opciju za pretragu dostupnih vozila.
+Korisnik unosi period rezervacije i druge parametre, i bira opciju pretrage.
+Sistem prikazuje dostupna vozila.
+Korisnik bira zeljena vozila i dodaje ih u rezervaciju.
+Sistem omogucava unos potrebnih podataka za kreiranje rezervacije.
+Korisnik unosi potrebne podatke.
+Sistem kreira rezervaciju i nudi mogucnost generisanja ugovora.
+
+EXTENSION POINTS
+5.1.1. Korisnik je unio pogresne informacije.
+5.1.2. Sistem ga obavjestava o tome i vraca se na stanje unosa.
+
+6.1.1. Ne postoje dostupna vozila za trazene parametre.
+6.1.2. Sistem obavjestava korisnika o tome i omogucava ponovni unos.
+
+7.1.1. Korisnik uklanja vozilo iz rezervacije.
+7.1.2. Sistem vraca vozilo medju dostupna vozila.
+
+9.1.1. korisnik je pogresno unio podatke
+9.1.2. sistem obavjestava korisnika o tome i nudi mu povratak na unos
+
+9.2.1. korisnik nije unio obavezne podatke
+9.2.2. sistem obavjestava korisnika o tome i nudi mu povratak na unos
+
+10.1.1. Sistem pokrece slucaj koristenja generisanje ugovora.
+
+POST-CONDITIONS
+Rezervacija je kreirana.
+DEFINITION
+PRETRAGA DOSTUPNIH: OD KAD, DO KAD, KLASA, TIP, LOKACIJA
+UNOS REZERVACIJE: 
+IME KLIJENTA, IDENTIFIKATOR, TIP
+VRIJEME PREUZIMANJA I POVRATKA (OPET!)
+DEPOZIT, UKUPNA CIJENA (kalkulisana na osnovu proizvoda, i promjenljiva od strane nas)
+DODAJ VOZILO DODAJE GA U NEKU NOVU TABELU
+Sistem korisniku omogućava pretragu vozila koja odgovaraju potrebama i željama mušterija,  filtriranjem istih, nakon čega unosi sve relevantne informacije o mušteriji, datum preuzimanja i vraćanja prevoznig sredstva, nakon čega on dobija potvrdu o izvršenju narudžbe, i šalje mejl korisniku sa informacijama relevantnim za tu narudžbu, nakon čega se njemu prikazuje početna stranica kako bi mogao dalje pretraživati prevozna sredstva i vršiti dalje narudžbe.
+
+
+FILTRIRANJE NARUDŽBE
+povezan predstavnik korisničke službe
+
+
+SPECIFITCATIONS
+
+PRE-CONDITIONS
+1.korisnik mora biti ulogovan na sistem
+
+ACTION STEPS
+1.korisnik izvršava filtraciju narudžbi:
+1a.unošenjem pojma za pretragu 
+1b.filtriranje pretrage
+2.korisnik potvrđuje izvršene promjene
+
+POST-CONDITIONS
+1.prikaz rezultat filtriranja narudžbi, tj tabelarni prikaz svih narudžbi koje odgovaraju zadatim parametrima
+
+DEFINITION
+Sistem omogućava filtriranje narudžba po zadatim parametrima, nakon čega izlistava sva prevozna sredstva koja odgovaraju zadatim istim
+
+GENERISANJE UGOVORA
+povezan predstavnik korisničke službe, agent za iznajmljivanje prevoznih sredstava, vozač
+
+
+SPECIFITCATIONS
+
+PRE-CONDITIONS
+1.korisnik mora biti ulogovan na sistem
+2.rezervacija mora da postoji
+
+ACTION STEPS
+1.korisnik bira opciju generisanje ugovora
+2.sistem otvara formu za generisanje ugovora sa potrebnim predefinisanim informacijama
+3.korisnik unosi dodatne potrebne informacije u šablon za ugovor, nakon čega potvrđuje unos
+4. Sistem verifikuje unos, šalje obavještenje o generisanom ugovoru, i nudi opciju stampanja.
+5. korisnik bira opciju zatvaranja forme
+6. sistem zatvara formu
+
+POST-CONDITIONS
+1. sistem je generisao ugovor i skladisti ga
+
+EXTENSION POINT
+3.1.1 korisnik odustaje od generisanja ugovora
+3.1.2 sistem vraća prikaz početne stranicež
+
+3.2.1. korisnik je pogresno unio podatke
+3.2.2. sistem obavjestava korisnika o tome i nudi mu povratak na unos
+
+3.3.1. korisnik nije unio obavezne podatke
+3.3.2. sistem obavjestava korisnika o tome i nudi mu povratak na unos
+DEFINITION
+Sistem omogućava korisniku generisanje ugovora koji sadrži zakonske formalizme, informacije o agenciji i klijentu, o proizvodima koji se prodaju ili iznajmljuju, ukupnoj cijeni i ostalim relevantnim podacima.
+
+za generisanje fakture išlo bi se analogno samo gdje je gore ugovor ovdje je faktura
+
+
+
+
+PREGLED PROUZVODA
+povezani svi osim vozača
+
+
+SPECIFITCATIONS
+
+PRE-CONDITIONS
+1.korisnik mora biti ulogovan na sistem
+
+ACTION STEPS
+1.bira opciju pregled prozvoda
+
+POST-CONDITIONS
+1.tabelarni prikaz svih prozvoda koje agencija nudi 
+
+DEFINITION
+
+Sistem omogućava korisniku biranje opcije pregled proizvoda, te tabelarni pregled istih u cilju praćenja resursa agencije, i pružanja informacija o vozilima i ostalim proizvodima klijentu i osoblju koje je zaduženo za nabavku resursa.
+
+KREIRANJE PROIZVODA
+povezani vozača, predstavnik službe za klijente
+
+
+SPECIFITCATIONS
+
+PRE-CONDITIONS
+1.korisnik mora biti ulogovan na sistem
+
+ACTION STEPS
+1.bira opciju kreiranje proizvoda
+2.popunjavanje forme za kreiranje proizvoda relevantnim informacijama
+3.potvrđivanje unosa kreiranog proizvoda
+
+POST-CONDITIONS
+1.sistem obavještava korisnika o uspješnom kreiranju proizvoda
+
+
+DEFINITION
+
+Korisnik prilikom izbora opcije kreiranje proizvoda ima mogućnost dodavanja novog proizvoda sa svim relevantnim informacijama o istom. 
+
+KREIRANJE PREVOZNOG SREDSTVA
+povezani upravitelj voznog parka
+
+
+SPECIFITCATIONS
+
+PRE-CONDITIONS
+1.korisnik mora biti ulogovan na sistem
+
+ACTION STEPS
+1.bira opciju kreiranje prevoznog sredstva
+2.popunjavanje forme za kreiranje prevoznog sredstva relevantnim informacijama
+3.potvrđivanje unosa kreiranog prevoznog sredstva
+
+POST-CONDITIONS
+1.sistem obavještava korisnika o uspješnom kreiranju proizvoda
+
+
+DEFINITION
+
+Korisnik prilikom izbora opcije kreiranje prevoznog sredstva ima mogućnost dodavanja novog prevoznog sredstva sa svim relevantnim informacijama o istom(npr. godina proizvodnje, kilometraža, tip auta…)
+
+FILTRIRANJE PROIZVODA
+povezan predstavnik korisničke službe
+
+
+SPECIFITCATIONS
+
+PRE-CONDITIONS
+1.korisnik mora biti ulogovan na sistem
+
+ACTION STEPS
+1.korisnik izvršava filtraciju proizvoda
+1a.unošenjem pojma za pretragu 
+1b.filtriranje pretrage
+2.korisnik potvrđuje izvršene promjene
+
+POST-CONDITIONS
+1.prikaz rezultat filtriranja proizvoda, tj tabelarni prikaz svih proizvoda koje odgovaraju zadatim parametrima
+
+DEFINITION
+Sistem omogućava filtriranje proizvoda po zadatim parametrima, nakon čega izlistava sve proizvode koja odgovaraju zadatim kriterijumima.
+
+FILITRIANJE PO TIPU I CIJENI
+Analogno prethodnom samo što ne stavljamo prema potrebama i željama, nego to tipu i cijeni.
+
+
+IZMJENA PROIZVODA
+povezan administrator
+
+
+SPECIFITCATIONS
+
+PRE-CONDITIONS
+1.korisnik mora biti ulogovan na sistem
+
+ACTION STEPS
+1.korisnik bira proizvod koji želi da izmijeni
+2.korisnik unosi odgovarajuće promijene 
+3. potvrđuje unos 
+
+POST-CONDITIONS
+1.tabelarni prikaz svih prizvoda zajedno sa ažuriranim 
+
+DEFINITION
+
+Sistem korisniku omogućava da izborom opcije izmjena proizvoda izvrši promjenu određenih stavki proizvoda, a zatim i ažuriranje i prikaz ažuriranog proizvoda. 
+
+
+DODJELA LOKACIJE PREVOZNOG SREDSTVA
+povezan administrator, upravitelj voznog parka, vozač, predstavnik službe za korisnike
+
+
+SPECIFITCATIONS
+
+PRE-CONDITIONS
+1.korisnik mora biti ulogovan na sistem
+
+ACTION STEPS
+1.korisnik bira proizvod kojem želi da izmijeni lokaciju
+2.korisnik unosi odgovarajuću lokaciju prevoznog sredstva
+3. potvrđuje unos 
+
+POST-CONDITIONS
+1.tabelarni prikaz svih prevoznih sredstava zajedno sa izvršenim ažuriranjima
+
+DEFINITION
+
+Sistem korisniku omogućava da izborom opcije dodjela lokacije prevoznog sredstva izvrši promjenu lokacije, a zatim i ažuriranje i prikaz ažuriranog prevoznog sredstva. 
+
+
+AŽURIRANJE KARAKTERISTIKA PREVOZNOG SREDSTVA
+povezani svi osim stručnjaka za makerting
+
+
+SPECIFITCATIONS
+
+PRE-CONDITIONS
+1.korisnik mora biti ulogovan na sistem
+
+ACTION STEPS
+1.korisnik bira prevozno sredstvo koji želi da ažurira
+2.korisnik unosi odgovarajuće promijene 
+3. potvrđuje unos 
+
+POST-CONDITIONS
+1.tabelarni prikaz svih prevoznih sredstava zajedno sa ažuriranim 
+
+DEFINITION
+
+Sistem korisniku omogućava da izborom opcije ažuriranje karakteristika prevoznog sredstva izvrši ažuriranja, a zatim prikaz svih prevoznih sredstava. 
+
+UNOS ŠTETE
+
+povezan upravitelj voznog parka
+
+
+SPECIFITCATIONS
+
+PRE-CONDITIONS
+1.korisnik mora biti ulogovan na sistem
+2.narudžba mora da postoji
+
+ACTION STEPS
+1.korisnik bira opciju unosa štete
+2.sistem otvara dokument o unosu štete sa potrebnim predefinisanim informacijama
+3.korisnik unosi dodatne potrebne informacije u šablon za unos štete, nakon čega potvrđuje unos
+
+POST-CONDITIONS
+1. sistem šalje potvrdu o uspješnom generisanje šablona za unos štete, te čuva informacije o tome u bazi podataka
+
+EXTENSION POINT
+1.korisnik odustaje od forimranja dokumenta o unosu štete
+2.sistem vraća prikaz početne stranice
+
+EXCEPTION
+1.korisnik ne može da se spoji na bazu podataka i unese izmjene u nju
+
+DEFINITION
+Sistem omogućava korisniku generisanje dokumenta o unosu štete koji sadrži informacije o agenciji , klijentu i prevoznom sredstvu, te o veličini učinjene štete, te ažurira informacije o prevoznom sredstvu u bazi podataka, zbog boljih informacija o popravci.
+
+PREGLED UPLATA
+
+povezan administrator, dioničar/vlasnik, agent za iznajmljivanje prevoznih sredstava,predstavnik klijentske službe, vozač
+
+
+SPECIFITCATIONS
+
+PRE-CONDITIONS
+1.korisnik mora biti ulogovan na sistem
+2.narudžba i ugovor o uplati iste moraju da postoje
+
+ACTION STEPS
+1.korisnik bira opciju pregleda uplata
+
+POST-CONDITIONS
+1. sistem prikazuje pregled uplata 
+
+EXTENSION POINT
+1.korisnik odustaje od akcije pregleda uplata
+2.sistem vraća prikaz početne stranice
+
+EXCEPTION
+1.korisnik ne može da se spoji na bazu podataka, a samim tim i da mu se prikažu uplate
+
+DEFINITION
+Sistem omogućava korisniku pregled svih uplata koje predstoje ili koje su već uplaćene od strane mušterija zbog jednostavnijeg praćenja ulaznih dobara kao i odgovornosti mušterija prema agenciji.
+
+
+
+KREIRANJE PROFILA MUŠTERIJA
+
+povezan agent za iznajmljivanje prevoznih sredstava,predstavnik klijentske službe, vozač
+
+
+SPECIFITCATIONS
+
+PRE-CONDITIONS
+1.korisnik mora biti ulogovan na sistem
+
+
+ACTION STEPS
+1.korisnik bira opciju kreiranja profila mušterija
+2.sistem prikazuje formu za unos mušterije
+3.korisnik unosi potrebne informacije o mušteriji u fomru, nakon čega potvrđuje unos
+
+POST-CONDITIONS
+1. sistem šalje potvrdu o uspješnom unosu mušterije
+
+EXTENSION POINT
+1.korisnik odustaje od akcije kreiranja profila mušterije
+2.sistem vraća prikaz početne stranice
+
+DEFINITION
+Sistem omogućava korisniku kreiranje profila mušterije, unosom relevantnih podataka kao što su vozačka dozvola, broj kreditne kartice.
+
+PREGLED MUŠTERIJA
+
+povezan agent za iznajmljivanje prevoznih sredstava,predstavnik klijentske službe, vozač ,vlasnik , stručnjak za marketing
+
+
+SPECIFITCATIONS
+
+PRE-CONDITIONS
+1.korisnik mora biti ulogovan na sistem
+2.unutar baze podataka moraju da se nalaze informacije o mušterijama, tj. da su prethodno uneseni
+
+
+ACTION STEPS
+1.korisnik bira opciju kreiranja pregleda mušterija
+
+POST-CONDITIONS
+1.sistem prikazuje profile mušterija iz baze podataka
+
+EXTENSION POINT
+1.korisnik odustaje od akcije pregleda mušterija
+2.sistem vraća prikaz početne stranice
+
+EXCEPTION
+1.korisnik ne može da se spoji na bazu podataka
+
+DEFINITION
+Omogućava korisniku sistema pregled svih mušterija, te svih relevantnih informacija o njima kako bi mogao izvršiti analizu I statistiku mušterija, što ima za cilj kreiranje marketinških strategija i pružanja ugodnije usluge.
+
+Za kreiranje zaposlenog i pregled zaposlenog ide analogno kao za mušteriju, samo što je vezan na to administrator.
+
+
+DODJELA ZADATKA ZAPOSLENOM
+
+povezan onaj koji bude na vrhu hijerarhije, za sada ovu ulogu ima upravitelj voznog parka
+
+
+SPECIFITCATIONS
+
+PRE-CONDITIONS
+1.korisnik mora biti ulogovan na sistem
+
+
+ACTION STEPS
+1.korisnik bira opciju dodjele zadataka zaposlenom, time što unosi opis posla i ostale relevantne informacije u bazu podataka 
+
+POST-CONDITIONS
+1.sistem šalje potvrdu i obavještenje o uspješnoj akciji dodjele zadataka
+
+EXTENSION POINT
+1.korisnik odustaje od akcije dodjele zadataka zaposlenim
+2.sistem vraća prikaz početne stranice
+
+EXCEPTION
+1.korisnik ne može da se spoji na bazu podataka
+
+DEFINITION
+Omogućava korisniku sistema dodjelu zadataka zaposlenim, te unošenje svih relevantnih informacija o tome.
+
+
+
+IZMJENA PROFILA ZAPOSLENOG
+
+povezan administrator
+
+SPECIFITCATIONS
+
+PRE-CONDITIONS
+1.korisnik mora biti ulogovan na sistem
+2.potrebno je da postoje profili zaposlenih
+
+ACTION STEPS
+1.korisnik bira opciju izmjena profila zaposlenog, a samim tim unosi relevantne informacije koje je potrebno da izmjeni, te nakon toga potvrđuje unos
+
+POST-CONDITIONS
+1.sistem šalje potvrdu i obavještenje o uspješnoj akciji izmjene profila, te vrši ažuriranje tih informacija u bazi podataka
+
+EXTENSION POINT
+1.korisnik odustaje od akcije izmjene profila zaposlenog
+2.sistem vraća prikaz početne stranice
+
+EXCEPTION
+1.korisnik ne može da se spoji na bazu podataka
+
+DEFINITION
+Omogućava korisniku sistema da vrši izmjene unutar profila zaposlenog, u kojem vrši izmjene relevantne podatke o istom.
+BRISANJE PROFILA ZAPOSLENOG
+
+povezan administrator
+
+SPECIFITCATIONS
+
+PRE-CONDITIONS
+1.korisnik mora biti ulogovan na sistem
+2.potrebno je da postoje profili zaposlenih
+
+ACTION STEPS
+1.korisnik bira opciju brisanje profila zaposlenog
+
+POST-CONDITIONS
+1.sistem šalje potvrdu i obavještenje o uspješnoj akciji brisanje profila, te vrši ažuriranje baze podataka
+
+EXTENSION POINT
+1.korisnik odustaje od akcije brisanje profila zaposlenog
+2.sistem vraća prikaz početne stranice
+
+EXCEPTION
+1.korisnik ne može da se spoji na bazu podataka
+
+DEFINITION
+Omogućava korisniku sistema da briše profil zaposlenog, u slučaju da zaposleni više ne obavlja dužnost zaposlenog.
+UPRAVLANJE POSLOVANJEM
+GENERISANJE IZVJEŠTAJA I FAKTURA 
+GENERISANJE IZVJEŠTAJA O NARUDŽBAMA
+ove dvije stavke analogno generisanju ugovora
+PREGLED IZVJEŠTAJA I FAKTURA
+analogno svim prethodnim pregledima 
+ŠTAMPANJE I IZVOR IZVOZ IZVJEŠTAJA I FAKTURA 
+povezan 
+
+SPECIFITCATIONS
+
+PRE-CONDITIONS
+1.korisnik mora biti ulogovan na sistem
+2.potrebno je da postoje izvještaji i fakture
+
+ACTION STEPS
+1.korisnik bira opciju štampanja, a samim tim konkretan izvještaj i fakturu koji želi da odštampa, te potvrđuje štampanje
+
+POST-CONDITIONS
+1.sistem šalje potvrdu i obavještenje o uspješnom štampanju
+
+EXTENSION POINT
+1.korisnik odustaje od akcije štampanja izvještaja i fakture
+2.sistem vraća prikaz početne stranice
+
+EXCEPTION
+1.korisnik ne može da se spoji na bazu podataka
+
+DEFINITION
+Omogućava korisniku sistema vrši štampanje faktura i izvještaja u odgovarajućem formatu
+UNOS CIJENOVNOG PRAVILA
+povezan stručnjak za marketing
+
+SPECIFITCATIONS
+
+PRE-CONDITIONS
+1.korisnik mora biti ulogovan na sistem
+
+ACTION STEPS
+1.korisnik bira opciju cijenovnog pravila, nakon čega unosi cijenovno pravilo i potvrđuje unos
+
+POST-CONDITIONS
+1.sistem šalje potvrdu i obavještenje o uspješnom unosu cijenovnog pravila, te ažurira te podatke u bazi podataka
+
+EXTENSION POINT
+1.korisnik odustaje od akcije unosa cijenovnog pravila
+2.sistem vraća prikaz početne stranice
+
+
+DEFINITION
+Omogućava strčnjaku za marketing unos cijenovnog pravila (akcije, poskupljenja) zbog dinamičkog prilagođavanja cijene prema mijenjajućim uslovima tržišta
+
+ANALITIKA
+TABELARNI PREGLED ANALITIKE ZA POSLOVNICE
+analogno svim pregledima samo što je povezan stručnjak za marketing
+TABELARNI PREGLED ANALITIKE ZA PREVOZNA SREDSTVA
+analogno svim pregledima  stručnjak za marketing
+PROMOCIJE I POPUSTI
+analogno svim 

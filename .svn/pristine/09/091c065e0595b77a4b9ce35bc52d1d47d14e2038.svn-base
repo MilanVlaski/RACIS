@@ -1,0 +1,65 @@
+package test.procedureservice;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.util.HashMap;
+
+import org.junit.BeforeClass;
+import org.junit.jupiter.api.Test;
+
+import db.manipulation.DbManipulation;
+import db.type.DatabaseType;
+import model.ProcedureService;
+import model.tree.TreeElement.Table;
+import model.tree.TreeElement.Column;
+
+class TestProcedureService {
+
+	private static Connection conn;
+	
+	@BeforeClass
+	void setup() {
+		 conn = DbManipulation.createConnection(DatabaseType.MsSQL_JDBC, "78.28.157.8",
+				"1435", "PIS2022","EtfPIS2022G2", "EtfPIS2022G22918").getConnection();
+	}
+	
+	@Test
+	void shouldGetResultSetForReadProcedureGetAllVozila() {
+		
+		Table table = new Table();
+		table.setRetrieveSProc("{ call st_GetAllVozila()}");
+		
+		ProcedureService spService = new ProcedureService(table);
+		
+		assertTrue(spService.retrieve() instanceof ResultSet);
+	}
+
+	
+	
+	@Test
+	void shouldGet1IfUpdateOneRow() {
+		Table table = new Table();
+		table.setUpdateSProc("{call st_updateTest(?,?)}");
+		
+		Column col1 = new Column("Primary key");
+		col1.setType("java.lang.Integer");
+		col1.setPrimary(true);
+		
+		Column col2 = new Column("Value");
+		col1.setType("java.lang.String");
+		
+		
+		table.addElement(col1);
+		table.addElement(col2);
+		ProcedureService spService = new ProcedureService(table);
+		
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("Primary key", 1);
+		params.put("Value", "Ten");
+		
+		assertEquals(1, spService.update(params));
+	}
+}

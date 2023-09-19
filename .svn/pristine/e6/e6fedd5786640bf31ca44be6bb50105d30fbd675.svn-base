@@ -1,0 +1,89 @@
+package controller.state;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.table.TableModel;
+
+import view.input.InputPanel;
+import view.menubar.MenuBar;
+import view.table.TablePanel;
+
+public abstract class BaseState implements EditorState {
+
+	protected TablePanel context;
+	protected InputPanel inputPanel;
+	protected MenuBar menuBar;
+
+	public BaseState(TablePanel context) {
+		this.context = context;
+		this.inputPanel = context.getInputPanel();
+		this.menuBar = context.getMenuBar();
+	}
+	
+	@Override
+	public void handleSelectionChanged(ListSelectionEvent e) {
+		boolean selectionHappened = handleSelectionCommon(e);
+		if(selectionHappened) {
+			handleSelectionSpecific();
+		}
+	}
+	
+	protected abstract void handleSelectionSpecific();
+
+	@Override
+	public void handleCreate() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void handleChange() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void handleDelete() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void handleCancel() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void handleSubmit() {
+		// TODO Auto-generated method stub
+
+	}
+	
+	private boolean handleSelectionCommon(ListSelectionEvent e) {
+		if (e.getValueIsAdjusting()) {
+			return false;
+		}
+		
+		TableModel model = context.getTable().getModel();
+		
+		ListSelectionModel lsm = (ListSelectionModel) e.getSource();
+		if (!lsm.isSelectionEmpty()) {
+			
+			int selectedRow = lsm.getMinSelectionIndex();
+			List<Object> row = new ArrayList<>();
+			for (int i = 0; i < model.getColumnCount(); i++) {
+				row.add(model.getValueAt(selectedRow, i));
+			}
+			
+			inputPanel.fillInputs(row);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+}

@@ -1,0 +1,188 @@
+package view;
+
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
+import java.util.EventListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.event.TreeSelectionListener;
+
+import controller.tree.TreeListener;
+import model.ApplicationModel;
+import view.table.MainTableView;
+import view.tree.MainTree;
+
+public class MainFrame extends JFrame implements ActionListener {
+
+	private JPanel cardPanel;
+	private CardLayout cardLayout;
+	ApplicationModel appModel;
+
+	public MainFrame(ApplicationModel appModel) {
+
+		this.appModel = appModel;
+		
+		// Set title
+		this.setTitle("RACIS");
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
+		// Set the window size and position
+		this.setSize(screenSize.width, screenSize.height);
+		this.setLocation(0, 0);
+
+		// Maximize the window
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		getContentPane().setLayout(new BorderLayout());
+
+		ActionListener interface1Listener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(cardPanel, "Interface 1");
+			}
+		};
+
+		ActionListener interface2Listener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(cardPanel, "Interface 2");
+			}
+		};
+		ActionListener interface3Listener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(cardPanel, "Interface 3");
+			}
+		};
+
+		ActionListener interface4Listener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(cardPanel, "Interface 4");
+			}
+		};
+		ActionListener interface5Listener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(cardPanel, "Interface 5");
+			}
+		};
+
+		ActionListener interface6Listener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(cardPanel, "Interface 6");
+			}
+		};
+		ActionListener interface7Listener = new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(cardPanel, "Interface 7");
+			}
+		};
+
+		cardPanel = new JPanel();
+		cardLayout = new CardLayout();
+		cardPanel.setLayout(cardLayout);
+
+		
+		//background image
+		ImageIcon backgroundImage = new ImageIcon("icons/logo.png");
+		
+		// Create interface panels
+		JPanel interface1Panel = new JPanel();
+		JLabel interface1Label = new JLabel("PLANER");
+		interface1Label.setIcon(backgroundImage);
+		interface1Label.setHorizontalTextPosition(JLabel.CENTER);
+		interface1Label.setVerticalTextPosition(JLabel.BOTTOM);
+		interface1Panel.add(interface1Label);
+
+		JPanel interface2Panel = new JPanel();
+		JLabel interface2Label = new JLabel("REZERVACIJE");
+		interface2Label.setIcon(backgroundImage);
+		interface2Label.setHorizontalTextPosition(JLabel.CENTER);
+		interface2Label.setVerticalTextPosition(JLabel.BOTTOM);
+		interface2Panel.add(interface2Label);
+		
+
+		JPanel interface3Panel = new JPanel();
+		JLabel interface3Label = new JLabel("VOZILA");
+		interface3Label.setIcon(backgroundImage);
+		interface3Label.setHorizontalTextPosition(JLabel.CENTER);
+		interface3Label.setVerticalTextPosition(JLabel.BOTTOM);
+		interface3Panel.add(interface3Label);
+
+		JPanel interface4Panel = new JPanel();
+		JLabel interface4Label = new JLabel("UGOVORI");
+		interface4Label.setIcon(backgroundImage);
+		interface4Label.setHorizontalTextPosition(JLabel.CENTER);
+		interface4Label.setVerticalTextPosition(JLabel.BOTTOM);
+		interface4Panel.add(interface4Label);
+
+		JPanel interface5Panel = new JPanel();
+		JLabel interface5Label = new JLabel("ANALITIKA");
+		interface5Label.setIcon(backgroundImage);
+		interface5Label.setHorizontalTextPosition(JLabel.CENTER);
+		interface5Label.setVerticalTextPosition(JLabel.BOTTOM);
+		interface5Panel.add(interface5Label);
+
+		JPanel interface6Panel = new JPanel();
+		JLabel interface6Label = new JLabel("ZAPOSLENI");
+		interface6Label.setIcon(backgroundImage);
+		interface6Label.setHorizontalTextPosition(JLabel.CENTER);
+		interface6Label.setVerticalTextPosition(JLabel.BOTTOM);
+		interface6Panel.add(interface6Label);
+
+		JPanel interface7Panel = new JPanel();
+		JLabel interface7Label = new JLabel("PODESAVANJA");
+		interface7Label.setIcon(backgroundImage);
+		interface7Label.setHorizontalTextPosition(JLabel.CENTER);
+		interface7Label.setVerticalTextPosition(JLabel.BOTTOM);
+		interface7Panel.add(interface7Label);
+
+		// Add interface panels to the card panel
+		cardPanel.add(interface1Panel, "Interface 1");
+		cardPanel.add(interface2Panel, "Interface 2");
+		cardPanel.add(interface3Panel, "Interface 3");
+		cardPanel.add(interface4Panel, "Interface 4");
+		cardPanel.add(interface5Panel, "Interface 5");
+		cardPanel.add(interface6Panel, "Interface 6");
+		cardPanel.add(interface7Panel, "Interface 7");
+
+		Toolbar toolbar = new Toolbar(interface1Listener, interface2Listener, interface3Listener, interface4Listener,
+				interface5Listener, interface6Listener, interface7Listener);
+		
+		MainTableView mainTable = new MainTableView();
+		appModel.subscribe(mainTable);
+		
+		MainTree mainTree = new MainTree(appModel);
+		
+		getContentPane().add(toolbar, BorderLayout.NORTH);
+		getContentPane().add(mainTable, BorderLayout.CENTER);
+		getContentPane().add(mainTree, BorderLayout.WEST);
+		
+		// Podesavanja ikonice
+		ImageIcon icon = new ImageIcon("icons/logo.png");
+		setIconImage(icon.getImage());
+
+		// Set window visible
+		// this.pack();
+		this.setVisible(true);
+
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+	}
+
+}

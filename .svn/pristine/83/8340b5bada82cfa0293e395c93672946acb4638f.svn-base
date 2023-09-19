@@ -1,0 +1,172 @@
+package view.login;
+
+import java.awt.Button;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+import java.sql.SQLException;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+
+import db.manipulation.DbManipulation;
+import model.ApplicationModel;
+import model.Login;
+import model.ProcedureService;
+import model.tree.CustomTreeModel;
+import view.MainFrame;
+
+public class LoginView extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField userField;
+	private JPasswordField passwordField;
+
+	int xx,xy;
+	public LoginView(ApplicationModel appModel) {
+		
+		setFocusable(true);
+		setBackground(Color.WHITE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 729, 476);
+		contentPane = new JPanel();
+		contentPane.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				xx = e.getX();
+			     xy = e.getY();
+			}
+		});
+		contentPane.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseDragged(MouseEvent arg1) {
+				int x = arg1.getXOnScreen();
+	            int y = arg1.getYOnScreen();
+	            LoginView.this.setLocation(x - xx, y - xy); 
+			}
+		});
+		
+		contentPane.setBackground(Color.WHITE);
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(Color.DARK_GRAY);
+		panel.setBounds(0, 0, 359, 479);
+		contentPane.add(panel);
+		panel.setLayout(null);
+		
+		JLabel label = new JLabel("");
+		
+		
+		label.setBounds(54, 86, 250, 250);
+		label.setVerticalAlignment(SwingConstants.TOP);
+		label.setIcon(new ImageIcon("icons/logo-login.png"));
+		panel.add(label);
+		
+		Button button = new Button("PRIJAVI SE");
+		button.setFont(new Font("Tw Cen MT", Font.BOLD, 14));
+		button.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				tryLogin(appModel);
+			}
+		});
+		
+		addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+					tryLogin(appModel);
+				}
+			}
+		});
+		
+		requestFocusInWindow();
+		
+		button.setForeground(Color.DARK_GRAY);
+		button.setBackground(new Color(227, 167, 47));
+		button.setBounds(395, 363, 283, 36);
+		contentPane.add(button);
+		
+		userField = new JTextField();
+		userField.setFont(new Font("Tahoma", Font.BOLD, 11));
+		userField.setBackground(Color.WHITE);
+		userField.setForeground(Color.DARK_GRAY);
+		userField.setBounds(395, 145, 283, 36);
+		contentPane.add(userField);
+		userField.setColumns(10);
+		
+		JLabel lblUsername = new JLabel("Korisničko ime");
+		lblUsername.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblUsername.setForeground(Color.DARK_GRAY);
+		lblUsername.setBounds(394, 120, 114, 14);
+		contentPane.add(lblUsername);
+		
+		JLabel lblPassword = new JLabel("Šifra");
+		lblPassword.setForeground(Color.DARK_GRAY);
+		lblPassword.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblPassword.setBounds(395, 213, 96, 14);
+		contentPane.add(lblPassword);
+		
+		passwordField = new JPasswordField();
+		passwordField.setFont(new Font("Tahoma", Font.BOLD, 11));
+		passwordField.setForeground(Color.DARK_GRAY);
+		passwordField.setBounds(395, 238, 283, 36);
+		contentPane.add(passwordField);
+		
+		JLabel lbl_close = new JLabel("X");
+		lbl_close.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				
+				System.exit(0);
+			}
+		});
+		lbl_close.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_close.setForeground(new Color(241, 57, 83));
+		lbl_close.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lbl_close.setBounds(679, 0, 49, 42);
+		contentPane.add(lbl_close);
+		this.setLocationRelativeTo(null);
+		this.setUndecorated(true);
+		this.setVisible(true);
+	}
+	
+	private void tryLogin(ApplicationModel appModel) {
+		try {
+//			String userName = userField.getText();
+//			String password = new String(passwordField.getPassword());
+			String userName = "perop";
+			String password = "pp123";
+			Boolean isPresent= Login.isUserPresent(DbManipulation.dbManip.get(0).getConnection(), userName, password);
+			
+			if (isPresent) {
+				
+				LoginView.this.dispose();
+				String procedure = appModel.getXmlParser().getProcedureForGetPrivileges();
+				CustomTreeModel restrictedTree = Login.treeModelWithAppliedPrivileges(appModel.getTreeModel(), userName, procedure);
+				appModel.setTreeModel(restrictedTree);
+				new MainFrame(appModel);
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Pogrešni podaci, pokušajte ponovo!");
+			}
+			
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+	}
+}

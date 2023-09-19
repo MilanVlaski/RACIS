@@ -1,0 +1,56 @@
+package test.input;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import model.tree.TreeElement.Column;
+import view.input.Input;
+import view.input.InputPanel;
+
+class TestInputPanel {
+
+	private InputPanel inputPanel;
+	private List<Column> columns;
+	
+	@BeforeEach
+	void setup() {
+		inputPanel = new InputPanel();
+		columns = new ArrayList<>();
+		columns.add(new Column("The key", null, false, true, null, null, "java.lang.String", 20, 20));
+		inputPanel.setFields(columns);
+	}
+	
+	@Test
+	void returnTrueIfMandatoryInputsAreFilled() {
+		inputPanel.getInputs().get(0).setValue("something");
+		assertTrue(inputPanel.inputsValid());
+	}
+	
+	@Test
+	void returnFalseIfMandatoryInputsAreEmpty() {
+		assertFalse(inputPanel.inputsValid());
+	}
+	
+	@Test
+	void returnInputValues() {
+		Input input = inputPanel.getInputs().get(0);
+		input.setValue(123);
+		
+		HashMap<String, Object> result = new HashMap<>();
+		result.put("The key", 123);
+		assertEquals(result, inputPanel.getValues());
+	}
+	
+	@Test
+	void returnNullValue_IfInputUntouched() {
+		HashMap<String, Object> result = new HashMap<>();
+		result.put("The key", null);
+		assertEquals(result, inputPanel.getValues());
+	}
+}

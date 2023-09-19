@@ -1,0 +1,763 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.5.final using JasperReports Library version 6.20.5-3efcf2e67f959db3888d79f73dde2dbd7acb4f8e  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DrumskaVozila" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d4a1d5eb-82dd-412f-a620-202e4bdf9dba">
+	<property name="template.engine" value="tabular_template"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="RACIS"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<style name="Table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+			<topPen lineWidth="1.0" lineColor="#000000"/>
+			<leftPen lineWidth="1.0" lineColor="#000000"/>
+			<bottomPen lineWidth="1.0" lineColor="#000000"/>
+			<rightPen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TH" mode="Opaque" backcolor="#F0E0CC">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Transparent" forecolor="#B89F7D" backcolor="#70A9C6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Transparent" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT} % 2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#ADADAD"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="tableDataset" uuid="8525b57d-0e99-4d53-af11-c8a1b09cb8f0">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="RACIS"/>
+		<queryString language="SQL">
+			<![CDATA[SELECT [pisg2].[Vozilo drumskog saobracaja].[Broj vozila]
+      ,[Broj sasije] AS [Broj šasije]
+      ,[Marka]
+      ,[Model]
+      ,[Boja]
+      ,[Manuelni]
+	  ,pisg2.Klasa.Naziv AS [Klasa]
+	  ,pisg2.[Tip motornog vozila].Naziv AS [Tip drumskog vozila]
+      ,[Broj vrata]
+      ,[Broj sjedista] AS [Broj sjedišta]
+      ,[Kilometraza] AS [Kilometraža]
+      ,[Broj motora]
+      ,[Zapremina motora]
+      ,[Snaga u kW] AS [Snaga (kW)]
+      ,[Masa]
+      ,[Ukupna nosivost] AS [Nosivost]
+	  ,[Registarski broj]
+	  ,[Broj saobracajne] AS [Broj saobraćajne]
+      ,[Zapremina rezervoara]
+	  ,[Stanje rezervoara]
+	  ,pisg2.[Status vozila].Naziv as [status vozila]
+	  ,pisg2.Cijena.[Dnevna cijena] as [Dnevna cijena iznajmljivanja vozila]
+	  ,pisg2.Cijena.[Sedmicna cijena] as [Sedmicna cijena iznajmljivanja vozila]
+	  ,pisg2.Cijena.[Mjesecna cijena] as [Mjesecna cijena iznajmljivanja vozila]
+  FROM [pisg2].[Vozilo drumskog saobracaja]
+  LEFT JOIN pisg2.[Tip motornog vozila] ON pisg2.[Vozilo drumskog saobracaja].Tip=pisg2.[Tip motornog vozila].Oznaka
+  LEFT JOIN pisg2.Klasa ON pisg2.[Vozilo drumskog saobracaja].Klasa=pisg2.Klasa.Oznaka
+  left join pisg2.Vozilo on pisg2.[Vozilo drumskog saobracaja].[Broj vozila]=pisg2.Vozilo.[Broj vozila]
+  left join pisg2.[Status vozila] on pisg2.Vozilo.Status=pisg2.[Status vozila].Oznaka
+  left join pisg2.[Cijena] on pisg2.Cijena.[Id cijene] = pisg2.Vozilo.Cijena]]>
+		</queryString>
+		<field name="Broj vozila" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="Broj vozila"/>
+			<property name="com.jaspersoft.studio.field.label" value="Broj vozila"/>
+		</field>
+		<field name="Broj šasije" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="Broj šasije"/>
+			<property name="com.jaspersoft.studio.field.label" value="Broj šasije"/>
+		</field>
+		<field name="Marka" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="Marka"/>
+			<property name="com.jaspersoft.studio.field.label" value="Marka"/>
+		</field>
+		<field name="Model" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="Model"/>
+			<property name="com.jaspersoft.studio.field.label" value="Model"/>
+		</field>
+		<field name="Boja" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="Boja"/>
+			<property name="com.jaspersoft.studio.field.label" value="Boja"/>
+		</field>
+		<field name="Manuelni" class="java.lang.Boolean">
+			<property name="com.jaspersoft.studio.field.name" value="Manuelni"/>
+			<property name="com.jaspersoft.studio.field.label" value="Manuelni"/>
+		</field>
+		<field name="Klasa" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="Klasa"/>
+			<property name="com.jaspersoft.studio.field.label" value="Klasa"/>
+		</field>
+		<field name="Tip drumskog vozila" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="Tip drumskog vozila"/>
+			<property name="com.jaspersoft.studio.field.label" value="Tip drumskog vozila"/>
+		</field>
+		<field name="Broj vrata" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="Broj vrata"/>
+			<property name="com.jaspersoft.studio.field.label" value="Broj vrata"/>
+		</field>
+		<field name="Broj sjedišta" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="Broj sjedišta"/>
+			<property name="com.jaspersoft.studio.field.label" value="Broj sjedišta"/>
+		</field>
+		<field name="Kilometraža" class="java.lang.Long">
+			<property name="com.jaspersoft.studio.field.name" value="Kilometraža"/>
+			<property name="com.jaspersoft.studio.field.label" value="Kilometraža"/>
+		</field>
+		<field name="Broj motora" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="Broj motora"/>
+			<property name="com.jaspersoft.studio.field.label" value="Broj motora"/>
+		</field>
+		<field name="Zapremina motora" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.name" value="Zapremina motora"/>
+			<property name="com.jaspersoft.studio.field.label" value="Zapremina motora"/>
+		</field>
+		<field name="Snaga (kW)" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.name" value="Snaga (kW)"/>
+			<property name="com.jaspersoft.studio.field.label" value="Snaga (kW)"/>
+		</field>
+		<field name="Masa" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.name" value="Masa"/>
+			<property name="com.jaspersoft.studio.field.label" value="Masa"/>
+		</field>
+		<field name="Nosivost" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.name" value="Nosivost"/>
+			<property name="com.jaspersoft.studio.field.label" value="Nosivost"/>
+		</field>
+		<field name="Registarski broj" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="Registarski broj"/>
+			<property name="com.jaspersoft.studio.field.label" value="Registarski broj"/>
+		</field>
+		<field name="Broj saobraćajne" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="Broj saobraćajne"/>
+			<property name="com.jaspersoft.studio.field.label" value="Broj saobraćajne"/>
+		</field>
+		<field name="Zapremina rezervoara" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.name" value="Zapremina rezervoara"/>
+			<property name="com.jaspersoft.studio.field.label" value="Zapremina rezervoara"/>
+		</field>
+		<field name="Stanje rezervoara" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.name" value="Stanje rezervoara"/>
+			<property name="com.jaspersoft.studio.field.label" value="Stanje rezervoara"/>
+		</field>
+		<field name="status vozila" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="status vozila"/>
+			<property name="com.jaspersoft.studio.field.label" value="status vozila"/>
+		</field>
+		<field name="Dnevna cijena iznajmljivanja vozila" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="Dnevna cijena iznajmljivanja vozila"/>
+			<property name="com.jaspersoft.studio.field.label" value="Dnevna cijena iznajmljivanja vozila"/>
+		</field>
+		<field name="Sedmicna cijena iznajmljivanja vozila" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="Sedmicna cijena iznajmljivanja vozila"/>
+			<property name="com.jaspersoft.studio.field.label" value="Sedmicna cijena iznajmljivanja vozila"/>
+		</field>
+		<field name="Mjesecna cijena iznajmljivanja vozila" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="Mjesecna cijena iznajmljivanja vozila"/>
+			<property name="com.jaspersoft.studio.field.label" value="Mjesecna cijena iznajmljivanja vozila"/>
+		</field>
+	</subDataset>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="6321f5e3-86eb-444f-acc1-8daaaa0d6c60"/>
+				<staticText>
+					<reportElement x="20" y="20" width="300" height="43" forecolor="#FFFFFF" uuid="9e48917a-7b59-4ffd-baad-725f45563194"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Drumska vozila]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="fed27553-a6c4-4a8a-9056-2f6f2589a3e5"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Strana "+$V{PAGE_NUMBER}+" od"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="9f5ad531-d413-49c9-874b-8b99e8150fa6"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="fc593335-5cbf-4caf-97b3-ff897c676bde"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="200" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<componentElement>
+				<reportElement x="-10" y="0" width="580" height="200" uuid="cca2c749-657f-41e7-a3e3-540cee57e374">
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="tableDataset" uuid="7ba64da9-1ec3-4d5e-a262-61b691e3cb87">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="23" uuid="e6aca98f-46e3-4097-a08c-bba28cc0d9c6">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<property name="com.jaspersoft.studio.layout"/>
+						<jr:tableHeader style="Table_TH" height="60" rowSpan="1">
+							<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+							<property name="com.jaspersoft.studio.layout"/>
+							<staticText>
+								<reportElement mode="Transparent" x="0" y="0" width="23" height="60" forecolor="#006699" backcolor="#E6E6E6" uuid="39b5e387-0ca3-4643-99c7-2540b2c71b10"/>
+								<textElement textAlignment="Center">
+									<font size="6" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Broj vozila]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="Table_TD" height="50">
+							<textField>
+								<reportElement key="" x="0" y="0" width="23" height="50" uuid="f8fa06bc-d90f-4439-a9d7-4f04adb9dc2e"/>
+								<box leftPadding="2"/>
+								<textElement>
+									<font fontName="Arial" size="6"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Broj vozila}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="23" uuid="055a95c5-605b-4e51-8563-4ae8843866df">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:tableHeader style="Table_TH" height="60" rowSpan="1">
+							<staticText>
+								<reportElement mode="Transparent" x="0" y="0" width="23" height="60" forecolor="#006699" backcolor="#E6E6E6" uuid="0c0c302b-c0c3-4293-91b4-5c2b3ef36410"/>
+								<textElement textAlignment="Center">
+									<font size="6" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Broj šasije]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="Table_TD" height="50">
+							<textField>
+								<reportElement key="" x="0" y="0" width="23" height="50" uuid="e3c733cd-9e90-45ed-a51b-63332bd607c8"/>
+								<box leftPadding="2"/>
+								<textElement>
+									<font fontName="Arial" size="6"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Broj šasije}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="23" uuid="1908e7f4-f8c1-446f-9850-04e6374cc109">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:tableHeader style="Table_TH" height="60" rowSpan="1">
+							<staticText>
+								<reportElement mode="Transparent" x="0" y="0" width="23" height="60" forecolor="#006699" backcolor="#E6E6E6" uuid="f25e04ab-010d-4d3d-819a-c92a1bafa7ac"/>
+								<textElement textAlignment="Center">
+									<font size="6" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Marka]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="Table_TD" height="50">
+							<textField>
+								<reportElement key="" x="0" y="0" width="23" height="50" uuid="e9ec9052-d2b4-4a15-89e0-5060e4f98498"/>
+								<box leftPadding="2"/>
+								<textElement>
+									<font fontName="Arial" size="6"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Marka}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="23" uuid="923de69e-678f-4d21-bfac-2e3e40e67136">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<jr:tableHeader style="Table_TH" height="60" rowSpan="1">
+							<staticText>
+								<reportElement mode="Transparent" x="0" y="0" width="23" height="60" forecolor="#006699" backcolor="#E6E6E6" uuid="417b9a96-6c73-4c84-926f-c73219370336"/>
+								<textElement textAlignment="Center">
+									<font size="6" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Model]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="Table_TD" height="50">
+							<textField>
+								<reportElement key="" x="0" y="0" width="23" height="50" uuid="8f6e6c05-4e1d-48b1-923f-a18fcc930f2b"/>
+								<box leftPadding="2"/>
+								<textElement>
+									<font fontName="Arial" size="6"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Model}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="23" uuid="71f992b9-dec8-4240-a814-008c88409a5a">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+						<jr:tableHeader style="Table_TH" height="60" rowSpan="1">
+							<staticText>
+								<reportElement mode="Transparent" x="0" y="0" width="23" height="60" forecolor="#006699" backcolor="#E6E6E6" uuid="070ec3d9-6534-4008-a61e-f9a09fe08b3d"/>
+								<textElement textAlignment="Center">
+									<font size="6" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Boja]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="Table_TD" height="50">
+							<textField>
+								<reportElement key="" x="0" y="0" width="23" height="50" uuid="f168adf7-1ccd-42be-9b29-61038474d007"/>
+								<box leftPadding="2"/>
+								<textElement>
+									<font fontName="Arial" size="6"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Boja}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="23" uuid="5ef17daa-3598-4ae9-88e1-e82959d01b84">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column6"/>
+						<jr:tableHeader style="Table_TH" height="60" rowSpan="1">
+							<staticText>
+								<reportElement mode="Transparent" x="0" y="0" width="23" height="60" forecolor="#006699" backcolor="#E6E6E6" uuid="e1687fe9-b6db-4948-b4ea-ed613354d763"/>
+								<textElement textAlignment="Center">
+									<font size="6" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Mjenjać]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="Table_TD" height="50">
+							<textField>
+								<reportElement key="" x="0" y="0" width="23" height="50" uuid="4d96f280-ea11-47ea-86ea-14a5e9d371de"/>
+								<box leftPadding="2"/>
+								<textElement>
+									<font fontName="Arial" size="6"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Manuelni}? "Manuelni" : "Automatik"]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="23" uuid="d28e1b6f-7285-4af7-93f2-aabf9899f1b0">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column7"/>
+						<jr:tableHeader style="Table_TH" height="60" rowSpan="1">
+							<staticText>
+								<reportElement mode="Transparent" x="0" y="0" width="23" height="60" forecolor="#006699" backcolor="#E6E6E6" uuid="4bcf3a98-70f6-4ad0-ad1c-e76c4203860b"/>
+								<textElement textAlignment="Center">
+									<font size="6" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Klasa]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="Table_TD" height="50">
+							<textField>
+								<reportElement key="" x="0" y="0" width="23" height="50" uuid="c70fdab0-183a-4592-a2cb-c394206123de"/>
+								<box leftPadding="2"/>
+								<textElement>
+									<font fontName="Arial" size="6"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Klasa}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="23" uuid="2568101f-860c-4058-805f-70a386cb68d1">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column8"/>
+						<jr:tableHeader style="Table_TH" height="60" rowSpan="1">
+							<staticText>
+								<reportElement mode="Transparent" x="0" y="0" width="23" height="60" forecolor="#006699" backcolor="#E6E6E6" uuid="2a040284-ca9a-4f22-8d8c-0f355e4a5d81"/>
+								<textElement textAlignment="Center">
+									<font size="6" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Tip]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="Table_TD" height="50">
+							<textField>
+								<reportElement key="" x="0" y="0" width="23" height="50" uuid="191e9085-88b7-4f71-b1b0-8a25672819e7"/>
+								<box leftPadding="2"/>
+								<textElement>
+									<font fontName="Arial" size="6"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Tip drumskog vozila}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="23" uuid="28dfbd06-b4e3-4e86-9b69-932070772a43">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column9"/>
+						<jr:tableHeader style="Table_TH" height="60" rowSpan="1">
+							<staticText>
+								<reportElement mode="Transparent" x="0" y="0" width="23" height="60" forecolor="#006699" backcolor="#E6E6E6" uuid="702a3945-bfcb-4eb2-ad55-54bf6a952234"/>
+								<textElement textAlignment="Center">
+									<font size="6" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Broj vrata]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="Table_TD" height="50">
+							<textField>
+								<reportElement key="" x="0" y="0" width="23" height="50" uuid="29a590de-9c62-403b-b236-8406a0dd1418"/>
+								<box leftPadding="2"/>
+								<textElement>
+									<font fontName="Arial" size="6"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Broj vrata}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="23" uuid="f1c3a004-13fd-4f10-b6a7-eb8ea6ac7a71">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column10"/>
+						<jr:tableHeader style="Table_TH" height="60" rowSpan="1">
+							<staticText>
+								<reportElement mode="Transparent" x="0" y="0" width="23" height="60" forecolor="#006699" backcolor="#E6E6E6" uuid="7d802e41-587a-4089-8070-51c323c87ffe"/>
+								<textElement textAlignment="Center">
+									<font size="6" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Broj sjedišta]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="Table_TD" height="50">
+							<textField>
+								<reportElement key="" x="0" y="0" width="23" height="50" uuid="0705f2a7-4b9c-4bac-a9e7-85967b01a7fd"/>
+								<box leftPadding="2"/>
+								<textElement>
+									<font fontName="Arial" size="6"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Broj sjedišta}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="23" uuid="85a98038-960f-45ba-adb5-aa6c9cc89e8c">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column11"/>
+						<jr:tableHeader style="Table_TH" height="60" rowSpan="1">
+							<staticText>
+								<reportElement mode="Transparent" x="0" y="0" width="23" height="60" forecolor="#006699" backcolor="#E6E6E6" uuid="c0acf3e6-59e4-4e5c-a4a0-55bb4b5ea756"/>
+								<textElement textAlignment="Center">
+									<font size="6" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Kilometraža]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="Table_TD" height="50">
+							<textField>
+								<reportElement key="" x="0" y="0" width="23" height="50" uuid="f8493fcc-c6e8-4a5b-bac3-1065ebdb4c0d"/>
+								<box leftPadding="2"/>
+								<textElement>
+									<font fontName="Arial" size="6"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Kilometraža}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="23" uuid="8ac8bc68-34c3-43c9-9527-d8d8bd5e430e">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column12"/>
+						<jr:tableHeader style="Table_TH" height="60" rowSpan="1">
+							<staticText>
+								<reportElement mode="Transparent" x="0" y="0" width="23" height="60" forecolor="#006699" backcolor="#E6E6E6" uuid="854dd073-ae5b-4694-9ec9-e07d8f749d7a"/>
+								<textElement textAlignment="Center">
+									<font size="6" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Broj motora]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="Table_TD" height="50">
+							<textField>
+								<reportElement key="" x="0" y="0" width="23" height="50" uuid="4480dbea-121b-48d4-ad2f-4239d9d068b1"/>
+								<box leftPadding="2"/>
+								<textElement>
+									<font fontName="Arial" size="6"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Broj motora}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="23" uuid="5f70e4e8-c6a7-4e38-8767-0ca31179114c">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column13"/>
+						<jr:tableHeader style="Table_TH" height="60" rowSpan="1">
+							<staticText>
+								<reportElement mode="Transparent" x="0" y="0" width="23" height="60" forecolor="#006699" backcolor="#E6E6E6" uuid="7cef3539-ffd0-4204-bee2-d2287e3f2e38"/>
+								<textElement textAlignment="Center">
+									<font size="6" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Zapremina motora]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="Table_TD" height="50">
+							<textField>
+								<reportElement key="" x="0" y="0" width="23" height="50" uuid="35c03d55-6c45-4758-a894-707a3c6bcb1e"/>
+								<box leftPadding="2"/>
+								<textElement>
+									<font fontName="Arial" size="6"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Zapremina motora}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="23" uuid="5079aea6-fd32-4e5f-b1cd-beb881fca829">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column14"/>
+						<jr:tableHeader style="Table_TH" height="60" rowSpan="1">
+							<staticText>
+								<reportElement mode="Transparent" x="0" y="0" width="23" height="60" forecolor="#006699" backcolor="#E6E6E6" uuid="0f8cf2a7-2767-4427-95c4-a83eed141d49"/>
+								<textElement textAlignment="Center">
+									<font size="6" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Snaga (kW)]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="Table_TD" height="50">
+							<textField>
+								<reportElement key="" x="0" y="0" width="23" height="50" uuid="fd1168ce-4f1e-436d-9b39-c843314af09a"/>
+								<box leftPadding="2"/>
+								<textElement>
+									<font fontName="Arial" size="6"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Snaga (kW)}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="23" uuid="4e145bfb-63f5-4b2a-b0e2-568db7999bb7">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column15"/>
+						<jr:tableHeader style="Table_TH" height="60" rowSpan="1">
+							<staticText>
+								<reportElement mode="Transparent" x="0" y="0" width="23" height="60" forecolor="#006699" backcolor="#E6E6E6" uuid="642df9c4-883e-4182-b967-c574334885dc"/>
+								<textElement textAlignment="Center">
+									<font size="6" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Masa]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="Table_TD" height="50">
+							<textField>
+								<reportElement key="" x="0" y="0" width="23" height="50" uuid="1d5a7951-ce8e-47e3-a044-432397b62901"/>
+								<box leftPadding="2"/>
+								<textElement>
+									<font fontName="Arial" size="6"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Masa}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="23" uuid="6de467ee-9336-4afd-ba7c-52d54ba06385">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column16"/>
+						<jr:tableHeader style="Table_TH" height="60" rowSpan="1">
+							<staticText>
+								<reportElement mode="Transparent" x="0" y="0" width="23" height="60" forecolor="#006699" backcolor="#E6E6E6" uuid="7c535f74-63f4-43f7-bd67-afc610c5eb41"/>
+								<textElement textAlignment="Center">
+									<font size="6" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Nosivost]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="Table_TD" height="50">
+							<textField>
+								<reportElement key="" x="0" y="0" width="23" height="50" uuid="044825c6-61c4-4b38-bb03-6e89349e5bbc"/>
+								<box leftPadding="2"/>
+								<textElement>
+									<font fontName="Arial" size="6"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Nosivost}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="23" uuid="e9576bda-399e-48b8-bbbc-5f2719e6e814">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column17"/>
+						<jr:tableHeader style="Table_TH" height="60" rowSpan="1">
+							<staticText>
+								<reportElement mode="Transparent" x="0" y="0" width="23" height="60" forecolor="#006699" backcolor="#E6E6E6" uuid="298a62a4-a186-44db-a781-cd740a569b96"/>
+								<textElement textAlignment="Center">
+									<font size="6" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Registarski broj]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="Table_TD" height="50">
+							<textField>
+								<reportElement key="" x="0" y="0" width="23" height="50" uuid="35f633e5-a411-4193-97be-867ed7491daf"/>
+								<box leftPadding="2"/>
+								<textElement>
+									<font fontName="Arial" size="6"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Registarski broj}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="23" uuid="01a94083-5752-4af1-8c7f-62de0006b6d3">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column18"/>
+						<jr:tableHeader style="Table_TH" height="60" rowSpan="1">
+							<staticText>
+								<reportElement mode="Transparent" x="0" y="0" width="23" height="60" forecolor="#006699" backcolor="#E6E6E6" uuid="ffbca34d-516d-4226-b76d-a9dd59b3d7d7"/>
+								<textElement textAlignment="Center">
+									<font size="6" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Broj saobraćajne]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="Table_TD" height="50">
+							<textField>
+								<reportElement key="" x="0" y="0" width="23" height="50" uuid="c278f741-4822-481e-954d-bf5a3b357916"/>
+								<box leftPadding="2"/>
+								<textElement>
+									<font fontName="Arial" size="6"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Broj saobraćajne}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="23" uuid="ab11db6a-bd31-49d8-b11f-18af3874d7f1">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column19"/>
+						<jr:tableHeader style="Table_TH" height="60" rowSpan="1">
+							<staticText>
+								<reportElement mode="Transparent" x="0" y="0" width="23" height="60" forecolor="#006699" backcolor="#E6E6E6" uuid="9095eca2-8552-419c-9400-14bd8e6572e5"/>
+								<textElement textAlignment="Center">
+									<font size="6" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Zapremina rezervoara]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="Table_TD" height="50">
+							<textField>
+								<reportElement key="" x="0" y="0" width="23" height="50" uuid="3de3ed4a-68e5-4a91-8e12-15a9d61f5440"/>
+								<box leftPadding="2"/>
+								<textElement>
+									<font fontName="Arial" size="6"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Zapremina rezervoara}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="23" uuid="57970f51-4e6f-4a3e-8472-50e42a175e07">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column20"/>
+						<jr:tableHeader style="Table_TH" height="60" rowSpan="1">
+							<staticText>
+								<reportElement mode="Transparent" x="0" y="0" width="23" height="60" forecolor="#006699" backcolor="#E6E6E6" uuid="326f6d8a-1fe3-48f3-9a11-f3a9941958e2"/>
+								<textElement textAlignment="Center">
+									<font size="6" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Stanje rezervoara]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="Table_TD" height="50">
+							<textField>
+								<reportElement key="" x="0" y="0" width="23" height="50" uuid="f7188691-e0b1-4d42-b950-987fb958e822"/>
+								<box leftPadding="2"/>
+								<textElement>
+									<font fontName="Arial" size="6"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Stanje rezervoara}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="23" uuid="63a9a0ce-c3e3-416d-acea-e19d355c47e1">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column21"/>
+						<jr:tableHeader style="Table_TH" height="60" rowSpan="1">
+							<staticText>
+								<reportElement mode="Transparent" x="0" y="0" width="23" height="60" forecolor="#006699" backcolor="#E6E6E6" uuid="88560b73-b0b8-4fc0-96b5-aa839c6599bb"/>
+								<textElement textAlignment="Center">
+									<font size="6" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Status vozila]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="Table_TD" height="50">
+							<textField>
+								<reportElement key="" x="0" y="0" width="23" height="50" uuid="a109e5f8-7ad8-4b37-bece-57d885afd7ac"/>
+								<box leftPadding="2"/>
+								<textElement>
+									<font fontName="Arial" size="6"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{status vozila}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="23" uuid="27f0450a-7944-4112-9b01-bbd679406696">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column22"/>
+						<jr:tableHeader style="Table_TH" height="60" rowSpan="1">
+							<staticText>
+								<reportElement mode="Transparent" x="0" y="0" width="23" height="60" forecolor="#006699" backcolor="#E6E6E6" uuid="f74bd7b9-39ec-42e0-aef8-304d5acc378d"/>
+								<textElement textAlignment="Center">
+									<font size="6" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Dnevna cijena iznajmljivanja vozila]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="Table_TD" height="50">
+							<textField>
+								<reportElement key="" x="0" y="0" width="23" height="50" uuid="c27ad5b0-796e-4bc9-894f-6e4c2215953c"/>
+								<box leftPadding="2"/>
+								<textElement>
+									<font fontName="Arial" size="6"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Dnevna cijena iznajmljivanja vozila}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="34" uuid="cf4a59df-1012-439f-b232-0c92bf8da5bf">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column23"/>
+						<jr:tableHeader style="Table_TH" height="60" rowSpan="1">
+							<staticText>
+								<reportElement mode="Transparent" x="0" y="0" width="34" height="60" forecolor="#006699" backcolor="#E6E6E6" uuid="b4f16104-f9a1-4f1a-bc7f-af04d0acf7b8"/>
+								<textElement textAlignment="Center">
+									<font size="6" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Sedmična cijena iznajmljivanja vozila]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="Table_TD" height="50">
+							<textField>
+								<reportElement key="" x="0" y="0" width="34" height="50" uuid="57473e42-e328-45ab-83e8-66a78f2b4f98"/>
+								<box leftPadding="2"/>
+								<textElement>
+									<font fontName="Arial" size="6"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Sedmicna cijena iznajmljivanja vozila}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="40" uuid="67683336-f038-46fe-afc5-3edf5a0baa5b">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column24"/>
+						<jr:tableHeader style="Table_TH" height="60" rowSpan="1">
+							<staticText>
+								<reportElement mode="Transparent" x="0" y="0" width="40" height="60" forecolor="#006699" backcolor="#E6E6E6" uuid="f5c20064-7ae1-4dff-958f-abb391fa446a"/>
+								<textElement textAlignment="Center">
+									<font size="6" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Mjesečna cijena iznajmljivanja vozila]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="Table_TD" height="50">
+							<textField>
+								<reportElement key="" x="0" y="0" width="40" height="50" uuid="65535a56-8294-4143-a66b-70a80b76240b"/>
+								<box leftPadding="2"/>
+								<textElement>
+									<font fontName="Arial" size="6"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{Mjesecna cijena iznajmljivanja vozila}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</summary>
+</jasperReport>

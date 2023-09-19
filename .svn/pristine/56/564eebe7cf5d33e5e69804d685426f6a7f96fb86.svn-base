@@ -1,0 +1,35 @@
+package db.helper;
+
+public class QueryBuilder {
+	private String query; 
+	
+	public QueryBuilder select(String columnName) {
+		query = "SELECT [" + columnName + "] ";
+		return this;
+	}
+	
+	public QueryBuilder selectAll() {
+		query = "SELECT * ";
+		return this;
+	}
+	
+	public QueryBuilder from(String databaseName, String schema, String table) {
+		query += "FROM [" + databaseName + "].[" + schema + "].[" + table + "] ";
+		return this;
+	}
+	
+	public QueryBuilder where(String column) {
+		query += "WHERE [" + column + "] ";
+		return this;
+	}
+	
+	public QueryBuilder equals() {
+		query += "= ? ";
+		return this;
+	}
+	
+	public String getQuery() {
+		return query;
+	}
+	
+}

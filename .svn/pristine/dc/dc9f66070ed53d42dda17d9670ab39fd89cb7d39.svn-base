@@ -1,0 +1,109 @@
+package test.procedureservice;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
+
+import org.junit.After;
+import org.junit.BeforeClass;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import db.manipulation.DbManipulation;
+import db.type.DatabaseType;
+import model.ProcedureService;
+import model.tree.TreeElement.Column;
+import model.tree.TreeElement.Table;
+
+public class TestProcedureService {
+
+	private Table table;
+	private ProcedureService spService;
+
+	@BeforeAll
+	public static void setupDb() {
+		DbManipulation.createConnection(DatabaseType.MsSQL_JDBC, "78.28.157.8", "1435", "PIS2022",
+		 "EtfPIS2022G2", "EtfPIS2022G22918");
+	}
+	
+	@BeforeEach
+	void setup() {
+		table = new Table();
+		table.setUpdateSProc("{call pisg2.st_UpdateTEST(?,?)}");
+		table.setCreateSProc("{call pisg2.st_createTEST(?,?)}");
+		table.setDeleteSProc("{call pisg2.st_deleteTEST(?)}");
+
+		Column col1 = new Column("Primary key");
+		col1.code = "PrimaryKey";
+
+		Column col2 = new Column("Value");
+		col2.code = "Value";
+
+		table.addElement(col1);
+		table.addElement(col2);
+		
+		spService = new ProcedureService(table);
+	}
+	
+	@Test
+	void shouldGet1IfValueIsNull() throws SQLException {
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("Primary key", 1);
+		params.put("Value", null);
+		
+		assertTrue(spService.update(params));
+	}
+	
+	@Test
+	void shouldGet1IfUpdateOneRow() throws SQLException {
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("Primary key", 2);
+		params.put("Value", "One row");
+		
+		assertTrue(spService.update(params));
+	}
+	
+	@Test
+	void shouldGet1_IfMissingParameter() throws SQLException {
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("Primary key", 3);
+		
+		assertTrue(spService.update(params));
+	}
+	
+	@Test
+	void shouldGet1IfCreateOneRow() throws SQLException {
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("Primary key", 4);
+		params.put("Value", "CREATE");
+		
+		assertTrue(spService.create(params));
+	}
+	
+	@Test
+	void shouldCreateIfTooManyParams() throws SQLException {
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("Primary key", 4);
+		params.put("Value", "CREATE");
+		params.put("Something that doesnt exist", "whatever");
+		
+		assertTrue(spService.create(params));
+	}
+	
+	@Test
+	void shouldDeleteRow() throws SQLException {
+		assertTrue(spService.delete(4));	
+	}
+	
+	@AfterEach
+	void cleanup() throws SQLException {
+		spService.delete(2);
+	}
+}

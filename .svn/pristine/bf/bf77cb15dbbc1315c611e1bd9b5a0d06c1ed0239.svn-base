@@ -1,0 +1,32 @@
+package test.input;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+import view.input.InputPanel;
+import view.input.InputPanel.SubmitAction;
+
+class TestSubmit {
+
+	@Test
+	void shouldCallAddRow_WhenSubmitActionIsCreate() {
+		MockCustomTableModel mockTableModel = new MockCustomTableModel();
+		InputPanel inputPanel = new InputPanel(mockTableModel);
+		
+		inputPanel.setSubmitAction(SubmitAction.CREATE);
+		inputPanel.submit();
+		assertTrue(mockTableModel.rowWasAdded);
+	}
+	
+	@Test
+	void shouldCallUpdateRow_WhenSubmitActionIsUpdate() {
+		MockCustomTableModel mockTableModel = new MockCustomTableModel();
+		InputPanel inputPanel = new InputPanel(mockTableModel);
+		
+		inputPanel.setSubmitAction(SubmitAction.UPDATE);
+		inputPanel.submit();
+		assertTrue(mockTableModel.rowWasUpdated);
+	}
+
+}
