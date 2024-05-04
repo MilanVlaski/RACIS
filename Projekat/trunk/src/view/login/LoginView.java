@@ -1,29 +1,15 @@
 package view.login;
 
-import java.awt.Button;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
+import java.awt.*;
+import java.awt.event.*;
 import java.sql.SQLException;
 
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import db.manipulation.DbManipulation;
 import model.ApplicationModel;
 import model.Login;
-import model.ProcedureService;
 import model.tree.CustomTreeModel;
 import view.MainFrame;
 
@@ -101,7 +87,7 @@ public class LoginView extends JFrame {
 		button.setBounds(395, 363, 283, 36);
 		contentPane.add(button);
 		
-		userField = new JTextField();
+		userField = new JTextField("perop");
 		userField.setFont(new Font("Tahoma", Font.BOLD, 11));
 		userField.setBackground(Color.WHITE);
 		userField.setForeground(Color.DARK_GRAY);
@@ -121,7 +107,7 @@ public class LoginView extends JFrame {
 		lblPassword.setBounds(395, 213, 96, 14);
 		contentPane.add(lblPassword);
 		
-		passwordField = new JPasswordField();
+		passwordField = new JPasswordField("pp123");
 		passwordField.setFont(new Font("Tahoma", Font.BOLD, 11));
 		passwordField.setForeground(Color.DARK_GRAY);
 		passwordField.setBounds(395, 238, 283, 36);
@@ -169,7 +155,8 @@ public class LoginView extends JFrame {
 				JOptionPane.showMessageDialog(null, "Pogrešni podaci, pokušajte ponovo!");
 			}
 			
-		} catch (SQLException e1) {
+		} catch (SQLException e1)
+		{
 			e1.printStackTrace();
 		}
 	}
