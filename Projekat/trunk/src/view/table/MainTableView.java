@@ -1,24 +1,14 @@
 package view.table;
 
-import java.awt.Dimension;
-import java.awt.Font;
-import java.lang.reflect.Array;
-import java.util.HashMap;
-
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import javax.swing.UIManager;
+import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
 import model.ApplicationModel;
 import model.Publisher;
 import model.table.GeneralTableModel;
-import view.Colors;
-import view.Fonts;
-import view.Subscriber;
+import view.*;
 import view.toolBar.ToolBar;
 
 public class MainTableView extends JTable implements Subscriber {
@@ -30,8 +20,8 @@ public class MainTableView extends JTable implements Subscriber {
 		setRowHeight(30);
 		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		setAutoResizeMode(AUTO_RESIZE_LAST_COLUMN);
-		tableHeader.setReorderingAllowed(false);
-		tableHeader.setResizingAllowed(false);
+		tableHeader.setReorderingAllowed(true);
+		tableHeader.setResizingAllowed(true);
 
 		tableHeader.setBackground(Colors.HEADER_COLOR);
 		setFont(Fonts.TABLE);
@@ -66,7 +56,7 @@ public class MainTableView extends JTable implements Subscriber {
 	public void setTableModel(GeneralTableModel tableModel) {
 		this.tableModel = tableModel;
 		setModel(tableModel);
-		setColumnWidths();
+//		setColumnWidths();
 	}
 
 	private void setColumnWidths() {
