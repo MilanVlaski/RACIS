@@ -17,9 +17,15 @@ The application uses a big database with about 200 tables. If each can be intera
 The fields with question marks next to them are linked fields. That's because the data inside needs to come from a different table than the main one we are working with. Typing into them is forbidden. Instead, the user opens up a dialog that shows the linked table.
 ![Linked_input](https://github.com/MilanVlaski/RACIS/assets/117462283/02325e9a-dc82-4f1b-b17d-9b30c33ca081)
 
-### Solutions
+### Notes
 
 - The application talks to the DB through stored procedures, which provide a simple entry point
 - The DB schema is translated to an XML file, with data about which tables call which stored procedures, and the types of data that exist inside each column (whether it's "native" to the table, or is a foreign key)
 - This is used to display the tables
 - As well as for creating forms with input validation, handling data constraints.
+
+## Status
+
+- Successfuly completed. No changes expected, as the platform it runs on is Desktop + DB.
+- Another enterprise CRUD app I'm making is for Forestry. Stay tuned 😄
+
