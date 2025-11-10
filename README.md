@@ -5,9 +5,10 @@ The application uses a big database with about 200 tables. If each can be intera
 
 ## Use Cases
 
-### You may log in as an admin by default, or try any of the other available users (Projekat folder, in trunk/src/main/MainClass).
+<!-- ### You may log in as an admin by default, or try any of the other available users (Projekat folder, in trunk/src/main/MainClass).
 
 ![Login](https://github.com/MilanVlaski/RACIS/assets/117462283/6202a051-981d-44d3-b543-2032ec144b40)
+-->
 ### You may Create, Read, Update or Delete any information as needed. 
 
 ![Changing](https://github.com/MilanVlaski/RACIS/assets/117462283/a949d1bc-218a-4939-a76c-f223c0caedf7)
